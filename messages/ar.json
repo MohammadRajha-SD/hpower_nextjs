@@ -27,7 +27,6 @@
     "cleaning": "تنظيف وتعقيم شامل",
     "skin": "العناية بالجسم والشعر"
   },
-
   "profile": {
     "profile_picture_alt": "صورة الملف الشخصي",
     "default_user_name": "اسم المستخدم",
@@ -129,7 +128,6 @@
     "account_created_successfully": "تم إنشاء حسابك بنجاح. يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.",
     "register_illustration_alt": "صورة التسجيل",
     "logo_alt": "مانباور فور يو",
-
     "name_required": "الاسم مطلوب",
     "username_required": "اسم المستخدم مطلوب",
     "email_required": "البريد الإلكتروني مطلوب",
@@ -590,7 +588,8 @@
     "optional": "اختياري",
     "dragDropFile": "اسحب وأفلت رخصة شركتك هنا، أو",
     "browseFiles": "تصفح الملفات",
-    "supportedFormats": "الصيغ المدعومة: PDF، JPG، PNG (الحد الأقصى 5 ميجابايت)"
+    "supportedFormats": "الصيغ المدعومة: PDF، JPG، PNG (الحد الأقصى 5 ميجابايت)",
+    "licenseRequired": "رخصة الشركة مطلوبة"
   },
   "progress": {
     "companyDetails": "تفاصيل الشركة",
