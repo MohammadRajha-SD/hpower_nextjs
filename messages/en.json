@@ -1,0 +1,633 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "services": "Services",
+    "about_us": "About Us",
+    "contact-us": "Contact Us",
+    "register_create_account": "Register/Create an account",
+    "im_provider": "I'm a service provider",
+    "profile": "Profile",
+    "logout": "Logout",
+    "signed_in_as": "Signed in as",
+    "becomeParter": "Become a Partner",
+    "registerButton": "Register / Create Account",
+    "search_placeholder": "Search for services..."
+  },
+  "slider": {
+    "explore_more": "Explore More"
+  },
+  "home": {
+    "partners_header": "Explore  Partners",
+    "partners_description": "Explore our partners",
+    "explore_our_collection": "Explore Our Collections"
+  },
+  "faq": {
+    "common_questions": "Common Questions"
+  },
+  "Categories": {
+    "children": "Children's Service",
+    "car": "Car Service",
+    "cleaning": "Deep Cleaning & Disinfection",
+    "skin": "Body & Hair Care"
+  },
+
+  "profile": {
+    "profile_picture_alt": "Profile picture",
+    "default_user_name": "Username",
+    "name_label": "Name",
+    "logout": "Logout",
+    "about_me": "About me",
+    "about_me_description": "Description about me. Here you can add a brief introduction about yourself, your interests, and skills.",
+    "services": "Services you provide",
+    "userServices": "Services booked through you",
+    "contact_information": "Contact information",
+    "username_label": "Username",
+    "default_username": "Username",
+    "email_label": "Email",
+    "default_email": "email@example.com",
+    "phone_label": "Phone",
+    "phone_not_provided": "Not available",
+    "no_services_booked": "No services booked yet",
+    "quantity": "×{count}",
+    "status_pending": "Pending",
+    "status_paid": "Paid",
+    "status_cancelled": "Cancelled",
+    "status_approved": "Approved",
+    "status_in_progress": "In Progress"
+  },
+  "cancelBooking": {
+    "cancel_booking_button": "Cancel Booking",
+    "cancel_booking_title": "Cancel Booking",
+    "cancel_booking_description": "Please provide a reason for cancelling your booking.",
+    "service_name_label": "Service Name",
+    "reason_label": "Reason for Cancellation",
+    "reason_placeholder": "Enter the reason for cancellation",
+    "cancel": "Cancel",
+    "confirm_cancel": "Confirm Cancellation",
+    "toast_success": "Booking cancellation request sent successfully!",
+    "toast_error": "Failed to send cancellation request. Please try again."
+  },
+  "editProfile": {
+    "edit_profile": "Edit Profile",
+    "update_profile_description": "Update your profile information",
+    "contact_info": "Contact Info",
+    "change_password": "Change Password",
+    "email_label": "Email",
+    "username_label": "Username",
+    "username_placeholder": "Enter Username",
+    "email_placeholder": "Enter your email",
+    "phone_label": "Phone Number",
+    "phone_placeholder": "Enter your phone number",
+    "current_password_label": "Current Password",
+    "current_password_placeholder": "Enter current password",
+    "new_password_label": "New Password",
+    "new_password_placeholder": "Enter new password",
+    "confirm_password_label": "Confirm Password",
+    "confirm_password_placeholder": "Confirm new password",
+    "passwords_dont_match": "Passwords don't match",
+    "cancel": "Cancel",
+    "save_changes": "Save Changes",
+    "update_success": "Profile updated successfully",
+    "update_failed": "Failed to update profile",
+    "no_changes": "No changes were made",
+    "fetch_user_failed": "Failed to fetch user data",
+    "name_label": "Name",
+    "name_placeholder": "Enter your name"
+  },
+  "BookAnAppointment": {
+    "title": "Book your appointment in simple steps",
+    "step_1": "1- Choose your request provider. There are many companies offering the best home services to our clients.",
+    "step_2": "2- Search for the service that meets your needs from the various services that include many different and unique fields.",
+    "step_3": "3- Book your request after selecting the right service. You need to enter the correct data and your request will be fulfilled immediately.",
+    "select_date": "Select Appointment Date",
+    "selected_date": "Selected date",
+    "no_date_selected": "No date selected"
+  },
+  "RegisterForm": {
+    "full_name": "Full Name",
+    "username": "Username",
+    "phone_number": "Phone Number",
+    "email": "E-Mail",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "enter_full_name": "Enter Full Name",
+    "enter_username": "Enter Username",
+    "enter_phone_number": "Enter your Phone Number",
+    "enter_email": "Enter your E-Mail",
+    "forgot_password": "Forgot Your Password?",
+    "create_account": "Create Account",
+    "creating_account": "Creating Account...",
+    "have_account": "You have an account?",
+    "login": "Login",
+    "login_to_account": "Login to Your Account",
+    "registration_successful": "Registration Successful!",
+    "account_created_successfully": "Your account has been created successfully. Please check your email to verify your account.",
+    "register_illustration_alt": "Registration Illustration",
+    "logo_alt": "HPOWER",
+
+    "name_required": "Name is required",
+    "username_required": "Username is required",
+    "email_required": "Email is required",
+    "email_invalid": "Please enter a valid email address",
+    "phone_required": "Phone number is required",
+    "password_required": "Password is required",
+    "confirm_password_required": "Please confirm your password",
+    "passwords_do_not_match": "Passwords do not match",
+    "unexpected_error": "An unexpected error occurred"
+  },
+  "ProviderRegister": {
+    "full_name": "Full Name",
+    "phone_number": "Phone Number",
+    "email": "E-Mail",
+    "password": "Password",
+    "enter_full_name": "Enter Full Name",
+    "enter_phone_number": "Enter your Phone Number",
+    "enter_email": "Enter your E-Mail",
+    "select_category": "Select Category:",
+    "forgot_password": "Forgot Your Password?",
+    "create_provider_account": "Create Provider Account",
+    "creating_account": "Creating Account...",
+    "have_account": "You have an account?",
+    "login": "Login",
+    "login_to_account": "Login to Your Account",
+    "registration_successful": "Registration Successful!",
+    "provider_account_created_successfully": "Your provider account has been created successfully.",
+    "register_illustration_alt": "Registration Illustration",
+    "logo_alt": "HPOWER",
+    "unexpected_error": "An unexpected error occurred"
+  },
+  "Login": {
+    "login_illustration": "Login Illustration",
+    "email": "E-Mail",
+    "email_placeholder": "Enter your E-Mail",
+    "password": "Password:",
+    "password_placeholder": "**********",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "forgot_password": "Forgot Your Password?",
+    "login": "Login",
+    "logging_in": "Logging in...",
+    "login_failed": "Login failed. Please check your credentials.",
+    "unexpected_error": "An unexpected error occurred. Please try again later.",
+    "no_account": "Don't have an account? Create an account as",
+    "provider": "Provider",
+    "seeker": "Register"
+  },
+  "Search": {
+    "search_placeholder": "Search for services...",
+    "select_location": "Select location",
+    "search_button": "Search",
+    "select_emirate": "Select Emirate",
+    "search": "Search"
+  },
+  "Loading": {
+    "loading": "Loading..."
+  },
+  "Picing": {
+    "pricing_title": "Subscribe to our premium plans",
+    "pricing_description": "Choose the plan that fits your business needs",
+    "companies_button": "Companies",
+    "month": "Months",
+    "select_button": ""
+  },
+  "FeaturedServices": {
+    "featured_services_title": "Featured Services",
+    "view_all_services": "View All Services",
+    "view_all_services_mobile": "View All Services"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "We couldn’t find the page you’re looking for.",
+    "description2": "Please check the URL or go back to the home page.",
+    "home_button": "Home Page",
+    "contact_button": "Contact Support"
+  },
+  "ContactForm": {
+    "title": "Contact Us",
+    "full_name": "Full Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "phone": "Phone",
+    "contact_email": "Email",
+    "name_required": "Name is required",
+    "name_too_short": "Name must be at least 2 characters",
+    "email_required": "Email is required",
+    "email_invalid": "Please enter a valid email",
+    "message_required": "Message is required",
+    "message_too_short": "Message must be at least 10 characters",
+    "submit_success": "Message sent successfully! We will get back to you as soon as possible.",
+    "submit_error": "Failed to send message. Please try again.",
+    "sending": "Sending"
+  },
+  "ServicesSection": {
+    "title": "Find the Best Services",
+    "description": "Services – H Power H Power offers a wide range of support services designed to meet your everyday needs. Whether you're seeking assistance with household tasks or other support roles, we're here to provide the ideal solution. Our services are tailored to be flexible, reliable, and of the highest quality—ensuring your comfort and satisfaction every step of the way",
+    "search_placeholder": "Search services...",
+    "select_location": "Select location",
+    "active_filters": "Search filters:",
+    "no_services_found": "No services found",
+    "showing": "Showing",
+    "service": "service",
+    "services": "services",
+    "adjust_search": "Try adjusting your search or filter criteria to find what you're looking for.",
+    "clear_filters": "Clear filters",
+    "clear_all": "Clear all",
+    "clear_search": "Clear search",
+    "clear_location": "Clear location",
+    "view_grid": "View as grid",
+    "view_list": "View as list",
+    "featured": "Featured",
+    "service_busy": "This service is busy"
+  },
+  "LocationSelector": {
+    "select_location_title": "Select Location",
+    "close": "Close",
+    "search_placeholder": "Search emirate or city...",
+    "no_locations_found": "No locations found matching \"{searchTerm}\"",
+    "selected": "Selected",
+    "clear_search": "Clear search"
+  },
+  "ErrorPage": {
+    "title": "Oops! Something Went Wrong",
+    "description": "We're sorry, but an error occurred on our server.",
+    "sub_description": "Please try again later or return to the homepage.",
+    "goHome": "Go to Homepage",
+    "go_home_label": "Go to {label} Page",
+    "logo_alt": "Error Logo"
+  },
+  "FirstSection": {
+    "title": "About Us – H Power Services | Your Trusted Service Partner in the UAE",
+    "download": "Download Company Profile",
+    "description": "At H Power Services, we are committed to delivering reliable, high-quality home and professional services across the UAE. As a licensed entity under H POWER FZ-LLC, we operate with the highest standards of professionalism, transparency, and integrity. Our platform serves as a trusted bridge between skilled service providers and clients seeking excellence—whether at home or in business. We believe in fostering a culture of collaboration, quality, and innovation to meet the evolving needs of our vibrant society. Driven by a passion for service and a commitment to progress, H Power is here to simplify your daily needs with trusted hands and outstanding results."
+  },
+  "SecondSection": {
+    "sections": [
+      {
+        "title": "Objectives",
+        "image": "/objective.webp",
+        "alt": "Objectives icon",
+        "items": [
+          {
+            "subtitle": "Ease of communication:",
+            "content": "We aim to enable individuals in the United Arab Emirates to easily access high-skilled services for the services they need."
+          },
+          {
+            "subtitle": "Building a collaborative community:",
+            "content": "We aim to build a community based on cooperation and positive interaction between service providers and users, where they exchange notes and comments."
+          },
+          {
+            "subtitle": "Commitment to innovation and development:",
+            "content": "We always strive to improve and develop our services, and respond quickly to user aspirations and changing market needs."
+          }
+        ]
+      },
+      {
+        "title": "Our Vision",
+        "image": "/vission.webp",
+        "alt": "Vision icon",
+        "content": "We seek to stimulate skills and facilitate access to services through (H power) platform. We are committed to providing a safe and reliable environment for users to enhance communication and collaboration. Where those searching for services meet distinguished people in every field with ease."
+      },
+      {
+        "title": "Our Goals",
+        "image": "/objective.webp",
+        "alt": "Goals icon",
+        "items": [
+          {
+            "subtitle": "Quality:",
+            "content": "We are committed to providing high-quality services. We strive to meet and exceed our customers' expectations by providing the best skills and experience."
+          },
+          {
+            "subtitle": "Transparency:",
+            "content": "We believe in the importance of transparency in our relationships. We work to provide clear and accurate information about services and prices to ensure a transparent and reliable user experience."
+          },
+          {
+            "subtitle": "Diversity and inclusion:",
+            "content": "We value diversity and consider it a source of strength. We collaborate with diverse service providers and welcome different individuals to form a community that reflects diversity of ambitions and skills."
+          }
+        ]
+      }
+    ]
+  },
+  "SingleService": {
+    "service_not_found": "Service not found.",
+    "enter_coupon_code": "Please enter a coupon code",
+    "coupon_applied": "Coupon applied successfully!",
+    "applied": "Coupon applied!",
+    "invalid_coupon": "Invalid coupon code",
+    "off": "OFF",
+    "check_schedule": "Check the schedule",
+    "you_saved": "You saved",
+    "with_coupon": "with this coupon!",
+    "apply_coupon": "Apply Coupon Code",
+    "enter_coupon_placeholder": "Enter your coupon",
+    "applying": "Applying...",
+    "apply": "Apply",
+    "sending": "Sending...",
+    "resend": "Verify Email",
+    "try_demo_coupon": "Try our demo coupon:",
+    "book_now": "Book Now",
+    "contact_provider": "Contact Provider",
+    "service_details": "Service Details",
+    "duration": "Duration",
+    "one_hour": "1 hour",
+    "availability": "Availability",
+    "service_busy_title": "Service Currently Unavailable",
+    "service_busy_message": "This service is currently at full capacity. Please check back later.",
+    "currently_unavailable": "Currently Unavailable",
+    "bookig_unavailable": "Booking Unavailable",
+    "status": "Status",
+    "expires_at": "Expires At",
+    "quantity": "Quantity",
+    "address": "Address",
+    "hint": "Hint",
+    "booking": "Booking",
+    "booking_successful": "Booking successful!",
+    "booking_failed": "Booking failed",
+    "service_unavailable": "Service unavailable",
+    "booking_requirements_guide": "Please complete all required fields (Quantity and Address) to finalize your booking.",
+    "provider_note": "Note: You are a Provider, you can not book, only users can book the services.",
+    "userNotVerified_note": "Note: Your account is not verified. Please verify your email to access our services.",
+    "no_user_note": "You must be logged in to continue.",
+    "login": "Login",
+    "select_location_placeholder": "Select your location",
+    "already_booked_message": "You have already booked this service. Please wait for approval or cancellation before booking again.",
+    "working_schedule": "Working Schedule",
+    "day": "Day",
+    "hours": "Hours",
+    "closed": "Closed",
+    "service_closed_message": "This service is currently closed.",
+    "service_closed_submessage": "Please check the provider's schedule for available days.",
+    "booking_datetime": "Booking Date & Time",
+    "select_datetime_placeholder": "Select date and time",
+    "select_date": "Select Date",
+    "select_time": "Select Time",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "verify_email_error": "Failed to send verification email. Please try again.",
+    "terms_and_conditions": "Terms and Conditions",
+    "agree_to_terms": "I agree to the Terms and Conditions",
+    "agree_to": "I agree to the",
+    "select_datetime": "Please select date and time",
+    "quantity_limit_reached": "You have reached the maximum quantity limit of {limit} for this service.",
+    "max_quantity": "Maximum quantity"
+  },
+
+  "SubscriptionSuccessPage": {
+    "title": "An email has been sent to confirm your subscription and checkout!",
+    "thank_you": "Thank you for trusting us. Your account has been successfully updated.",
+    "check_email": "Check your email",
+    "email_sent": "We've sent a confirmation email to your registered email address. Please check your inbox to confirm the payment process.",
+    "what_happens_next": "What happens next?",
+    "next_steps": [
+      "Once payment is confirmed, your subscription will be activated",
+      "You'll receive access to all premium features",
+      "Your first billing cycle starts today",
+      "You can manage your subscription from your account dashboard"
+    ],
+    "return_home": "Return to Home",
+    "questions": "If you have any questions, please contact our",
+    "customer_support": "customer support",
+    "copyright": "© {year} Your Company. All rights reserved."
+  },
+  "SubscriptionConfirmation": {
+    "complete_subscription": "Complete Subscription",
+    "review_plan": "Please review your plan details before confirming.",
+    "plan_features": "Plan Features",
+    "subscription_summary": "Subscription Summary",
+    "plan_type": "Plan Type",
+    "billing_cycle": "Billing Cycle",
+    "billing_cycle_value": "{months} Months",
+    "plan_price": "Plan Price",
+    "total_due_today": "Total Due Today",
+    "your_information": "Your Information",
+    "email_address": "Email Address",
+    "phone_number": "Phone Number",
+    "not_available": "Not Available",
+    "back_to_plans": "Back to Plans",
+    "confirm_subscribe": "Confirm & Subscribe",
+    "processing": "Processing",
+    "back_to_home": "Back to Home",
+    "terms_agreement": "By subscribing, you agree to our",
+    "terms_of_service": "Terms of Service",
+    "and": "and",
+    "privacy_policy": "Privacy Policy",
+    "support_message": "Need help? Contact our",
+    "customer_support": "Customer Support",
+    "subscription_confirmed": "Subscription Confirmed",
+    "subscription_confirmed_title": "Subscription Successfully Confirmed!",
+    "subscription_confirmed_description": "Your subscription has been confirmed. Check your email for details.",
+    "check_email": "Check Your Email",
+    "email_confirmation_message": "We’ve sent a confirmation email to your registered email address.",
+    "email": "Email",
+    "phone": "Phone",
+    "close": "Close",
+    "plan_not_found": "Plan not found",
+    "plan_not_found_description": "The plan you are looking for does not exist. Please return to the plans page.",
+    "already_subscribed": "Already Subscribed",
+    "months": "months"
+  },
+  "accessDenied": {
+    "title": "Access Denied",
+    "description": "You don't have permission to access this page. This section is restricted to services providers only.",
+    "providerOnlyMessage": "This feature is exclusively available to registered service providers. To access this functionality, you need to have a provider account.",
+    "backToHome": "Back to Home",
+    "becomeProvider": "Become a Provider",
+    "supportMessage": "Need help? Contact our support team"
+  },
+  "ServicesPopup": {
+    "title": "Select a Service",
+    "instructions": "Browse categories and select the service you need",
+    "selectCategoryService": "Select Category or Service",
+    "back": "Back",
+    "cancel": "Cancel",
+    "selectService": "Select Service",
+    "price": "Price",
+    "noServicesAvailable": "Comming Soon!."
+  },
+  "BookingModal": {
+    "title": "Book an Appointment",
+    "selectedDate": "Date of appointment booking selected",
+    "instructions": "Please select a category or service and then click 'Book Appointment' to proceed.",
+    "selectCategoryService": "Select a Category/Service",
+    "back": "Back",
+    "cancel": "Cancel",
+    "bookAppointment": "Book Appointment",
+    "price": "Price",
+    "selectServiceFirst": "Please select a service first!",
+    "noServicesAvailable": "Comming Soon!."
+  },
+  "BecomeAPartner": {
+    "header": "Become a HPOWER partner",
+    "description": "",
+    "features": [
+      {
+        "title": "Get real leads for your business",
+        "description": "Gain access to hundreds of service requests in the city of your choice!"
+      },
+      {
+        "title": "Highlight your service quality",
+        "description": "We will collect and verify all reviews from customers, and give your business the boost it deserves"
+      },
+      {
+        "title": "Raise your online profile",
+        "description": "Display your services, certifications, and details of your business on your dedicated profile page"
+      }
+    ]
+  },
+  "StatsBar": {
+    "happy_customers": "15,000+ happy customers",
+    "reviews": "Over 15,000 reviews",
+    "rating": "★ 4.8 out of 5",
+    "trusted_pros": "Trusted service professionals",
+    "live_support": "Live customer support"
+  },
+  "PartnerForm": {
+    "joinNetwork": "Join HPOWER's Company As a Partner",
+    "contactWithinDays": "Just fill out the form below and one of our sales representatives will contact you within 2 working days",
+    "describeCompany": "Describe your company & provide contact details",
+    "companyName": "Company Name",
+    "numberOfEmployees": "Number of Employees",
+    "contactPerson": "Contact Person",
+    "contactEmail": "Contact Email",
+    "companyWebsite": "Company Website",
+    "activeCities": "Which cities are you active in? (Click all that apply)",
+    "servicesOffered": "What services do you offer? (Click all that apply)",
+    "additionalInfo": "Is there any other information you would like to share?",
+    "additionalInfoPlaceholder": "Enter additional information...",
+    "submit": "Submit",
+    "submitSuccess": "Form submitted successfully!",
+    "cancelDone": "Your cancellation request has been received successfully. Our team will contact you within 1–2 business days to follow up.",
+    "thankYou": "Thank you!",
+    "successMessage": "Thank you for your interest in joining our Partner Network. Our team will contact you within 1-2 working days to discuss your request.",
+    "verifySuccessMessage": "The verification link has been sent successfully. Please check your email and follow the link to complete the registration process.",
+    "close": "Close",
+    "formSubmitted": "Form submitted successfully!",
+    "submissionError": "Error submitting form. Please try again.",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "fillRequiredFields": "Please fill all required fields"
+  },
+  "CompanyDetailsStep": {
+    "title": "Tell us about your company",
+    "company_name_label": "Company Name",
+    "company_name_placeholder": "Your company name",
+    "number_of_employees_label": "Number of Employees",
+    "number_of_employees_placeholder": "Select size",
+    "contact_person_label": "Contact Person",
+    "contact_person_placeholder": "Name of contact person",
+    "contact_email_label": "Contact Email",
+    "contact_email_placeholder": "email@company.com",
+    "employee_options": {
+      "1_10": "1-10 employees",
+      "11_50": "11-50 employees",
+      "51_100": "51-100 employees",
+      "100_plus": "100+ employees"
+    }
+  },
+  "StepNavigation": {
+    "previous": "Previous",
+    "next_step": "Next Step"
+  },
+  "CoverageAndServicesStep": {
+    "company_website_label": "Company Website",
+    "company_website_placeholder": "www.yourcompany.com",
+    "phone_number_label": "Phone Number",
+    "phone_number_placeholder": "50 123 4567",
+    "cities_operate_label": "Cities You Operate In",
+    "services_offered_label": "Services Offered",
+    "other_service_button": "Other",
+    "other_service_placeholder": "Enter other service",
+    "add_service_button": "Add",
+    "phone_required": "Phone number is required",
+    "city_required": "At least one city is required",
+    "services_required": "At least one service is required",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "error": {
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Phone number must include more than just the country code",
+      "phone_invalid_digits" : "Phone number must be exactly 9 digits after the country code"
+    }
+  },
+  "FinalStep": {
+    "additionalInformation": "Additional Information",
+    "companyInfoLabel": "Tell us more about your company",
+    "additionalInfoPlaceholder": "Share any additional information that may be relevant...",
+    "applicationSummary": "Application Summary",
+    "company": "Company",
+    "size": "Size",
+    "contactPerson": "Contact Person",
+    "email": "Email",
+    "website": "Website",
+    "phone": "Phone",
+    "cities": "Cities",
+    "services": "Services",
+    "select_plan_label": "Select Subscription Plan",
+    "termsAndConditions": "I agree to the",
+    "termsLink": "Terms and Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "and": "and",
+    "previous": "Previous",
+    "applicationSubmitted": "Application Submitted!",
+    "submitting": "Submitting...",
+    "termsRequired": "You must accept the terms and conditions.",
+    "submitApplication": "Submit Application",
+    "plan": "Plan",
+    "license": "License",
+    "companyLicenseLabel": "Company License",
+    "optional": "Optional",
+    "dragDropFile": "Drag and drop your company license here, or",
+    "browseFiles": "Browse Files",
+    "supportedFormats": "Supported formats: PDF, JPG, PNG (Max 5MB)"
+  },
+  "progress": {
+    "companyDetails": "Company Details",
+    "coverageServices": "Coverage & Services",
+    "additionalInfo": "Additional Info"
+  },
+  "ReturnPolicy": {
+    "title": "Return policy",
+    "individual_clients": {
+      "description": "Customers can request a refund if they cancel 4 hours before the service is scheduled to be provided. Unfortunately, refunds or service exchanges are not possible after this period or in cases of urgent requests such as same day delivery. To receive a refund, cancellations must be made within the specified time frame, with the exception of services and exclusive offers that are not covered by the refund policy."
+    },
+    "partner_companies": {
+      "title": "For Partner Companies",
+      "description": "Partner companies can cancel their subscription and request a refund within 24 hours of subscribing. If more than 24 hours have passed since the subscription, the company will not be eligible for a refund. Refund Process: You will be notified via email whether your refund request has been approved or denied. If approved, the amount will be refunded to the original payment method within 7-10 business days. For further inquiries, please contact us via email or customer service."
+    }
+  },
+  "PrivacyPolicy": {
+    "title": "Privacy policy",
+    "section": {
+      "title": "Privacy policy",
+      "description_1": "When you use our Services or Website, you may be asked for personally identifiable information such as your name, address, email address, and telephone number. By giving us such information, you will need to consent by using it in the manner described in this policy.",
+      "description_2": "You may withdraw your consent at any time by emailing us at <email>info@hpower.ae</email>. We will return or destroy your personal information within five days of receipt of your withdrawal of consent."
+    }
+  },
+  "Terms": {
+    "title": "Terms and Conditions",
+    "header": "Terms and Conditions",
+    "paragraph_1": "Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern HPOWER’s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.",
+    "paragraph_2": "The term “HPOWER” or 'us' or 'we' refers to the owner of the website whose registered shop in Ras Al Khaimah, UAE. The term 'you' refers to the user or viewer of our website.",
+    "point_1": "The content of the pages of this website is for your general information and use only. It is subject to change without notice.",
+    "point_2": "This website uses cookies to monitor browsing preferences. If you do allow cookies to be used, the following personal information may be stored by us for use by third parties.",
+    "point_3": "Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.",
+    "point_4": "Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.",
+    "point_5": "This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.",
+    "point_6": "All trademarks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.",
+    "cancel": "Cancel",
+    "agree": "Agree"
+  },
+  "Footer": {
+    "products": "Services",
+    "Contact_Us_Footer": "Contact Us",
+    "part_of_mhg": "Part of Modern Home Group",
+    "rights_reserved": "© All Rights Reserved",
+    "All_Copyright": "H POWER FZ LLC 2025 - All rights reserved",
+    "Customer_Service": "Customer Service",
+    "Common_Questions": "Common Questions",
+    "Return_Policy": "Return Policy",
+    "Privacy_Policy": "Privacy Policy",
+    "Terms_and_Conditions": "Terms and Conditions",
+    "Email": "E-mail: info@hpower.ae"
+  }
+}
