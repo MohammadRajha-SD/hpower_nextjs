@@ -131,26 +131,34 @@ const CoverageAndServicesStep = ({
                   required: t("error.phone_required"),
                   validate: (value) => {
                     const countryCode = "+971";
+                    const localNumber = value.slice(countryCode.length - 1);
+                    const prefix = localNumber.slice(0, 2);
+                    const validPrefixes = ["50", "54", "56", "52", "55", "58"];
+                    const remainingDigits = localNumber.slice(2);
 
-                    if (
-                      value === countryCode ||
-                      value.length <= countryCode.length
-                    ) {
+                    if (value === countryCode || value.length <= countryCode.length) {
                       return (
                         t("error.phone_invalid") ||
                         "Phone number must include more than just the country code"
                       );
                     }
+
+                    else if (!validPrefixes.includes(prefix)) {
+                      return (t("error.phone_invalid_prefix") || "Phone number prefix is invalid. Must be one of Etisalat or Du.");
+                    }
+
+                    else if (!/^\d{7}$/.test(remainingDigits)) {
+                      return ( t("error.phone_invalid_format") || "Phone number must have exactly 7 digits after the prefix");
+                    }
+
                     else if ((value.length - 3) != 9) {
-                      return (
-                        t("error.phone_invalid_digits") ||
-                        "Phone number must be exactly 9 digits after the country code"
-                      );
+                      return (t("error.phone_invalid_digits") || "Phone number must be exactly 9 digits after the country code");
                     }
 
                     return true;
                   },
                 }}
+
                 render={({ field: { onChange, value } }) => (
                   <PhoneInput
                     country={"ae"}

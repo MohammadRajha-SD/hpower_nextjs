@@ -543,7 +543,9 @@
     "error": {
       "phone_required": "Phone number is required",
       "phone_invalid": "Phone number must include more than just the country code",
-      "phone_invalid_digits": "Phone number must be exactly 9 digits after the country code"
+      "phone_invalid_digits": "Phone number must be exactly 9 digits after the country code",
+      "phone_invalid_prefix": "Phone number prefix is invalid. Must be one of Etisalat or Du.",
+      "phone_invalid_format": "Phone number must have exactly 7 digits after the prefix"
     }
   },
   "FinalStep": {
@@ -640,9 +642,9 @@
     "verify": "Verify",
     "code": "Code",
     "sending": "Sending...",
-  "resendCode": "Resend Code",
-  "sendVerificationCode": "Send Verification Code",
-   "codeVerifiedSuccess": "Code verified successfully!",
-  "codeInvalid": "The verification code is incorrect."
+    "resendCode": "Resend Code",
+    "sendVerificationCode": "Send Verification Code",
+    "codeVerifiedSuccess": "Code verified successfully!",
+    "codeInvalid": "The verification code is incorrect."
   }
 }

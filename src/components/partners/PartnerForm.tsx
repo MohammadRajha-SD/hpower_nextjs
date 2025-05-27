@@ -323,7 +323,8 @@ const PartnerForm = () => {
                 isSending={isSending}
                 sendSuccess={sendSuccess}
                 watch={watch}
-                isCodeValid={isCodeValid}
+                isCodeValid={true }
+                // isCodeValid
               />
             )}
 
