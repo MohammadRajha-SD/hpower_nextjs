@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGlobe } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiServiceLine } from "react-icons/ri";
 import SelectionButton from "./SelectionButton";
+import { FaGlobe } from "react-icons/fa";
 import FormField from "./FormField";
 import StepNavigation from "./StepNavigation";
 import PhoneInput from "react-phone-input-2";
@@ -96,7 +96,7 @@ const CoverageAndServicesStep = ({
 
   return (
     <motion.div
-      key="step2"
+      key="step3"
       variants={formVariants}
       initial="hidden"
       animate="visible"

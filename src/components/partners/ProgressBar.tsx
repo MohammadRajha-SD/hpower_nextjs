@@ -30,17 +30,22 @@ const ProgressBar = ({ step, totalSteps = 3 }) => {
       </div>
       <div className="flex justify-between mt-2">
         <div
-          className={`text-sm ${step >= 0 ? "text-interactive_color font-medium" : "text-gray-500"}`}
+          className={`text-sm ${step == 0 ? "text-interactive_color font-medium" : "text-gray-500"}`}
         >
           {t("companyDetails")}
         </div>
         <div
-          className={`text-sm ${step >= 1 ? "text-interactive_color font-medium" : "text-gray-500"}`}
+          className={`text-sm ${step == 1 ? "text-interactive_color font-medium" : "text-gray-500"}`}
+        >
+          {t("emailVerification")}
+        </div>
+        <div
+          className={`text-sm ${step == 2 ? "text-interactive_color font-medium" : "text-gray-500"}`}
         >
           {t("coverageServices")}
         </div>
         <div
-          className={`text-sm ${step >= 2 ? "text-interactive_color font-medium" : "text-gray-500"}`}
+          className={`text-sm ${step == 3 ? "text-interactive_color font-medium" : "text-gray-500"}`}
         >
           {t("additionalInfo")}
         </div>

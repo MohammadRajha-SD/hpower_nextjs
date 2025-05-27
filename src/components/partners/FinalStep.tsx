@@ -124,7 +124,7 @@ const FinalStep = ({
 
   return (
     <motion.div
-      key="step3"
+      key="step4"
       variants={formVariants}
       initial="hidden"
       animate="visible"

@@ -594,7 +594,8 @@
   "progress": {
     "companyDetails": "تفاصيل الشركة",
     "coverageServices": "النطاق والخدمات",
-    "additionalInfo": "معلومات إضافية"
+    "additionalInfo": "معلومات إضافية",
+    "emailVerification": "تأكيد البريد الإلكتروني"
   },
   "ReturnPolicy": {
     "title": "سياسة الإرجاع",
@@ -640,5 +641,21 @@
     "Privacy_Policy": "سياسة الخصوصية",
     "Terms_and_Conditions": "الشروط والأحكام",
     "Email": "البريد الإلكتروني: info@hpower.ae"
+  },
+  "Confirmations": {
+    "confirmationTitle": "أدخل رمز التحقق",
+    "confirmationMessage": "تم إرسال رمز التأكيد إلى رقم هاتفك أو بريدك الإلكتروني. الرجاء إدخاله أدناه.",
+    "enterCode": "أدخل الرمز المستلم",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "pleaseEnterCode": "يرجى إدخال رمز التحقق",
+    "sendCode": "إرسال الكود",
+    "verify": "تحقق",
+    "code": "رمز التحقق",
+    "sending": "جارٍ الإرسال...",
+    "resendCode": "إعادة إرسال الرمز",
+    "sendVerificationCode": "إرسال رمز التحقق",
+    "codeVerifiedSuccess": "تم التحقق من الرمز بنجاح!",
+    "codeInvalid": "رمز التحقق غير صحيح."
   }
 }

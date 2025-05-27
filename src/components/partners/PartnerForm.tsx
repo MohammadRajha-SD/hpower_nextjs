@@ -12,6 +12,7 @@ import FinalStep from "./FinalStep";
 import SuccessPopup from "./SuccessPopup";
 import { sendContactForm } from "@/actions/sendMail";
 import { sendVerificationCodeEmail } from "@/actions/sendVerificationCode";
+import EmailVerificationStep from "./EmailVerificationStep";
 
 interface FormValues {
   companyName: string;
@@ -24,66 +25,12 @@ interface FormValues {
   selectedPlan: string;
   terms: boolean;
   companyLicense?: File | null;
-}
-
-function ConfirmationCodeModal({
-  isOpen,
-  onClose,
-  onConfirm,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: (codeEntered: string) => void;
-}) {
-  const [inputCode, setInputCode] = useState("");
-
-  if (!isOpen) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h2 className="text-xl font-semibold mb-4 text-center">
-          Enter Confirmation Code
-        </h2>
-        <input
-          type="text"
-          value={inputCode}
-          onChange={(e) => setInputCode(e.target.value)}
-          placeholder="Enter the code you received"
-          className="border rounded px-4 py-2 w-full mb-4"
-        />
-        <div className="flex justify-end gap-4">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              if (!inputCode.trim()) {
-                toast.error("Please enter the confirmation code.");
-                return;
-              }
-              onConfirm(inputCode.trim());
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
+  code?: null;
 }
 
 const PartnerForm = () => {
   const t = useTranslations("PartnerForm");
+  const t1 = useTranslations("Confirmations");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,8 +38,11 @@ const PartnerForm = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [formStep, setFormStep] = useState(0);
   const locale = useLocale();
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
+
+  const [isCodeValid, setIsCodeValid] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [sendSuccess, setSendSuccess] = useState(false);
+  const [codeConfirm, setCodeConfirm] = useState(false);
 
   const {
     register,
@@ -116,6 +66,7 @@ const PartnerForm = () => {
       selectedPlan: "",
       terms: false,
       companyLicense: null,
+      code: null,
     },
   });
 
@@ -131,153 +82,17 @@ const PartnerForm = () => {
   const section2Valid =
     // formValues.companyWebsite &&
     formValues.phoneNumber &&
-    formValues.phoneNumber.length > 4 && // Ensure phone number is longer than country code (e.g., +971)
+    formValues.phoneNumber.length > 4 &&
     selectedCities.length > 0 &&
     selectedServices.length > 0;
 
   const section3Valid = formValues.selectedPlan && formValues.terms;
-
-  const onSubmitx = async (data: FormValues) => {
-    setIsSubmitting(true);
-
-    try {
-      // 1. توليد كود التأكيد
-      const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-      localStorage.setItem("confirmationCode", confirmationCode);
-      localStorage.setItem("confirmationEmail", data.contactEmail);
-
-      // 3. إرسال الكود بالإيميل
-      const codeEmailForm = new FormData();
-      codeEmailForm.append("email", data.contactEmail);
-      codeEmailForm.append("subject", "Confirmation Code");
-      codeEmailForm.append("message", `Your confirmation code is: ${confirmationCode}`);
-
-      const sendResult = await sendVerificationCodeEmail({ userName: "Mohammad", userEmail: "user@example.com", code: confirmationCode, locale: "ar", });
-
-      if (!sendResult.success) {
-        throw new Error(sendResult.error || "Failed to send confirmation email.");
-      }
-
-      // 4. إدخال المستخدم للكود
-      const userInputCode = prompt("Check your email and enter the confirmation code:");
-
-      if (userInputCode !== confirmationCode) {
-        toast.error("Incorrect confirmation code.");
-        setIsSubmitting(false);
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("company_name", data.companyName);
-      formData.append("company_website", data.companyWebsite);
-      formData.append("contact_person", data.contactPerson);
-      formData.append("contact_email", data.contactEmail);
-      formData.append("phone", data.phoneNumber || "");
-      formData.append("number_employees", data.numberOfEmployees);
-      formData.append("cities", selectedCities.join(","));
-      formData.append("services", selectedServices.join(","));
-      formData.append("plans", data.selectedPlan);
-      formData.append("notes", data.message || "");
-      if (data.companyLicense) {
-        formData.append("licence", data.companyLicense);
-      }
-
-      console.log("Submitting data:", {
-        ...formData,
-        licence: data.companyLicense ? "[File]" : null,
-      });
-
-      const backendResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_OLD}/become-partner`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const backendResult = await backendResponse.json();
-
-      if (!backendResponse.ok) {
-        throw new Error(backendResult.message || "Backend submission failed");
-      }
-
-      const emailFormData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== null && value !== undefined && key !== "companyLicense") {
-          emailFormData.append(key, value.toString());
-        }
-      });
-      emailFormData.append("selectedCitie", selectedCities.join(","));
-      emailFormData.append("selectedService", selectedServices.join(","));
-
-      const emailResult = await sendContactForm(emailFormData, locale);
-      console.log("Email result:", emailResult);
-
-      if (emailResult.success) {
-        setIsSuccess(true);
-        setShowSuccessPopup(true);
-        toast.success(
-          t("formSubmitted") || "Application submitted successfully!"
-        );
-      } else {
-        console.warn("Email failed but backend succeeded:", emailResult.error);
-        setIsSuccess(true);
-        setShowSuccessPopup(true);
-        toast.success(
-          t("formSubmitted") || "Application submitted successfully!"
-        );
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      setIsSubmitting(false);
-
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      toast.error(
-        errorMessage.includes("fetch")
-          ? t("networkError") || "Network error. Please check your connection."
-          : t("submissionError") || "Submission failed. Please try again."
-      );
-    } finally {
-      if (!isSuccess) {
-        setIsSubmitting(false);
-      } else {
-        setTimeout(() => {
-          setIsSubmitting(false);
-        }, 1000);
-      }
-    }
-  };
+  const section4Valid = formValues.code;
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
     try {
-      // 1. توليد كود التأكيد
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-
-      setConfirmationCode(code);
-      localStorage.setItem("confirmationCode", code);
-      localStorage.setItem("confirmationEmail", data.contactEmail);
-
-
-      // 2. إرسال الكود للإيميل
-      const sendResult = await sendVerificationCodeEmail({
-        userName: data.contactPerson,
-        userEmail: data.contactEmail,
-        code: code,
-        locale: locale,
-      });
-
-      if (!sendResult.success) {
-        throw new Error(sendResult.error || "Failed to send confirmation email.");
-      }
-
-      // 3. فتح مودال الإدخال
-      setIsConfirmationModalOpen(true);
-
-      // 4. تحضير البيانات للإرسال للbackend
       const formData = new FormData();
       formData.append("company_name", data.companyName);
       formData.append("company_website", data.companyWebsite);
@@ -359,9 +174,6 @@ const PartnerForm = () => {
     }
   };
 
-
-
-
   const closeSuccessPopup = () => {
     setShowSuccessPopup(false);
     setIsSuccess(false);
@@ -382,15 +194,19 @@ const PartnerForm = () => {
         "contactPerson",
         "contactEmail",
       ];
-    } else if (formStep === 1) {
+    }
+    else if (formStep === 1) {
+      fieldsToValidate = ["code"];
+    }
+    else if (formStep === 2) {
       fieldsToValidate = ["phoneNumber"];
-    } else if (formStep === 2) {
+    } else if (formStep === 3) {
       fieldsToValidate = ["selectedPlan", "terms"];
     }
 
     const isStepValid = await trigger(fieldsToValidate);
 
-    const stepValidations = [section1Valid, section2Valid, section3Valid];
+    const stepValidations = [section1Valid, section4Valid, section2Valid, section3Valid];
 
     if (isStepValid && stepValidations[formStep]) {
       setFormStep((current) => current + 1);
@@ -399,9 +215,60 @@ const PartnerForm = () => {
     }
   };
 
-  const previousStep = () => {
-    setFormStep((current) => current - 1);
+  const previousStep = () => setFormStep((current) => current - 1);
+
+  const verifyCode = (enteredCode: string) => {
+    const savedCode = localStorage.getItem("confirmationCode");
+    const res = enteredCode === savedCode;
+
+    setIsCodeValid(res);
+
+    if (res) {
+      toast.success(t1("codeVerifiedSuccess"));
+      nextStep();
+    } else {
+      toast.error(t1("codeInvalid"));
+    }
+    
+    return res;
   };
+
+  const handleSendCode = async () => {
+    setIsSending(true);
+
+    try {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const contactEmail = watch("contactEmail");
+      const contactPerson = watch("contactPerson");
+
+      localStorage.setItem("confirmationCode", code);
+
+      const sendResult = await sendVerificationCodeEmail({
+        userName: contactPerson,
+        userEmail: contactEmail,
+        code: code,
+        locale: locale,
+      });
+
+      if (!sendResult.success) {
+        throw new Error(sendResult.error || "Failed to send confirmation email.");
+      }
+
+      setSendSuccess(true);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setIsSubmitting(false);
+
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      toast.error(
+        errorMessage.includes("fetch")
+          ? t("networkError") || "Network error. Please check your connection."
+          : t("submissionError") || "Submission failed. Please try again."
+      );
+    }
+    setIsSending(false);
+  }
 
   return (
     <div className="container mx-auto p-4 max-w-7xl relative overflow-hidden">
@@ -445,6 +312,22 @@ const PartnerForm = () => {
             )}
 
             {formStep === 1 && (
+              <EmailVerificationStep
+                register={register}
+                onPrev={previousStep}
+                errors={errors}
+                onNext={nextStep}
+                isNextDisabled={!section4Valid}
+                handleSendCode={handleSendCode}
+                verifyCode={verifyCode}
+                isSending={isSending}
+                sendSuccess={sendSuccess}
+                watch={watch}
+                isCodeValid={isCodeValid}
+              />
+            )}
+
+            {formStep === 2 && (
               <CoverageAndServicesStep
                 register={register}
                 control={control}
@@ -459,7 +342,7 @@ const PartnerForm = () => {
               />
             )}
 
-            {formStep === 2 && (
+            {formStep === 3 && (
               <FinalStep
                 errors={errors}
                 register={register}

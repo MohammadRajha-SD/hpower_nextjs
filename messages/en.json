@@ -581,7 +581,8 @@
   "progress": {
     "companyDetails": "Company Details",
     "coverageServices": "Coverage & Services",
-    "additionalInfo": "Additional Info"
+    "additionalInfo": "Additional Info",
+    "emailVerification": "Email Verification"
   },
   "ReturnPolicy": {
     "title": "Return policy",
@@ -627,5 +628,21 @@
     "Privacy_Policy": "Privacy Policy",
     "Terms_and_Conditions": "Terms and Conditions",
     "Email": "E-mail: info@hpower.ae"
+  },
+  "Confirmations": {
+    "confirmationTitle": "Enter Confirmation Code",
+    "confirmationMessage": "A confirmation code has been sent to your phone or email. Please enter it below.",
+    "enterCode": "Enter the code you received",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "pleaseEnterCode": "Please enter the confirmation code",
+    "sendCode": "Send Code",
+    "verify": "Verify",
+    "code": "Code",
+    "sending": "Sending...",
+  "resendCode": "Resend Code",
+  "sendVerificationCode": "Send Verification Code",
+   "codeVerifiedSuccess": "Code verified successfully!",
+  "codeInvalid": "The verification code is incorrect."
   }
 }
