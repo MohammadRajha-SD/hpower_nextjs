@@ -142,13 +142,12 @@ const CoverageAndServicesStep = ({
                       );
                     }
                     else if ((value.length - 3) != 9) {
-                    console.log(value.length,      t("error.phone_invalid_digits"));
-
                       return (
                         t("error.phone_invalid_digits") ||
                         "Phone number must be exactly 9 digits after the country code"
                       );
                     }
+
                     return true;
                   },
                 }}
@@ -198,6 +197,7 @@ const CoverageAndServicesStep = ({
                 animate={{ opacity: 1 }}
                 className="text-red-500 text-sm mt-1"
               >
+                {errors.phoneNumber.message}
               </motion.p>
             )}
           </div>
@@ -289,8 +289,8 @@ const CoverageAndServicesStep = ({
                 onClick={handleAddCustomService}
                 disabled={!customService.trim()}
                 className={`px-4 py-2 rounded-md text-white ${customService.trim()
-                    ? "bg-interactive_color hover:bg-opacity-90"
-                    : "bg-gray-400 cursor-not-allowed"
+                  ? "bg-interactive_color hover:bg-opacity-90"
+                  : "bg-gray-400 cursor-not-allowed"
                   }`}
               >
                 {t("add_service_button") || "Add"}
