@@ -57,6 +57,7 @@ const CompanyDetailsStep = ({
             name="companyName"
             errors={errors}
             placeholder={t("company_name_placeholder")}
+            required={true} 
           />
 
           <FormField
@@ -68,6 +69,7 @@ const CompanyDetailsStep = ({
             type="select"
             options={employeeOptions}
             placeholder={t("number_of_employees_placeholder")}
+            required={true} 
           />
 
           <FormField
@@ -77,6 +79,7 @@ const CompanyDetailsStep = ({
             name="contactPerson"
             errors={errors}
             placeholder={t("contact_person_placeholder")}
+            required={true} 
           />
 
           <FormField
@@ -87,6 +90,7 @@ const CompanyDetailsStep = ({
             errors={errors}
             type="email"
             placeholder={t("contact_email_placeholder")}
+            required={true} 
           />
         </div>
       </motion.div>

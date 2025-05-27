@@ -204,10 +204,13 @@ const FinalStep = ({
 
         <div className="form-group mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            {t("companyInfoLabel")}
+            {t("companyInfoLabel")}{" "}
+            <span className="text-gray-500 ml-2 text-xs">
+              ({t("optional") || "Optional"})
+            </span>
           </label>
           <textarea
-            {...register("message")}
+            {...register("messages")}
             placeholder={t("additionalInfoPlaceholder")}
             rows={6}
             className="w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-interactive_color focus:border-transparent transition duration-200"
@@ -218,9 +221,7 @@ const FinalStep = ({
         <div className="form-group mb-8">
           <label className="text-sm font-medium text-gray-700 mb-3 flex items-center">
             📄 {t("companyLicenseLabel") || "Company License"}
-            <span className="text-gray-500 ml-2 text-xs">
-              ({t("optional") || "Optional"})
-            </span>
+            <span className="text-red-500">*</span>
           </label>
 
           {!uploadedFile ? (

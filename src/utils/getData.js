@@ -44,3 +44,19 @@ export const getAllData = async (param, locale) => {
     return null;
   }
 };
+export const getUrl = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${param}?lang=${locale}`;
+
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return null;
+  }
+};

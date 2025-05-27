@@ -89,9 +89,7 @@ const CoverageAndServicesStep = ({
     }
   };
 
-  const handleOtherClick = () => {
-    setShowCustomInput(true);
-  };
+  const handleOtherClick = () => setShowCustomInput(true);
 
   const isServiceValid =
     selectedServices.length > 0 || customService.trim() !== "";
@@ -114,6 +112,7 @@ const CoverageAndServicesStep = ({
             name="companyWebsite"
             errors={errors}
             placeholder={t("company_website_placeholder")}
+            required={false} // Mark as optional
           />
 
           {/* Phone Number with Flag using Controller */}
@@ -122,7 +121,7 @@ const CoverageAndServicesStep = ({
               htmlFor="phoneNumber"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              {t("phone_number_label")}
+              {t("phone_number_label")} <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <Controller
@@ -143,6 +142,8 @@ const CoverageAndServicesStep = ({
                       );
                     }
                     else if ((value.length - 3) != 9) {
+                    console.log(value.length,      t("error.phone_invalid_digits"));
+
                       return (
                         t("error.phone_invalid_digits") ||
                         "Phone number must be exactly 9 digits after the country code"
@@ -197,7 +198,6 @@ const CoverageAndServicesStep = ({
                 animate={{ opacity: 1 }}
                 className="text-red-500 text-sm mt-1"
               >
-                {errors.phoneNumber.message}
               </motion.p>
             )}
           </div>
@@ -206,7 +206,10 @@ const CoverageAndServicesStep = ({
         <div className="form-group mb-8">
           <label className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
             <HiOutlineLocationMarker className="mr-2 text-interactive_color" />
-            {t("cities_operate_label")}
+            {t("cities_operate_label")}{" "}
+            <span className="text-gray-500 ml-2 text-xs">
+              <span className="text-red-500">*</span>
+            </span>
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {allLocations.map((location) => (
@@ -232,7 +235,10 @@ const CoverageAndServicesStep = ({
         <div className="form-group">
           <label className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
             <RiServiceLine className="mr-2 text-interactive_color" />
-            {t("services_offered_label")}
+            {t("services_offered_label")}{" "}
+            <span className="text-gray-500 ml-2 text-xs">
+              <span className="text-red-500">*</span>
+            </span>
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
             {serviceCategories.map((service: string) => (
@@ -270,6 +276,7 @@ const CoverageAndServicesStep = ({
             >
               <input
                 type="text"
+                value={customService}
                 onChange={(e) => setCustomService(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={
@@ -282,8 +289,8 @@ const CoverageAndServicesStep = ({
                 onClick={handleAddCustomService}
                 disabled={!customService.trim()}
                 className={`px-4 py-2 rounded-md text-white ${customService.trim()
-                  ? "bg-interactive_color hover:bg-opacity-90"
-                  : "bg-gray-400 cursor-not-allowed"
+                    ? "bg-interactive_color hover:bg-opacity-90"
+                    : "bg-gray-400 cursor-not-allowed"
                   }`}
               >
                 {t("add_service_button") || "Add"}
