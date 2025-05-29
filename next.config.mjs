@@ -8,15 +8,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "dashboard.manpowerforu.com",
-      },
-      {
-        protocol: "https",
-        hostname: "backend.manpowerforu.com",
-      },
-      {
-        protocol: "https",
         hostname: "dashboard.hpower.ae",
+      },
+      {
+        protocol: "https",
+        hostname: "hpower.ae",
       },
     ],
   },

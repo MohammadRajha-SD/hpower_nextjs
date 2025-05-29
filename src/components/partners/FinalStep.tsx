@@ -313,7 +313,7 @@ const FinalStep = ({
               <p>
                 <span className="text-gray-500">{t("phone")}:</span>{" "}
                 {formValues.phoneNumber
-                  ? `+971 ${formValues.phoneNumber}`
+                  ? `+${formValues.phoneNumber}`
                   : "—"}
               </p>
               <p>

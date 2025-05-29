@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
@@ -42,7 +42,6 @@ const PartnerForm = () => {
   const [isCodeValid, setIsCodeValid] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
-  const [codeConfirm, setCodeConfirm] = useState(false);
 
   const {
     register,
@@ -80,7 +79,6 @@ const PartnerForm = () => {
 
   // Updated section2Valid to include phone number validation
   const section2Valid =
-    // formValues.companyWebsite &&
     formValues.phoneNumber &&
     formValues.phoneNumber.length > 4 &&
     selectedCities.length > 0 &&
@@ -229,7 +227,7 @@ const PartnerForm = () => {
     } else {
       toast.error(t1("codeInvalid"));
     }
-    
+
     return res;
   };
 
@@ -270,6 +268,12 @@ const PartnerForm = () => {
     setIsSending(false);
   }
 
+  useEffect(() => {
+    if(formStep == 1){
+      handleSendCode();
+    }
+  }, [formStep]);
+
   return (
     <div className="container mx-auto p-4 max-w-7xl relative overflow-hidden">
       <motion.div
@@ -299,7 +303,7 @@ const PartnerForm = () => {
 
         <ProgressBar step={formStep} />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" encType="multipart/form-data">
           <AnimatePresence mode="wait">
             {formStep === 0 && (
               <CompanyDetailsStep
@@ -323,7 +327,7 @@ const PartnerForm = () => {
                 isSending={isSending}
                 sendSuccess={sendSuccess}
                 watch={watch}
-                isCodeValid={isCodeValid}
+                isCodeValid={true}
               />
             )}
 
