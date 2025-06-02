@@ -646,5 +646,55 @@
     "sendVerificationCode": "Send Verification Code",
     "codeVerifiedSuccess": "Code verified successfully!",
     "codeInvalid": "The verification code is incorrect."
+  },
+  "Providers": {
+    "providerInformation": "Provider Information",
+    "termsConditions": "Terms & Conditions",
+    "eSignture": "E-Signture"
+  },
+  "ProvidersTerms": {
+    "termsLink": "Service Provider Terms & Conditions",
+    "title1": "Effective Date:",
+    "paragraph1": "Please read the following terms carefully. By completing the form and clicking \"Agree & Sign\", you confirm your acceptance of these Terms & Conditions.",
+    "title2": "1. Scope of Work",
+    "paragraph2": "H POWER promotes and facilitates services provided by your (\"Service Provider\"). You agree to deliver services to customers with professionalism and in a timely manner.",
+    "title3": "2. Registration & Compliance",
+    "paragraph3": "You must be legally registered business and provide valid trade/commercial license and related documents up to date.",
+    "title4": "3. Commission & Payment",
+    "paragraph4_1": "H POWER retains a commision percentage (defined below).",
+    "paragraph4_2": "You will be paid monthly after deducting commission and any refund-related charges.",
+    "paragraph4_3": "Payments are subject to UAE tax regulations",
+    "termsError": "You must agree to the terms and conditions before continuing."
+  },
+  "eSignture": {
+    "clear": "Clear",
+    "save": "Save Signature",
+    "signature": "Signature (Draw Box)",
+    "signatureRequired": "You must sign electronically to complete your application",
+    "title1": "Acknowledgment & Signture",
+    "paragraph1": "✅ I Confirm that I have read and agreed to the above Terms & Conditions",
+    "paragraph2": "✅ I understand that this serves as a binding agreement between my company and H POWER FZ-LLC",
+    "date": "Date",
+    "submit": "Submit & Send Copy to Email"
+  },
+  "Agreement": {
+    "agreement": "Agreement",
+    "agreement_desc": "Registration Contract Form",
+    "formSubmitted": "Form submitted successfully!"
+  },
+  "AgreementDetails": {
+    "legal_business_name": "Legal Business Name",
+    "trade_license_number": "Trade License Number",
+    "company_address": "Company Address",
+    "contact_email": "Comany Email",
+    "contact_phone_number": "Contact Phone Number",
+    "commission_agreed": "Commission % Agreed",
+    "signature": "E-Signature:",
+    "applicationSummary": "Application Summary"
+  },
+  "Signing": {
+    "close": "Close",
+    "thankYou": "Thank you for signing!",
+    "successMessage": "Your agreement has been successfully submitted. We appreciate your trust."
   }
 }

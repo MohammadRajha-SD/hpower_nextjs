@@ -127,6 +127,7 @@ const PartnerForm = () => {
 
       // 5. إرسال البيانات عبر الإيميل
       const emailFormData = new FormData();
+      
       Object.entries(data).forEach(([key, value]) => {
         if (value !== null && value !== undefined && key !== "companyLicense") {
           emailFormData.append(key, value.toString());
@@ -327,7 +328,7 @@ const PartnerForm = () => {
                 isSending={isSending}
                 sendSuccess={sendSuccess}
                 watch={watch}
-                isCodeValid={true}
+                isCodeValid={isCodeValid}
               />
             )}
 
