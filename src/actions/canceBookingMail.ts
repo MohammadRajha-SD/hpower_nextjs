@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   port: parseInt(process.env.MAIL_PORT || "465"),
   secure: true,
   auth: {
-    user: process.env.MAIL_USERNAME || "info@hpower.ae",
+    user: process.env.MAIL_USERNAME || "noreply@hpower.ae",
     pass: process.env.MAIL_PASSWORD || "hpower@200",
   },
   tls: {
@@ -125,8 +125,8 @@ export async function sendCancellationEmail(data: CancellationData) {
     }
 
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || "info@hpower.ae",
-      to: process.env.MAIL_ADMIN || "info@hpower.ae",
+      from: process.env.MAIL_FROM || "noreply@hpower.ae",
+      to: process.env.MAIL_ADMIN || "noreply@hpower.ae",
       cc: data.providerEmail,
       ...cancellationEmailTemplate(data, data.locale || "en"),
     });

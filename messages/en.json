@@ -664,7 +664,8 @@
     "paragraph4_1": "H POWER retains a commision percentage (defined below).",
     "paragraph4_2": "You will be paid monthly after deducting commission and any refund-related charges.",
     "paragraph4_3": "Payments are subject to UAE tax regulations",
-    "termsError": "You must agree to the terms and conditions before continuing."
+    "termsError": "You must agree to the terms and conditions before continuing.",
+    "no_terms": "No terms available."
   },
   "eSignture": {
     "clear": "Clear",
@@ -690,7 +691,8 @@
     "contact_phone_number": "Contact Phone Number",
     "commission_agreed": "Commission % Agreed",
     "signature": "E-Signature:",
-    "applicationSummary": "Application Summary"
+    "applicationSummary": "Application Summary",
+    "print_agreement": "Print Agreement"
   },
   "Signing": {
     "close": "Close",

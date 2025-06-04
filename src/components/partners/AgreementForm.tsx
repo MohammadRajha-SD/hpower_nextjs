@@ -18,6 +18,8 @@ interface FormValues {
 
 const AgreementForm = ({ agreement }) => {
   const t = useTranslations("Agreement");
+  const locale = useLocale();
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [formStep, setFormStep] = useState(0);
@@ -55,11 +57,7 @@ const AgreementForm = ({ agreement }) => {
       formData.append("terms", String(data.terms));
       formData.append("eSignture", data.eSignture);
       formData.append("uid", uid);
-
-      console.log("Submitting data:", {
-        ...formData,
-        eSignture: data.eSignture ? "[File]" : null,
-      });
+      formData.append("lang", locale);
 
       const backendResponse = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/agreement/${uid}`,
@@ -74,7 +72,7 @@ const AgreementForm = ({ agreement }) => {
       if (!backendResponse.ok) {
         throw new Error(backendResult.message || "Backend submission failed");
       }
-      
+
       // success
       setIsSuccess(true);
       setShowSuccessPopup(true);

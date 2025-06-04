@@ -9,6 +9,7 @@ import {
   FaSpinner,
 } from "react-icons/fa";
 import StepNavigation from "./StepNavigation";
+import { useAgreementTerms } from "@/hooks/useAgreementTerms";
 
 const formVariants = {
   hidden: { opacity: 0, x: "100%" },
@@ -32,11 +33,20 @@ const AgreementTermsConditions = ({
 }) => {
   const tF = useTranslations("FinalStep");
   const tTerms = useTranslations("ProvidersTerms");
+  const { terms } = useAgreementTerms();
+
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   }).format(new Date());
+
+  function decodeHtml(html) {
+    if (typeof window === "undefined") return html;
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
   return (
     <motion.div
@@ -45,51 +55,15 @@ const AgreementTermsConditions = ({
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="space-y-6"
-    >
+      className="space-y-6">
+
       {/* Terms and Conditions Section */}
-      <div className="bg-white border rounded-lg p-6 shadow-sm mx-auto ">
-        <h2 className="text-2xl font-bold text-interactive_color mb-6 text-center">
-          {tTerms("termsLink")}
-        </h2>
-
-        {/* Effective Date */}
-        <p className="text-sm text-gray-600 mb-6">
-          <span className="font-medium">{tTerms("title1")}</span> {formattedDate}
-        </p>
-
-        {/* Paragraph 1 */}
-        <p className="text-sm text-gray-700 mb-6">
-          {tTerms("paragraph1")}
-        </p>
-
-        {/* Section 1: Scope of Work */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            {tTerms("title2")}
-          </h3>
-          <p className="text-sm text-gray-700">{tTerms("paragraph2")}</p>
-        </div>
-
-        {/* Section 2: Registration & Compliance */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            {tTerms("title3")}
-          </h3>
-          <p className="text-sm text-gray-700">{tTerms("paragraph3")}</p>
-        </div>
-
-        {/* Section 3: Commission & Payment */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            {tTerms("title4")}
-          </h3>
-          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-            <li>{tTerms("paragraph4_1")}</li>
-            <li>{tTerms("paragraph4_2")}</li>
-            <li>{tTerms("paragraph4_3")}</li>
-          </ul>
-        </div>
+      <div className="bg-white border rounded-lg p-6 shadow-sm mx-auto">
+        {terms?.content ? (
+          <div dangerouslySetInnerHTML={{ __html: decodeHtml(terms.content) }} />
+        ) : (
+          <p>{tTerms("no_terms")}</p>
+        )}
       </div>
 
       {/* Accept Checkbox */}
@@ -115,7 +89,6 @@ const AgreementTermsConditions = ({
           <p className="text-xs text-red-500 mt-1">{tTerms("termsError")}</p>
         )}
       </div>
-
 
       <StepNavigation
         step={1}

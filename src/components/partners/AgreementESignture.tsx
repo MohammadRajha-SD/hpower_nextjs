@@ -157,7 +157,7 @@ const AgreementESignture = ({
             exit="exit"
             className="space-y-6"
         >
-            <motion.div
+            {/* <motion.div
                 variants={fadeInUp}
                 className="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200"
             >
@@ -170,7 +170,7 @@ const AgreementESignture = ({
                 <p className="text-gray-700 leading-relaxed">
                     {t("paragraph2")}
                 </p>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div variants={fadeInUp}
                 className="p-6 md:p-8 bg-white rounded-2xl shadow-md border border-gray-200 text-gray-700 text-base"
@@ -208,13 +208,6 @@ const AgreementESignture = ({
                         <p className="text-red-500 text-sm mt-2">{t("signatureRequired")}</p>
                     )}
                 </div>
-            </motion.div>
-
-            <motion.div
-                variants={fadeInUp}
-                className="p-6 md:p-8 bg-white rounded-2xl shadow-md border border-gray-200 text-gray-700 text-base"
-            >
-                <span className="font-semibold text-gray-800">{t("date")}:</span> {formattedDate}
             </motion.div>
 
             {/* Buttons */}

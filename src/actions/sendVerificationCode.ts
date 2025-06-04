@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   port: parseInt(process.env.MAIL_PORT || "465"),
   secure: true,
   auth: {
-    user: process.env.MAIL_USERNAME || "info@hpower.ae",
+    user: process.env.MAIL_USERNAME || "noreply@hpower.ae",
     pass: process.env.MAIL_PASSWORD || "hpower@200",
   },
   tls: {
@@ -87,7 +87,7 @@ export async function sendVerificationCodeEmail(data: VerificationEmailData) {
     const template = getVerificationEmailTemplate(data, data.locale || "en");
 
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || "info@hpower.ae",
+      from: process.env.MAIL_FROM || "noreply@hpower.ae",
       to: data.userEmail,
       subject: template.subject,
       html: template.html,

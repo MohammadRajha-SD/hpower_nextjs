@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   port: parseInt(process.env.MAIL_PORT || "465"),
   secure: true,
   auth: {
-    user: process.env.MAIL_USERNAME || "info@hpower.ae",
+    user: process.env.MAIL_USERNAME || "noreply@hpower.ae",
     pass: process.env.MAIL_PASSWORD || "hpower@200",
   },
   debug: process.env.NODE_ENV === "development",
@@ -197,7 +197,7 @@ export async function sendContactForm(formData: any, locale: string) {
 
     // Send user confirmation email
     // await transporter.sendMail({
-    //   from: process.env.MAIL_FROM || "info@hpower.ae",
+    //   from: process.env.MAIL_FROM || "noreply@hpower.ae",
     //   to: formValues.contactEmail,
     //   ...userEmailTemplate(
     //     formValues.contactPerson || formValues.companyName,
@@ -208,8 +208,8 @@ export async function sendContactForm(formData: any, locale: string) {
 
     // Send admin notification email
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || "info@hpower.ae",
-      to: process.env.MAIL_ADMIN || "info@hpower.ae",
+      from: process.env.MAIL_FROM || "noreply@hpower.ae",
+      to: process.env.MAIL_ADMIN || "noreply@hpower.ae",
       ...adminEmailTemplate(formValues, locale),
     });
 

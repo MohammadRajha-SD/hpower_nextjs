@@ -102,6 +102,8 @@ const PartnerForm = () => {
       formData.append("services", selectedServices.join(","));
       formData.append("plans", data.selectedPlan);
       formData.append("notes", data.message || "");
+      formData.append("lang", locale || "en");
+      
       if (data.companyLicense) {
         formData.append("licence", data.companyLicense);
       }

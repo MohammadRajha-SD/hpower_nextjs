@@ -1,10 +1,9 @@
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaBuilding, FaUsers, FaUser, FaEnvelope } from "react-icons/fa";
-import FormField from "./FormField";
+import { FaBuilding } from "react-icons/fa";
 import StepNavigation from "./StepNavigation";
-import { useAgreement } from "@/hooks/useAgreement";
+
 
 //================ Animation Variants ================
 const formVariants = {

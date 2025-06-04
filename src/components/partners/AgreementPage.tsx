@@ -2,9 +2,16 @@
 import "swiper/css";
 import AgreementForm from "./AgreementForm";
 import { useAgreement } from "@/hooks/useAgreement";
+import { useEffect } from "react";
 
 const AgreementPage = ({ uid }: { uid: string }) => {
     const { agreement } = useAgreement(uid);
+
+    useEffect(() => {
+        if (agreement?.redirect === true) {
+            window.location.href = `https://hpower.ae/agreement/${uid}/details`;
+        }
+    }, [agreement, uid]);
 
     if (!agreement) return <div>Loading...</div>;
 
