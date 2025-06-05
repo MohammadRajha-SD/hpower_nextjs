@@ -22,13 +22,13 @@ export function getFeaturesFromDescription(htmlDescription: string): string[] {
     .filter((text) => text.length > 0); // Filter out empty strings
 }
 export const formatCurrency = (
-  amount: number,
+  amount,
   locale: string,
   size: number = 20
 ) => {
   return (
     <div
-      className={`flex items-center gap-1 ${locale === "en" ? "flex-row-reverse" : ""}`}
+      className={`flex justify-center items-center gap-1 ${locale === "en" ? "flex-row-reverse" : ""}`}
     >
       <Image
         src="/aed.svg"
@@ -40,15 +40,14 @@ export const formatCurrency = (
       />
       {amount && (
         <span className={`${locale === "ar" ? "mt-1" : ""}`}>
-          {amount.toFixed(2)}
+          {amount}
         </span>
       )}
     </div>
   );
 };
 
-export // Function to determine status badge styles
-const getStatusStyles = (status: string) => {
+export const getStatusStyles = (status: string) => {
   switch (status.toLowerCase()) {
     case "paid":
       return "bg-green-200 text-green-800";

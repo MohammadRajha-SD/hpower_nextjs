@@ -14,10 +14,10 @@ async function withAuth(request) {
       pathname.includes("sign-in") || pathname.includes("register");
     const inProtectedPage =
       pathname.includes("pricing") ||
-      pathname.includes("profile") ||
-      pathname.includes("subscription");
+      pathname.includes("profile");
+      // pathname.includes("subscription")
 
-    const inSubscriptionPage = pathname.includes("subscription");
+    // const inSubscriptionPage = pathname.includes("subscription");
 
     if (inProtectedPage) {
       if (!token)
@@ -26,10 +26,10 @@ async function withAuth(request) {
     if (inLoginPage) {
       if (token) return NextResponse.redirect(new URL("/", request.url));
     }
-    if (inSubscriptionPage) {
-      if (token && userType === "user")
-        return NextResponse.redirect(new URL("/access-denied", request.url));
-    }
+    // if (inSubscriptionPage) {
+    //   if (token && userType === "user")
+    //     return NextResponse.redirect(new URL("/access-denied", request.url));
+    // }
 
     return null;
   } catch (error) {

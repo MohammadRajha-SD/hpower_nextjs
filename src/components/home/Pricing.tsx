@@ -36,10 +36,13 @@ const Pricing: React.FC = () => {
                 key={pack.id}
                 planId={pack.id}
                 title={pack.text}
-                subtitle={`${formatCurrency(pack.price, locale,16)}/${pack.number_of_months} ${t("month")}`}
-                price={`${formatCurrency(pack.price, locale, 16)}`}
+                // subtitle={formatCurrency(pack.price, locale, 16) + `/${pack.number_of_months} ${t("month")}`}
+                subtitle={t("month")}
+                number_of_months={pack.number_of_months}
+                price={pack.price}
                 isPopular={pack.price >= 1499}
-                features={getFeaturesFromDescription(pack.description)}
+                // features={getFeaturesFromDescription(pack.description)}
+                features={pack.description}
                 buttonText={t("select_button")}
                 className={
                   pack.price >= 1499
