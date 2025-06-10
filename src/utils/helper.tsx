@@ -21,6 +21,7 @@ export function getFeaturesFromDescription(htmlDescription: string): string[] {
     })
     .filter((text) => text.length > 0); // Filter out empty strings
 }
+
 export const formatCurrency = (
   amount,
   locale: string,
@@ -30,6 +31,12 @@ export const formatCurrency = (
     <div
       className={`flex justify-center items-center gap-1 ${locale === "en" ? "flex-row-reverse" : ""}`}
     >
+      {amount && (
+        <span className={`${locale === "ar" ? "mt-1" : ""}`}>
+          {amount}
+        </span>
+      )}
+
       <Image
         src="/aed.svg"
         width={size}
@@ -38,11 +45,6 @@ export const formatCurrency = (
         style={{ verticalAlign: "middle" }}
         className="hover:scale-110 transition-transform duration-200"
       />
-      {amount && (
-        <span className={`${locale === "ar" ? "mt-1" : ""}`}>
-          {amount}
-        </span>
-      )}
     </div>
   );
 };

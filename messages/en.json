@@ -650,7 +650,8 @@
   "Providers": {
     "providerInformation": "Provider Information",
     "termsConditions": "Terms & Conditions",
-    "eSignture": "E-Signture"
+    "eSignture": "E-Signture",
+    "signed_at" : "Signed at"
   },
   "ProvidersTerms": {
     "termsLink": "Service Provider Terms & Conditions",

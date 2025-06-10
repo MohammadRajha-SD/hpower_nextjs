@@ -8,7 +8,7 @@ import { FaBuilding } from "react-icons/fa";
 import { useAgreementTerms } from "@/hooks/useAgreementTerms";
 import { useRef } from "react";
 import "@/styles/print.css";
-
+import { format } from "date-fns";
 const formVariants = {
     hidden: { opacity: 0, x: "100%" },
     visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
@@ -29,7 +29,6 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
     const tF = useTranslations("AgreementDetails");
     const tTerms = useTranslations("ProvidersTerms");
 
-
     const [formValues, setFormValues] = useState({
         legal_business_name: agreement && agreement['legal_business_name'] || null,
         trade_license_number: agreement && agreement['trade_license_number'] || null,
@@ -39,6 +38,7 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
         commission_agreed: agreement && agreement['commission_agreed'] || 0,
         eSignature: agreement && agreement['signature'] || null,
         id: agreement && agreement['id'] || null,
+        signed_at: agreement && agreement['signed_at'] || null,
     });
 
     useEffect(() => {
@@ -51,6 +51,7 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
             commission_agreed: agreement && agreement['commission_agreed'] || 0,
             eSignature: agreement && agreement['signature'] || null,
             id: agreement && agreement['id'] || null,
+            signed_at: agreement && agreement['signed_at'] || null,
         });
     }, [agreement]);
 
@@ -85,6 +86,9 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
                             <div className="flex items-center text-xl font-semibold text-gray-700">
                                 <FaBuilding className="mr-2 text-indigo-600" />
                                 {t("providerInformation")}
+                                <small className="mx-2 text-sm text-gray-500">
+                                    ({t("signed_at")} {format(new Date(agreement.signed_at), "MMMM d, yyyy")})
+                                </small>
                             </div>
 
                             <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 shadow-sm">

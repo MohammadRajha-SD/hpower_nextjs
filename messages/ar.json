@@ -663,7 +663,8 @@
   "Providers": {
     "providerInformation": "معلومات المزود",
     "termsConditions": "الشروط والأحكام",
-    "eSignture": "التوقيع الإلكتروني"
+    "eSignture": "التوقيع الإلكتروني",
+    "signed_at": "تم التوقيع في"
   },
   "ProvidersTerms": {
     "termsLink": "شروط وأحكام مزود الخدمة",
