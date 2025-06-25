@@ -63,6 +63,9 @@ const FinalStep = ({
   const handleFileUpload = (file: File) => {
     const allowedTypes = [
       "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
     ];
     const maxSize = 5 * 1024 * 1024; // 5MB
 
@@ -223,18 +226,17 @@ const FinalStep = ({
 
           {!uploadedFile ? (
             <div
-              className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-all duration-200 ${
-                isDragOver
-                  ? "border-interactive_color bg-blue-50"
-                  : "border-gray-300 hover:border-interactive_color hover:bg-gray-50"
-              }`}
+              className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-all duration-200 ${isDragOver
+                ? "border-interactive_color bg-blue-50"
+                : "border-gray-300 hover:border-interactive_color hover:bg-gray-50"
+                }`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
             >
               <input
                 type="file"
-                accept=".pdf"
+                accept=".pdf,.jpg,.jpeg,.png"
                 onChange={handleFileInputChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
@@ -248,8 +250,7 @@ const FinalStep = ({
                   </span>
                 </p>
                 <p className="text-xs text-gray-500">
-                  {t("supportedFormats") ||
-                    "Supported formats: PDF (Max 5MB)"}
+                  {t("supportedFormats") || "Supported formats: PDF, JPG, PNG (Max 5MB)"}
                 </p>
               </div>
             </div>
@@ -320,9 +321,8 @@ const FinalStep = ({
               <p>
                 <span className="text-gray-500">{t("services")}:</span>{" "}
                 {selectedServices.length > 2
-                  ? `${selectedServices.slice(0, 2).join(", ")} + ${
-                      selectedServices.length - 2
-                    } more`
+                  ? `${selectedServices.slice(0, 2).join(", ")} + ${selectedServices.length - 2
+                  } more`
                   : selectedServices.join(", ") || "—"}
               </p>
               <p>
@@ -391,11 +391,10 @@ const FinalStep = ({
             disabled={
               isSubmitting || !!errors.terms || !formValues.selectedPlan
             }
-            className={`px-6 py-3 bg-interactive_color text-white rounded-lg flex items-center gap-2 ${
-              isSubmitting || !!errors.terms || !formValues.selectedPlan
-                ? "opacity-70 cursor-not-allowed"
-                : "hover:bg-interactive_color"
-            } transition duration-200`}
+            className={`px-6 py-3 bg-interactive_color text-white rounded-lg flex items-center gap-2 ${isSubmitting || !!errors.terms || !formValues.selectedPlan
+              ? "opacity-70 cursor-not-allowed"
+              : "hover:bg-interactive_color"
+              } transition duration-200`}
           >
             {isSubmitting ? (
               <>
