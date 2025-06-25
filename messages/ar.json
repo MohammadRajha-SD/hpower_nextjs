@@ -590,7 +590,7 @@
     "optional": "اختياري",
     "dragDropFile": "اسحب وأفلت رخصة شركتك هنا، أو",
     "browseFiles": "تصفح الملفات",
-    "supportedFormats": "الصيغ المدعومة: PDF، JPG، PNG (الحد الأقصى 5 ميجابايت)",
+    "supportedFormats": "الصيغ المدعومة: PDF (الحد الأقصى 5 ميجابايت)",
     "licenseRequired": "رخصة الشركة مطلوبة"
   },
   "progress": {

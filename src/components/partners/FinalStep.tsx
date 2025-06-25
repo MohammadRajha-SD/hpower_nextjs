@@ -63,14 +63,11 @@ const FinalStep = ({
   const handleFileUpload = (file: File) => {
     const allowedTypes = [
       "application/pdf",
-      "image/jpeg",
-      "image/png",
-      "image/jpg",
     ];
     const maxSize = 5 * 1024 * 1024; // 5MB
 
     if (!allowedTypes.includes(file.type)) {
-      alert("Please upload a PDF, JPG, or PNG file.");
+      alert("Please upload a PDF file.");
       return;
     }
 
@@ -237,7 +234,7 @@ const FinalStep = ({
             >
               <input
                 type="file"
-                accept=".pdf,.jpg,.jpeg,.png"
+                accept=".pdf"
                 onChange={handleFileInputChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
@@ -252,7 +249,7 @@ const FinalStep = ({
                 </p>
                 <p className="text-xs text-gray-500">
                   {t("supportedFormats") ||
-                    "Supported formats: PDF, JPG, PNG (Max 5MB)"}
+                    "Supported formats: PDF (Max 5MB)"}
                 </p>
               </div>
             </div>
