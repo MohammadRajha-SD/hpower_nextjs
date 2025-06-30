@@ -28,6 +28,7 @@ const AgreementDetails = ({
 }) => {
     const t = useTranslations("Providers");
     const tF = useTranslations("AgreementDetails");
+    const tF2 = useTranslations("FinalStep");
 
     const [formValues, setFormValues] = useState({
         legal_business_name: agreement && agreement['legal_business_name'] || null,
@@ -36,6 +37,7 @@ const AgreementDetails = ({
         contact_email: agreement && agreement['contact_email'] || null,
         contact_phone_number: agreement && agreement['contact_phone_number'] || null,
         commission_agreed: agreement && agreement['commission_agreed'] || 0,
+        plan_name: agreement && agreement['plan_name'] || null,
         eSignature: ''
     });
 
@@ -88,6 +90,10 @@ const AgreementDetails = ({
                             <p>
                                 <span className="text-gray-500">{tF("commission_agreed")}:</span>{" "}
                                 {formValues.commission_agreed || "0.00"}
+                            </p>
+                            <p>
+                                <span className="text-gray-500">{tF2("plan")}:</span>{" "}
+                                {formValues.plan_name || "0.00"}
                             </p>
                             <p>
                                 <span className="text-gray-500">{tF("signature")}</span>{" "}
