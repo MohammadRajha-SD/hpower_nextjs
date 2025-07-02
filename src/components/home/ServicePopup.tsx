@@ -15,6 +15,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { formatCurrency } from "@/utils/helper";
+import useUserDetails from "@/hooks/useUserDetails";
 
 interface ServicesPopupProps {
   isOpen: boolean;
@@ -42,6 +43,7 @@ interface Service {
   description?: string;
   price?: string;
   image_path?: string;
+  addresses?: any[];
 }
 
 const ServicesPopup: FC<ServicesPopupProps> = ({
@@ -54,20 +56,60 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
   const [currentLevel, setCurrentLevel] = useState<Category[]>([]);
   const [navigationStack, setNavigationStack] = useState<Category[][]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const { user, userType } = useUserDetails();
 
   const locale = useLocale();
+
+  // useEffect(() => {
+  //   if (isOpen && selectedCategory) {
+  //     if (selectedCategory.children && selectedCategory.children.length > 0) {
+  //       setCurrentLevel(selectedCategory.children);
+  //     } else if (
+  //       selectedCategory.has_services &&
+  //       selectedCategory.services &&
+  //       selectedCategory.services.length > 0
+  //     ) {
+  //       setCurrentLevel(
+  //         selectedCategory.services.map((service) => ({
+  //           ...service,
+  //           name: service.name,
+  //           image_path: service.image_path,
+  //         }))
+  //       );
+  //     } else {
+  //       setCurrentLevel([]);
+  //       toast.error(t("noServicesAvailable"));
+  //     }
+  //     setNavigationStack([]);
+  //     setSelectedService(null);
+  //   }
+  // }, [isOpen, selectedCategory, t]);
 
   useEffect(() => {
     if (isOpen && selectedCategory) {
       if (selectedCategory.children && selectedCategory.children.length > 0) {
         setCurrentLevel(selectedCategory.children);
+        console.log(selectedCategory.children);
       } else if (
         selectedCategory.has_services &&
         selectedCategory.services &&
         selectedCategory.services.length > 0
       ) {
+        console.log("SERVICES");
+        console.log(selectedCategory.services);
+        // Filter services where at least one address matches the user address
+        const filteredServices = selectedCategory.services.filter((service) =>
+          service.addresses?.some((addr) =>
+            addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
+          )
+        );
+
+        if (filteredServices.length === 0) {
+          toast.error(t("noServicesAvailable"));
+        }
+
         setCurrentLevel(
-          selectedCategory.services.map((service) => ({
+          filteredServices.map((service) => ({
             ...service,
             name: service.name,
             image_path: service.image_path,
@@ -77,32 +119,67 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
         setCurrentLevel([]);
         toast.error(t("noServicesAvailable"));
       }
+
       setNavigationStack([]);
       setSelectedService(null);
     }
-  }, [isOpen, selectedCategory, t]);
+  }, [isOpen, selectedCategory, t, user?.address]);
+
 
   const handleCategorySelect = (category: Category) => {
-    if (category.children && category.children.length > 0) {
-      setNavigationStack((prev) => [...prev, currentLevel]);
-      setCurrentLevel(category.children);
-    } else if (
-      category.has_services &&
-      category.services &&
-      category.services.length > 0
-    ) {
-      setNavigationStack((prev) => [...prev, currentLevel]);
-      setCurrentLevel(
-        category.services.map((service) => ({
-          ...service,
-          name: service.name,
-          image_path: service.image_path,
-        }))
-      );
-    } else if (!category.has_services) {
+  if (category.children && category.children.length > 0) {
+    setNavigationStack((prev) => [...prev, currentLevel]);
+    setCurrentLevel(category.children);
+  } else if (
+    category.has_services &&
+    category.services &&
+    category.services.length > 0
+  ) {
+    const filteredServices = category.services.filter((service) =>
+      service.addresses?.some((addr) =>
+        addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
+      )
+    );
+
+    if (filteredServices.length === 0) {
       toast.error(t("noServicesAvailable"));
+
     }
-  };
+
+    setNavigationStack((prev) => [...prev, currentLevel]);
+    setCurrentLevel(
+      filteredServices.map((service) => ({
+        ...service,
+        name: service.name,
+        image_path: service.image_path,
+      }))
+    );
+  } else if (!category.has_services) {
+    toast.error(t("noServicesAvailable"));
+  }
+};
+
+  // const handleCategorySelect = (category: Category) => {
+  //   if (category.children && category.children.length > 0) {
+  //     setNavigationStack((prev) => [...prev, currentLevel]);
+  //     setCurrentLevel(category.children);
+  //   } else if (
+  //     category.has_services &&
+  //     category.services &&
+  //     category.services.length > 0
+  //   ) {
+  //     setNavigationStack((prev) => [...prev, currentLevel]);
+  //     setCurrentLevel(
+  //       category.services.map((service) => ({
+  //         ...service,
+  //         name: service.name,
+  //         image_path: service.image_path,
+  //       }))
+  //     );
+  //   } else if (!category.has_services) {
+  //     toast.error(t("noServicesAvailable"));
+  //   }
+  // };
 
   const handleServiceSelect = (service: Service) => {
     setSelectedService(service);
@@ -129,14 +206,13 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
 
     return (
       <div
-        key={item.id}
-        className={`border rounded-lg cursor-pointer transition-all duration-300 shadow-lg p-4 ${
-          isService
-            ? isSelected
-              ? "bg-[#f57f1e5b] border-interactive_color"
-              : "bg-transparent"
-            : "bg-white border-gray-200"
-        } hover:bg-gray-100 active:bg-[var(--active-color)] transform hover:scale-105`}
+        key={"service_pop_up_" + item.id}
+        className={`border rounded-lg cursor-pointer transition-all duration-300 shadow-lg p-4 ${isService
+          ? isSelected
+            ? "bg-[#f57f1e5b] border-interactive_color"
+            : "bg-transparent"
+          : "bg-white border-gray-200"
+          } hover:bg-gray-100 active:bg-[var(--active-color)] transform hover:scale-105`}
         onClick={() =>
           isService
             ? handleServiceSelect(item as Service)
@@ -163,6 +239,11 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
             </div>
           </div>
         </div>
+
+        <h4 className="font-medium text-center text-lg shadow-text">
+          {typeof item.name === "string" ? item.name : item.name.en}
+        </h4>
+
         {isService && (
           <div className="mt-2 text-sm text-gray-600 flex justify-between">
             <span>{t("price")}:</span>
@@ -214,9 +295,8 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
           <AlertDialogAction
             onClick={handleSelect}
             disabled={!selectedService}
-            className={`bg-interactive_color disabled:bg-[#5c4255] text-white disabled:cursor-not-allowed hover:bg-active_color transition-colors ${
-              !selectedService ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`bg-interactive_color disabled:bg-[#5c4255] text-white disabled:cursor-not-allowed hover:bg-active_color transition-colors ${!selectedService ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             {t("selectService")}
           </AlertDialogAction>

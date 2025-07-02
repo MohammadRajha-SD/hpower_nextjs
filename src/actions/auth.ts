@@ -41,9 +41,11 @@ export const providerRegister = async (formData: any) => {
   }
 };
 
-export const userRegister = async (formData: any) => {
+export const userRegister = async (formData: any, locale) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/register`;
+    
+    formData.lang = locale;
 
     const response = await fetch(url, {
       method: "POST",
@@ -73,12 +75,11 @@ export const userRegister = async (formData: any) => {
   }
 };
 
-export const multiLogin = async (formData: {
-  email: string;
-  password: string;
-}) => {
+export const multiLogin = async (formData:any, locale) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}/login`;
+
+    formData.lang = locale;
 
     const response = await fetch(url, {
       method: "POST",
@@ -107,6 +108,7 @@ export const multiLogin = async (formData: {
     };
   }
 };
+
 export const logout = async () => {
   try {
     const headers = {

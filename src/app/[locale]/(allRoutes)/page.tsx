@@ -1,5 +1,6 @@
 "use client";
 
+import AddressPromptDialog from "@/components/home/AddressPromptDialog";
 import BookAnAppointment from "@/components/home/BookAnAppointment";
 import ContactForm from "@/components/home/ContactForm";
 import FeaturedServices from "@/components/home/FeaturedServices";
@@ -20,6 +21,8 @@ export default function HomePage() {
       {/* <Pricing /> */}
       {/* <Partners /> */}
       <ContactForm fromHome />
+
+      <AddressPromptDialog />
     </div>
   );
 }

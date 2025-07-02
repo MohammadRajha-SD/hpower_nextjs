@@ -108,6 +108,7 @@
     "no_date_selected": "لم يتم تحديد تاريخ"
   },
   "RegisterForm": {
+    "captcha_required": "يرجى إتمام التحقق من CAPTCHA.",
     "full_name": "الاسم الكامل",
     "username": "اسم المستخدم",
     "phone_number": "رقم الهاتف",
@@ -136,7 +137,14 @@
     "password_required": "كلمة المرور مطلوبة",
     "confirm_password_required": "الرجاء تأكيد كلمة المرور",
     "passwords_do_not_match": "كلمات المرور غير متطابقة",
-    "unexpected_error": "حدث خطأ غير متوقع"
+    "unexpected_error": "حدث خطأ غير متوقع",
+    "error": {
+      "phone_required": "رقم الهاتف مطلوب",
+      "phone_invalid": "يجب أن يتضمن رقم الهاتف أكثر من مجرد رمز البلد",
+      "phone_invalid_digits": "يجب أن يكون رقم الهاتف 9 أرقام بالضبط بعد رمز الدولة",
+      "phone_invalid_prefix": "بادئة رقم الهاتف غير صحيحة. يجب أن تبدأ بأحد أرقام اتصالات أو دو.",
+      "phone_invalid_format": "يجب أن يحتوي رقم الهاتف على 7 أرقام بعد البادئة."
+    }
   },
   "ProviderRegister": {
     "full_name": "الاسم الكامل",
@@ -181,7 +189,8 @@
     "select_emirate": "تحديد الإمارة",
     "search": "بحث",
     "select_location": "اختر الموقع",
-    "search_button": "بحث"
+    "search_button": "بحث",
+    "provided_by": "مقدمة من"
   },
   "Loading": {
     "loading": "جاري التحميل..."
@@ -229,7 +238,7 @@
     "search_placeholder": "ابحث عن الخدمات...",
     "select_location": "اختر الموقع",
     "active_filters": "فلاتر البحث :",
-    "no_services_found": "لم يتم العثور على خدمات",
+    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!",
     "showing": "عرض",
     "service": "خدمة",
     "services": "خدمات",
@@ -240,6 +249,7 @@
     "clear_location": "مسح الموقع",
     "view_grid": "عرض كشبكة",
     "view_list": "عرض كقائمة",
+    "no_services_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
     "featured": "مميز",
     "service_busy": "هذه الخدمة مشغولة"
   },
@@ -313,7 +323,7 @@
     ]
   },
   "SingleService": {
-    "service_not_found": "الخدمة غير موجودة.",
+    "service_not_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
     "enter_coupon_code": "يرجى إدخال رمز القسيمة",
     "coupon_applied": "تم تطبيق القسيمة بنجاح!",
     "applied": "تم تطبيق القسيمة!",
@@ -373,7 +383,10 @@
     "agree_to": "أوافق على",
     "select_datetime": "يرجى اختيار التاريخ والوقت",
     "quantity_limit_reached": "لقد وصلت إلى الحد الأقصى للكمية وهو {limit} لهذه الخدمة.",
-    "max_quantity": "الكمية القصوى"
+    "max_quantity": "الكمية القصوى",
+    "service_addresses": "عناوين الخدمة",
+    "view_addresses": "عرض العناوين",
+    "service_charge": "رسوم الخدمة"
   },
   "SubscriptionSuccessPage": {
     "title": "!تم إرسال إيميل إليك لتأكيد الاشتراك والدفع",
@@ -453,7 +466,7 @@
     "cancel": "إلغاء",
     "selectService": "اختر الخدمة",
     "price": "السعر",
-    "noServicesAvailable": "ستتوفر قريبا!."
+    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!"
   },
   "BookingModal": {
     "title": "احجز موعدًا",
@@ -465,7 +478,7 @@
     "bookAppointment": "احجز الموعد",
     "price": "السعر",
     "selectServiceFirst": "يرجى اختيار خدمة أولاً!",
-    "noServicesAvailable": "ستتوفر قريبا!."
+    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!"
   },
   "BecomeAPartner": {
     "header": "كن شريكًا في HPOWER",
@@ -712,5 +725,11 @@
     "close": "إغلاق",
     "thankYou": "شكرًا لتوقيعك!",
     "successMessage": "تم إرسال الاتفاقية بنجاح. نقدر ثقتك بنا."
+  },
+  "AddressPrompt": {
+    "pleaseSelectAddress": "يرجى اختيار عنوانك",
+    "youNeedToSelectAddress": "يجب عليك اختيار عنوانك للمتابعة",
+    "cancel": "إلغاء",
+    "save": "حفظ"
   }
 }

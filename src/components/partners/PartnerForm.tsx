@@ -92,6 +92,7 @@ const PartnerForm = () => {
 
     try {
       const formData = new FormData();
+
       formData.append("company_name", data.companyName);
       formData.append("company_website", data.companyWebsite);
       formData.append("contact_person", data.contactPerson);
@@ -103,7 +104,7 @@ const PartnerForm = () => {
       formData.append("plans", data.selectedPlan);
       formData.append("notes", data.message || "");
       formData.append("lang", locale || "en");
-      
+
       if (data.companyLicense) {
         formData.append("licence", data.companyLicense);
       }
@@ -129,18 +130,17 @@ const PartnerForm = () => {
 
       // 5. إرسال البيانات عبر الإيميل
       const emailFormData = new FormData();
-      
+
       Object.entries(data).forEach(([key, value]) => {
         if (value !== null && value !== undefined && key !== "companyLicense") {
           emailFormData.append(key, value.toString());
         }
       });
 
-      emailFormData.append("selectedCitie", selectedCities.join(","));
-      emailFormData.append("selectedService", selectedServices.join(","));
+      emailFormData.append("selectedCities", selectedCities.join(","));
+      emailFormData.append("selectedServices", selectedServices.join(","));
 
       const emailResult = await sendContactForm(emailFormData, locale);
-      console.log("Email result:", emailResult);
 
       if (emailResult.success) {
         setIsSuccess(true);
@@ -272,7 +272,7 @@ const PartnerForm = () => {
   }
 
   useEffect(() => {
-    if(formStep == 1){
+    if (formStep == 1) {
       handleSendCode();
     }
   }, [formStep]);

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaLock, FaEyeSlash, FaEye, FaUserAlt } from "react-icons/fa";
 import Image from "next/image";
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   ArrowBigLeftIcon,
   ArrowBigRight,
@@ -14,6 +15,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { userRegister } from "@/actions/auth";
 
+// 
 interface FormData {
   name: string;
   username: string;
@@ -35,6 +37,8 @@ const SeekerRegisterForm = ({
   const isRTL = locale === "ar";
   const t = useTranslations("RegisterForm");
 
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     username: "",
@@ -44,6 +48,20 @@ const SeekerRegisterForm = ({
     confirm_password: "",
     language: locale,
   });
+
+  const handleCaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+
+    if (errors.recaptcha) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors.recaptcha;
+        return newErrors;
+      });
+    }
+  };
+
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -104,8 +122,22 @@ const SeekerRegisterForm = ({
       newErrors.email = [t("email_invalid")];
     }
 
-    if (!formData.phone_number.trim()) {
-      newErrors.phone_number = [t("phone_required")];
+    // Phone Number
+    const phone = formData.phone_number.trim();
+    const countryCode = "+971";
+    const localNumber = phone.slice(countryCode.length);
+    const prefix = localNumber.slice(0, 2);
+    const validPrefixes = ["50", "54", "56", "52", "55", "58"];
+    const remainingDigits = localNumber.slice(2);
+
+    if (!phone) {
+      newErrors.phone_number = [t("error.phone_required")];
+    } else if (phone === countryCode || phone.length <= countryCode.length) {
+      newErrors.phone_number = [t("error.phone_invalid")];
+    } else if (!validPrefixes.includes(prefix)) {
+      newErrors.phone_number = [t("error.phone_invalid_prefix")];
+    }  else if ((phone.length - 3) !== 9) {
+      newErrors.phone_number = [t("error.phone_invalid_digits")];
     }
 
     if (!formData.password) {
@@ -127,6 +159,12 @@ const SeekerRegisterForm = ({
 
     // Validate form first
     const validationErrors = validateForm();
+
+    // Check if reCAPTCHA was completed
+    if (!recaptchaToken) {
+      validationErrors.recaptcha = [t("captcha_required")];
+    }
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setIsSubmitting(false);
@@ -145,7 +183,7 @@ const SeekerRegisterForm = ({
         language: formData.language,
       };
 
-      const result = await userRegister(apiFormData);
+      const result = await userRegister(apiFormData, locale);
 
       if (result.success) {
         setSubmitSuccess(true);
@@ -247,9 +285,8 @@ const SeekerRegisterForm = ({
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${
-                        errors.name ? "border-red-500" : "border-gray-400"
-                      } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                      className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${errors.name ? "border-red-500" : "border-gray-400"
+                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                       placeholder={t("enter_full_name")}
                       required
                       dir={isRTL ? "rtl" : "ltr"}
@@ -280,9 +317,8 @@ const SeekerRegisterForm = ({
                       name="username"
                       value={formData.username}
                       onChange={handleChange}
-                      className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${
-                        errors.username ? "border-red-500" : "border-gray-400"
-                      } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                      className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${errors.username ? "border-red-500" : "border-gray-400"
+                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                       placeholder={t("enter_username")}
                       required
                       dir="ltr"
@@ -295,6 +331,8 @@ const SeekerRegisterForm = ({
                   )}
                 </div>
 
+
+                {/* PHONe */}
                 <div className="flex gap-2 w-full flex-col md:flex-row">
                   {/* Phone Input */}
                   <div className="flex flex-col w-full md:w-1/2">
@@ -314,11 +352,10 @@ const SeekerRegisterForm = ({
                         name="phone_number"
                         value={formData.phone_number}
                         onChange={handleChange}
-                        className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${
-                          errors.phone_number
-                            ? "border-red-500"
-                            : "border-gray-400"
-                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                        className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${errors.phone_number
+                          ? "border-red-500"
+                          : "border-gray-400"
+                          } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                         placeholder={t("enter_phone_number")}
                         required
                         dir="ltr"
@@ -349,9 +386,8 @@ const SeekerRegisterForm = ({
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${
-                          errors.email ? "border-red-500" : "border-gray-400"
-                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                        className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${errors.email ? "border-red-500" : "border-gray-400"
+                          } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                         placeholder={t("enter_email")}
                         required
                         dir="ltr"
@@ -384,9 +420,8 @@ const SeekerRegisterForm = ({
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className={`w-full pl-10 pr-10 py-3 text-sm sm:text-base rounded-lg border ${
-                          errors.password ? "border-red-500" : "border-gray-400"
-                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                        className={`w-full pl-10 pr-10 py-3 text-sm sm:text-base rounded-lg border ${errors.password ? "border-red-500" : "border-gray-400"
+                          } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                         placeholder="**********"
                         required
                         dir="ltr"
@@ -428,11 +463,10 @@ const SeekerRegisterForm = ({
                         name="confirm_password"
                         value={formData.confirm_password}
                         onChange={handleChange}
-                        className={`w-full pl-10 pr-10 py-3 text-sm sm:text-base rounded-lg border ${
-                          errors.confirm_password
-                            ? "border-red-500"
-                            : "border-gray-400"
-                        } placeholder-gray-500 focus:outline-none focus:border-active_color`}
+                        className={`w-full pl-10 pr-10 py-3 text-sm sm:text-base rounded-lg border ${errors.confirm_password
+                          ? "border-red-500"
+                          : "border-gray-400"
+                          } placeholder-gray-500 focus:outline-none focus:border-active_color`}
                         placeholder="**********"
                         required
                         dir="ltr"
@@ -457,6 +491,18 @@ const SeekerRegisterForm = ({
                   </div>
                 </div>
 
+                <div className="my-3">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey="6Lf-N3QrAAAAADCbD2tKhah1FZWwYUoq0pOdymcS"
+                    onChange={handleCaptchaChange}
+                  />
+                  {errors.recaptcha && (
+                    <p className="text-red-500 text-xs mt-2">
+                      {errors.recaptcha[0]}
+                    </p>
+                  )}
+                </div>
                 {/* Forgot Password Link */}
                 <div className="text-right text-sm">
                   <Link

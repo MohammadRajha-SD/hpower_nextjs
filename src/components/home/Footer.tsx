@@ -60,7 +60,7 @@ const Footer = () => {
                 <ul className="flex flex-col gap-2 items-center md:items-start">
                   {featuredServices?.map((item: Service) => (
                     <li
-                      key={item.id}
+                      key={"footer_feateured_service_" + item.id}
                       className="group text-sm text-gray-500 hover:text-gray-900 transition-all duration-300 w-fit relative"
                     >
                       <Link
@@ -78,14 +78,14 @@ const Footer = () => {
 
               {/* Dynamic Sections */}
               {com_data(t).map((section, index) => (
-                <div key={index} className="w-full">
+                <div key={"com_data_section_" + index} className="w-full">
                   <h2 className="text-md font-semibold text-gray-800 mb-4 max-md:text-center">
                     {section.title}
                   </h2>
                   <ul className="flex flex-col gap-2 items-center md:items-start">
                     {section.items.map((item, idx) => (
                       <li
-                        key={idx}
+                        key={"section_items_" + idx}
                         className="group text-sm text-gray-500 hover:text-gray-900 cust-trans w-fit relative"
                       >
                         <Link
@@ -154,6 +154,33 @@ const Footer = () => {
             <Image
               quality={100}
               src={"/images/home/payment2.svg"}
+              alt=""
+              width={40}
+              height={40}
+            />
+          </div>
+           <div>
+            <Image
+              quality={100}
+              src={"/images/home/google-pay.svg"}
+              alt=""
+              width={40}
+              height={40}
+            />
+          </div>
+           <div>
+            <Image
+              quality={100}
+              src={"/images/home/apple-pay.webp"}
+              alt=""
+              width={40}
+              height={40}
+            />
+          </div>
+           <div>
+            <Image
+              quality={100}
+              src={"/images/home/logo-samsung.png"}
               alt=""
               width={40}
               height={40}

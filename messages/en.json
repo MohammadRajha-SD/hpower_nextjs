@@ -104,6 +104,7 @@
   },
   "RegisterForm": {
     "full_name": "Full Name",
+    "captcha_required": "Please complete the CAPTCHA verification.",
     "username": "Username",
     "phone_number": "Phone Number",
     "email": "E-Mail",
@@ -131,7 +132,14 @@
     "password_required": "Password is required",
     "confirm_password_required": "Please confirm your password",
     "passwords_do_not_match": "Passwords do not match",
-    "unexpected_error": "An unexpected error occurred"
+    "unexpected_error": "An unexpected error occurred",
+     "error": {
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Phone number must include more than just the country code",
+      "phone_invalid_digits": "Phone number must be exactly 9 digits after the country code",
+      "phone_invalid_prefix": "Phone number prefix is invalid. Must be one of Etisalat or Du.",
+      "phone_invalid_format": "Phone number must have exactly 7 digits after the prefix"
+    }
   },
   "ProviderRegister": {
     "full_name": "Full Name",
@@ -176,7 +184,8 @@
     "select_location": "Select location",
     "search_button": "Search",
     "select_emirate": "Select Emirate",
-    "search": "Search"
+    "search": "Search",
+    "provided_by": "Provided By"
   },
   "Loading": {
     "loading": "Loading..."
@@ -224,7 +233,7 @@
     "search_placeholder": "Search services...",
     "select_location": "Select location",
     "active_filters": "Search filters:",
-    "no_services_found": "No services found",
+    "no_services_found": "Service is not available in your area yet. Coming soon!",
     "showing": "Showing",
     "service": "service",
     "services": "services",
@@ -308,7 +317,7 @@
     ]
   },
   "SingleService": {
-    "service_not_found": "Service not found.",
+    "service_not_found": "Service is not available in your area yet. Coming soon!",
     "enter_coupon_code": "Please enter a coupon code",
     "coupon_applied": "Coupon applied successfully!",
     "applied": "Coupon applied!",
@@ -338,7 +347,7 @@
     "expires_at": "Expires At",
     "quantity": "Quantity",
     "address": "Address",
-    "hint": "Hint",
+    "hint": "Notes",
     "booking": "Booking",
     "booking_successful": "Booking successful!",
     "booking_failed": "Booking failed",
@@ -368,7 +377,10 @@
     "agree_to": "I agree to the",
     "select_datetime": "Please select date and time",
     "quantity_limit_reached": "You have reached the maximum quantity limit of {limit} for this service.",
-    "max_quantity": "Maximum quantity"
+    "max_quantity": "Maximum quantity",
+    "service_addresses": "Service Addresses",
+    "view_addresses": "View Addresses",
+    "service_charge": "Service Charge"
   },
   "SubscriptionSuccessPage": {
     "title": "An email has been sent to confirm your subscription and checkout!",
@@ -440,7 +452,7 @@
     "cancel": "Cancel",
     "selectService": "Select Service",
     "price": "Price",
-    "noServicesAvailable": "Comming Soon!."
+    "noServicesAvailable": "Service is not available in your area yet. Coming soon!"
   },
   "BookingModal": {
     "title": "Book an Appointment",
@@ -452,7 +464,7 @@
     "bookAppointment": "Book Appointment",
     "price": "Price",
     "selectServiceFirst": "Please select a service first!",
-    "noServicesAvailable": "Comming Soon!."
+    "noServicesAvailable": "Service is not available in your area yet. Coming soon!"
   },
   "BecomeAPartner": {
     "header": "Become a HPOWER partner",
@@ -699,5 +711,11 @@
     "close": "Close",
     "thankYou": "Thank you for signing!",
     "successMessage": "Your agreement has been successfully submitted. We appreciate your trust."
+  },
+  "AddressPrompt": {
+    "pleaseSelectAddress": "Please select your address",
+    "youNeedToSelectAddress": "You need to select your address to continue",
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }

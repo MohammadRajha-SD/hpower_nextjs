@@ -44,7 +44,7 @@ const LoginForm = () => {
     setError(null);
 
     try {
-      const result = await multiLogin(formData);
+      const result = await multiLogin(formData, locale);
 
       if (result.success && result.data) {
         const { token, user } = result.data;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { SearchIcon, MapPin, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
@@ -10,7 +10,7 @@ import CustomButton from "../ui/CustomButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/utils/helper";
-import parse from "html-react-parser";
+import useUserDetails from "@/hooks/useUserDetails";
 
 const Search = () => {
   const t = useTranslations("Search");
@@ -23,9 +23,10 @@ const Search = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchInputRef = useRef(null);
   const dropdownRef = useRef(null);
-  const allServices = searchServices?.services || [];
+  const allServices = useMemo(() => searchServices?.services || [], [searchServices]);
   const locale = useLocale();
   const router = useRouter();
+  const { user } = useUserDetails();
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -57,36 +58,92 @@ const Search = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Real-time search and filter
   useEffect(() => {
-    if (!searchQuery && !selectedEmirate && !selectedCity) {
+    const shouldFilter =
+      searchQuery.trim() !== "" ||
+      selectedEmirate.trim() !== "" ||
+      selectedCity.trim() !== "" ||
+      user?.address?.trim() !== "";
+
+    if (!shouldFilter) {
       setFilteredServices([]);
       setIsDropdownOpen(false);
       return;
     }
 
+    const locationToMatch = selectedEmirate || selectedCity || user?.address || "";
+
     const filtered = allServices.filter((service) => {
+      const name = service.name?.toLowerCase() || "";
+      const desc = service.description?.toLowerCase() || "";
+
       const matchesQuery = searchQuery
-        ? service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          service.description.toLowerCase().includes(searchQuery.toLowerCase())
+        ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
         : true;
 
-      const matchesLocation = selectedEmirate
-        ? service?.address
-            ?.toLowerCase()
-            .includes(selectedEmirate.toLowerCase()) ||
-          (selectedCity &&
-            service?.address
-              ?.toLowerCase()
-              ?.includes(selectedCity?.toLowerCase()))
-        : true;
+      const matchesLocation =
+        locationToMatch === ""
+          ? true
+          : service.addresses?.some((addr: any) =>
+            addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
+          );
 
       return matchesQuery && matchesLocation;
     });
 
-    setFilteredServices(filtered);
-    setIsDropdownOpen(filtered.length > 0);
-  }, [searchQuery, selectedEmirate, selectedCity, allServices]);
+    // Only update state if filteredServices changed to prevent infinite loop
+    const isSame =
+      filtered.length === filteredServices.length &&
+      filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
+
+    if (!isSame) {
+      setFilteredServices(filtered);
+      setIsDropdownOpen(filtered.length > 0);
+    }
+  }, [searchQuery, selectedEmirate, selectedCity, allServices, user?.address]);
+
+  // useEffect(() => {
+  //   const shouldFilter =
+  //     searchQuery.trim() !== "" ||
+  //     selectedEmirate.trim() !== "" ||
+  //     selectedCity.trim() !== "";
+
+  //   if (!shouldFilter) {
+  //     setFilteredServices([]);
+  //     setIsDropdownOpen(false);
+  //     return;
+  //   }
+
+  //   const filtered = allServices.filter((service) => {
+  //     const name = service.name?.toLowerCase() || "";
+  //     const desc = service.description?.toLowerCase() || "";
+  //     const addr = service.address?.toLowerCase() || "";
+
+  //     const matchesQuery =
+  //       searchQuery
+  //         ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
+  //         : true;
+
+  //     const matchesLocation =
+  //       selectedEmirate
+  //         ? addr.includes(selectedEmirate.toLowerCase()) ||
+  //         (selectedCity && addr.includes(selectedCity.toLowerCase()))
+  //         : true;
+
+  //     return matchesQuery && matchesLocation;
+  //   });
+
+  //   // Only update state if filteredServices changed to prevent infinite loop
+  //   const isSame =
+  //     filtered.length === filteredServices.length &&
+  //     filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
+
+  //   if (!isSame) {
+  //     setFilteredServices(filtered);
+  //     setIsDropdownOpen(filtered.length > 0);
+  //   }
+  //   // **Remove filteredServices from dependencies**
+  // }, [searchQuery, selectedEmirate, selectedCity, allServices]);
 
   // Handle search submission
   const handleSearch = (e) => {
@@ -108,6 +165,7 @@ const Search = () => {
   useEffect(() => {
     searchInputRef.current?.focus();
   }, []);
+
 
   return (
     <motion.div
@@ -132,17 +190,17 @@ const Search = () => {
             className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-interactive_color focus:border-transparent"
           />
           {/* Dropdown */}
-          {isDropdownOpen && filteredServices.length > 0 && (
+          {isDropdownOpen == true && filteredServices.length > 0 && (
             <motion.div
               ref={dropdownRef}
-              className="fixed left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-96 overflow-y-auto"
+              className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-96 overflow-y-auto"
               variants={dropdownVariants}
               initial="hidden"
               animate="visible"
             >
-              {filteredServices.map((service) => (
+              {filteredServices.map((service, index) => (
                 <div
-                  key={service.id}
+                  key={`search12345_${service.id}_${index}`}
                   className="flex items-center p-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0 gap-5"
                   onClick={() => {
                     router.push(`/services/${service.id}`);
@@ -158,6 +216,7 @@ const Search = () => {
                       className="object-cover rounded-md mr-4"
                     />
                   )}
+
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-text-active_color">
                       {service.name}
@@ -169,15 +228,15 @@ const Search = () => {
                       <span className="text-interactive_color font-medium">
                         {service.discount_price
                           ? formatCurrency(
-                              parseFloat(service.discount_price),
-                              locale,
-                              16
-                            )
+                            parseFloat(service.discount_price),
+                            locale,
+                            16
+                          )
                           : formatCurrency(
-                              parseFloat(service.price),
-                              locale,
-                              16
-                            )}
+                            parseFloat(service.price),
+                            locale,
+                            16
+                          )}
                       </span>
                       {service.discount_price && (
                         <span className="text-gray-500 line-through ml-2">

@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useServices } from "@/hooks/useServices";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
@@ -21,11 +21,13 @@ import { sendBookingEmail } from "@/actions/bookingMail";
 import {
   CalendarIcon,
   CheckCircleIcon,
-  ChevronDownIcon,
   ClockIcon,
   Eye,
   XCircleIcon,
+  ChevronDownIcon,
+  MapPinIcon,
 } from "lucide-react";
+
 import { FaExclamation } from "react-icons/fa";
 
 const SingleService = ({ serviceId }: { serviceId: string }) => {
@@ -37,6 +39,8 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
   const [bookingLoading, setBookingLoading] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+  const [isAddressOpen, setIsAddressOpen] = useState(false);
+
   const [couponData, setCouponData] = useState<{
     discount: number;
     discountType: string;
@@ -64,6 +68,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
   const servicePrice = parseFloat(
     service.discount_price < 1 ? service.price : service.discount_price
   );
+
   const isBookingDisabled = service.enable_booking === 0;
 
   const images: string[] = service.images?.length
@@ -214,8 +219,24 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     return { savings: "0", discountPercentage: 0, discountPrice: servicePrice };
   };
 
+  const isUserAddressSupported = () => {
+    if(user == null) return true;
+    if (!user?.address || !Array.isArray(service.addresses)) return false;
+
+    return service.addresses.some((addr: any) =>
+      addr.address?.toLowerCase().includes(user.address.toLowerCase())
+    );
+  };
+
   const { savings, discountPercentage, discountPrice } = calculateDiscount();
   const finalPrice = appliedCoupon ? discountPrice : servicePrice;
+
+  if (!isUserAddressSupported()) {
+    return <div className="flex justify-center text-center items-center gap-2 text-sm text-red-600 mt-4">
+      <FaExclamation className="text-yellow-500" />
+      {t("service_not_found")}
+    </div>
+  }
 
   return (
     <div className={`w-full ${isRTL ? "text-right" : "text-left"}`}>
@@ -307,6 +328,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                 </p>
               )}
             </div>
+
             <BookingForm
               couponCode={couponCode}
               setCouponCode={setCouponCode}
@@ -326,12 +348,14 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
               hasBookedService={hasBookedService}
               setShowSuccessPopup={setShowSuccessPopup}
             />
+
             <hr className="my-4 border-gray-200" />
 
             <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100">
               <h2 className="text-xl font-bold mb-5 text-gray-800">
                 {t("service_details")}
               </h2>
+
               <div className="flex items-center mb-4 p-3 bg-blue-50 rounded-lg gap-2">
                 <ClockIcon className="w-5 h-5 text-interactive_color mr-2" />
                 <span className="font-medium text-gray-700">
@@ -341,6 +365,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                   {service.duration?.slice(0, 5) || t("one_hour")}
                 </span>
               </div>
+
               {isBookingDisabled && (
                 <div className="flex items-center mb-4 p-3 bg-red-50 rounded-lg">
                   <FaExclamation className="w-5 h-5 text-red-600 mr-2" />
@@ -352,7 +377,9 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                   </span>
                 </div>
               )}
+
               <div>{parse(service.description)}</div>
+
               <div className="bg-white">
                 <button
                   onClick={() => setIsScheduleOpen(!isScheduleOpen)}
@@ -380,11 +407,10 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                     (schedule: any, idx: number) => (
                       <div
                         key={idx}
-                        className={`flex justify-between items-center p-3 rounded-lg ${
-                          schedule.working_hours === "Closed"
-                            ? "bg-gray-100 text-gray-500"
-                            : "bg-green-50 text-gray-700"
-                        }`}
+                        className={`flex justify-between items-center p-3 rounded-lg ${schedule.working_hours === "Closed"
+                          ? "bg-gray-100 text-gray-500"
+                          : "bg-green-50 text-gray-700"
+                          }`}
                       >
                         <span className="font-medium">{schedule.day}</span>
                         <div className="flex items-center gap-2">
@@ -404,6 +430,60 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                         </div>
                       </div>
                     )
+                  )}
+                </div>
+              </div>
+
+              <hr className="my-4 border-gray-200" />
+              <div>
+                <button
+                  onClick={() => setIsAddressOpen(!isAddressOpen)}
+                  className="flex items-center justify-between w-full text-lg font-semibold text-gray-800 mb-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <MapPinIcon className="w-5 h-5 mr-2 text-gray-600" />
+                    {t("service_addresses")}
+                  </div>
+                  {isAddressOpen ? (
+                    <ChevronDownIcon className="w-6 h-6 text-gray-600 transition-transform" />
+                  ) : (
+                    <div className="flex items-center cursor-pointer gap-2 hover:underline text-interactive_color hover:text-active_color mt-2">
+                      <p className="text-sm">{t("view_addresses")}</p>
+                      <Eye className="w-6 h-6 transition-transform" />
+                    </div>
+                  )}
+                </button>
+
+
+                <div
+                  className={`space-y-2 overflow-hidden transition-all duration-300 ${isAddressOpen ? "max-h-[500px]" : "max-h-0"
+                    }`}
+                >
+                  {service.addresses?.length === 0 ? (
+                    <div className="p-3 text-sm text-gray-500 bg-gray-100 rounded-lg">
+                      {t("no_addresses")}
+                    </div>
+                  ) : (
+                    service.addresses?.map((item: any, idx: number) => (
+                      <div
+                        key={idx}
+                        className="flex justify-between items-center p-3 rounded-lg bg-blue-50 text-gray-700"
+                      >
+                        <div className="flex flex-col">
+                          <span className="font-medium">{item.address}</span>
+                          <span className="text-sm text-gray-500 inline-flex items-center gap-1">
+                            {t("service_charge")}:
+                            <Image
+                              src="/aed.svg"
+                              width={12}
+                              height={12}
+                              alt="AED"
+                              className="inline-block hover:scale-110 transition-transform duration-200"
+                            /> {item.service_charge}
+                          </span>
+                        </div>
+                      </div>
+                    ))
                   )}
                 </div>
               </div>

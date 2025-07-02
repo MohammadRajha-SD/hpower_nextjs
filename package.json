@@ -41,6 +41,7 @@
     "react-datepicker": "^8.2.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^4.12.0",

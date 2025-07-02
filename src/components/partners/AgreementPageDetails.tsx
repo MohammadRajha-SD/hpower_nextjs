@@ -2,13 +2,13 @@
 import "swiper/css";
 import { useAgreement } from "@/hooks/useAgreement";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaBuilding } from "react-icons/fa";
 import { useAgreementTerms } from "@/hooks/useAgreementTerms";
-import { useRef } from "react";
-import "@/styles/print.css";
 import { format } from "date-fns";
+import "@/styles/print.css";
+
 const formVariants = {
     hidden: { opacity: 0, x: "100%" },
     visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
@@ -56,6 +56,7 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
     }, [agreement]);
 
     if (!agreement) return <div className="text-center mt-20 text-gray-500 text-lg">Loading...</div>;
+
     function decodeHtml(html) {
         if (typeof window === "undefined") return html;
         const txt = document.createElement("textarea");

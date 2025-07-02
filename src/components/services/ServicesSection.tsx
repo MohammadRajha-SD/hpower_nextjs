@@ -9,12 +9,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPinIcon, SearchIcon, FilterIcon, StarIcon } from "lucide-react";
 import LocationSelector from "../home/LocationSelector";
 import ServiceCard from "./ServiceCard";
+import useUserDetails from "@/hooks/useUserDetails";
 
 const ServicesSection = () => {
   const { services, emirates } = useServices();
   const allServices = services?.services || [];
   const router = useRouter();
   const t = useTranslations("ServicesSection");
+  const { user } = useUserDetails();
 
   // State
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,28 +24,51 @@ const ServicesSection = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  
+
   // Filter services based on search query and location
+  // const filteredServices = useMemo(() => {
+  //   return allServices.filter((service: any) => {
+  //     // Search query filter
+  //     const matchesSearch =
+  //       searchQuery.trim() === ""
+  //         ? true
+  //         : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         service.description
+  //           .toLowerCase()
+  //           .includes(searchQuery.toLowerCase());
+
+  //     // Location filter
+  //     const matchesLocation =
+  //       selectedEmirate === ""
+  //         ? true
+  //         : service?.address?.toLowerCase() === selectedEmirate.toLowerCase();
+
+  //     return matchesSearch && matchesLocation;
+  //   });
+  // }, [allServices, searchQuery, selectedEmirate]);
+
+
   const filteredServices = useMemo(() => {
+    const locationToMatch = selectedEmirate || user?.address || "";
+
     return allServices.filter((service: any) => {
-      // Search query filter
+      // 🔍 Search query filter
       const matchesSearch =
         searchQuery.trim() === ""
           ? true
           : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            service.description
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase());
+          service.description?.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Location filter
-      const matchesLocation =
-        selectedEmirate === ""
-          ? true
-          : service?.address?.toLowerCase() === selectedEmirate.toLowerCase();
+      // 📍 Location filter (match any address that includes the locationToMatch)
+      const matchesLocation = locationToMatch === ""
+        ? true
+        : service.addresses?.some((addr: any) =>
+          addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
+        );
 
       return matchesSearch && matchesLocation;
     });
-  }, [allServices, searchQuery, selectedEmirate]);
+  }, [allServices, searchQuery, selectedEmirate, user?.address]);
 
   // Handle location selection
   const handleLocationSelect = (emirate: string, city?: string) => {
@@ -270,7 +295,7 @@ const ServicesSection = () => {
 
       {/* Results count */}
       <div className="flex justify-between items-center mb-6 ">
-        <p className="text-interactive_color bg-green-300/60  p-2 rounded-xl">
+        <p className="text-interactive_color text-center mx-auto bg-green-300/60 p-2 rounded-xl">
           {filteredServices.length === 0
             ? t("no_services_found")
             : `${t("showing")} ${filteredServices.length} ${filteredServices.length === 1 ? t("service") : t("services")}`}
@@ -332,9 +357,9 @@ const ServicesSection = () => {
         {filteredServices.length === 0 && (
           <div
             className={`text-center py-16 bg-gray-50 rounded-xl `}
-            // initial={{ opacity: 0 }}
-            // animate={{ opacity: 1 }}
-            // transition={{ duration: 0.5 }}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
+          // transition={{ duration: 0.5 }}
           >
             <div className="mx-auto h-24 w-24 text-gray-300 mb-4">
               <svg

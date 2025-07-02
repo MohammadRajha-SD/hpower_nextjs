@@ -144,9 +144,9 @@ const AutoSlider = ({ data }) => {
             }}
             className="w-full py-10"
           >
-            {data?.map((item: any) => (
+            {data?.map((item: any, index) => (
               <SwiperSlide
-                key={item.id}
+                key={`swiper_slide_1_${item.id}_${index}`}
                 className="flex justify-center items-center"
               >
                 <div
@@ -164,6 +164,7 @@ const AutoSlider = ({ data }) => {
                       className="object-cover rounded-lg group-hover:scale-110"
                     />
                   </div>
+
 
                   <AnimatePresence>
                     {item.name && (

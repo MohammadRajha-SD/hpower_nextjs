@@ -44,11 +44,11 @@ const Slider = () => {
         className="w-full h-full"
       >
         {slides?.slides?.map((slide) => (
-          <SwiperSlide key={slide.id} className="relative">
+          <SwiperSlide key={"slide_" + slide.id} className="relative">
             <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
               <Image
                 src={slide.image_path}
-                alt={slide.description}
+                alt={slide.description ?? ""}
                 fill
                 priority
                 quality={100}

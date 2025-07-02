@@ -68,7 +68,7 @@ const FeaturedServices = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredServices?.map((service: any) => (
             <ServiceCard
-              key={service.id}
+              key={"featured_service_" + service.id}
               id={service.id}
               title={service.name}
               description={service.description}

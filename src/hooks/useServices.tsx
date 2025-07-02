@@ -13,6 +13,7 @@ export const useServices = () => {
     queryKey: ["services"],
     queryFn: () => getAllData(`services`, locale),
   });
+
   const { data: emirates } = useQuery({
     queryKey: ["emirates"],
     queryFn: () => getAllData(`emirates`, locale),
