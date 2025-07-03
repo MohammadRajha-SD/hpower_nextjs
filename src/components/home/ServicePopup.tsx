@@ -60,56 +60,17 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
 
   const locale = useLocale();
 
-  // useEffect(() => {
-  //   if (isOpen && selectedCategory) {
-  //     if (selectedCategory.children && selectedCategory.children.length > 0) {
-  //       setCurrentLevel(selectedCategory.children);
-  //     } else if (
-  //       selectedCategory.has_services &&
-  //       selectedCategory.services &&
-  //       selectedCategory.services.length > 0
-  //     ) {
-  //       setCurrentLevel(
-  //         selectedCategory.services.map((service) => ({
-  //           ...service,
-  //           name: service.name,
-  //           image_path: service.image_path,
-  //         }))
-  //       );
-  //     } else {
-  //       setCurrentLevel([]);
-  //       toast.error(t("noServicesAvailable"));
-  //     }
-  //     setNavigationStack([]);
-  //     setSelectedService(null);
-  //   }
-  // }, [isOpen, selectedCategory, t]);
-
   useEffect(() => {
     if (isOpen && selectedCategory) {
       if (selectedCategory.children && selectedCategory.children.length > 0) {
         setCurrentLevel(selectedCategory.children);
-        console.log(selectedCategory.children);
       } else if (
         selectedCategory.has_services &&
         selectedCategory.services &&
         selectedCategory.services.length > 0
       ) {
-        console.log("SERVICES");
-        console.log(selectedCategory.services);
-        // Filter services where at least one address matches the user address
-        const filteredServices = selectedCategory.services.filter((service) =>
-          service.addresses?.some((addr) =>
-            addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
-          )
-        );
-
-        if (filteredServices.length === 0) {
-          toast.error(t("noServicesAvailable"));
-        }
-
         setCurrentLevel(
-          filteredServices.map((service) => ({
+          selectedCategory.services.map((service) => ({
             ...service,
             name: service.name,
             image_path: service.image_path,
@@ -119,67 +80,106 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
         setCurrentLevel([]);
         toast.error(t("noServicesAvailable"));
       }
-
       setNavigationStack([]);
       setSelectedService(null);
     }
-  }, [isOpen, selectedCategory, t, user?.address]);
+  }, [isOpen, selectedCategory, t]);
 
+  // useEffect(() => {
+  //   if (isOpen && selectedCategory) {
+  //     if (selectedCategory.children && selectedCategory.children.length > 0) {
+  //       setCurrentLevel(selectedCategory.children);
+  //       console.log(selectedCategory.children);
+  //     } else if (
+  //       selectedCategory.has_services &&
+  //       selectedCategory.services &&
+  //       selectedCategory.services.length > 0
+  //     ) {
+  //       console.log("SERVICES");
+  //       console.log(selectedCategory.services);
+  //       // Filter services where at least one address matches the user address
+  //       const filteredServices = selectedCategory.services.filter((service) =>
+  //         service.addresses?.some((addr) =>
+  //           addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
+  //         )
+  //       );
+
+  //       if (filteredServices.length === 0) {
+  //         toast.error(t("noServicesAvailable"));
+  //       }
+
+  //       setCurrentLevel(
+  //         filteredServices.map((service) => ({
+  //           ...service,
+  //           name: service.name,
+  //           image_path: service.image_path,
+  //         }))
+  //       );
+  //     } else {
+  //       setCurrentLevel([]);
+  //       toast.error(t("noServicesAvailable"));
+  //     }
+
+  //     setNavigationStack([]);
+  //     setSelectedService(null);
+  //   }
+  // }, [isOpen, selectedCategory, t, user?.address]);
+
+
+//   const handleCategorySelect = (category: Category) => {
+//   if (category.children && category.children.length > 0) {
+//     setNavigationStack((prev) => [...prev, currentLevel]);
+//     setCurrentLevel(category.children);
+//   } else if (
+//     category.has_services &&
+//     category.services &&
+//     category.services.length > 0
+//   ) {
+//     const filteredServices = category.services.filter((service) =>
+//       service.addresses?.some((addr) =>
+//         addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
+//       )
+//     );
+
+//     if (filteredServices.length === 0) {
+//       toast.error(t("noServicesAvailable"));
+
+//     }
+
+//     setNavigationStack((prev) => [...prev, currentLevel]);
+//     setCurrentLevel(
+//       filteredServices.map((service) => ({
+//         ...service,
+//         name: service.name,
+//         image_path: service.image_path,
+//       }))
+//     );
+//   } else if (!category.has_services) {
+//     toast.error(t("noServicesAvailable"));
+//   }
+// };
 
   const handleCategorySelect = (category: Category) => {
-  if (category.children && category.children.length > 0) {
-    setNavigationStack((prev) => [...prev, currentLevel]);
-    setCurrentLevel(category.children);
-  } else if (
-    category.has_services &&
-    category.services &&
-    category.services.length > 0
-  ) {
-    const filteredServices = category.services.filter((service) =>
-      service.addresses?.some((addr) =>
-        addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
-      )
-    );
-
-    if (filteredServices.length === 0) {
+    if (category.children && category.children.length > 0) {
+      setNavigationStack((prev) => [...prev, currentLevel]);
+      setCurrentLevel(category.children);
+    } else if (
+      category.has_services &&
+      category.services &&
+      category.services.length > 0
+    ) {
+      setNavigationStack((prev) => [...prev, currentLevel]);
+      setCurrentLevel(
+        category.services.map((service) => ({
+          ...service,
+          name: service.name,
+          image_path: service.image_path,
+        }))
+      );
+    } else if (!category.has_services) {
       toast.error(t("noServicesAvailable"));
-
     }
-
-    setNavigationStack((prev) => [...prev, currentLevel]);
-    setCurrentLevel(
-      filteredServices.map((service) => ({
-        ...service,
-        name: service.name,
-        image_path: service.image_path,
-      }))
-    );
-  } else if (!category.has_services) {
-    toast.error(t("noServicesAvailable"));
-  }
-};
-
-  // const handleCategorySelect = (category: Category) => {
-  //   if (category.children && category.children.length > 0) {
-  //     setNavigationStack((prev) => [...prev, currentLevel]);
-  //     setCurrentLevel(category.children);
-  //   } else if (
-  //     category.has_services &&
-  //     category.services &&
-  //     category.services.length > 0
-  //   ) {
-  //     setNavigationStack((prev) => [...prev, currentLevel]);
-  //     setCurrentLevel(
-  //       category.services.map((service) => ({
-  //         ...service,
-  //         name: service.name,
-  //         image_path: service.image_path,
-  //       }))
-  //     );
-  //   } else if (!category.has_services) {
-  //     toast.error(t("noServicesAvailable"));
-  //   }
-  // };
+  };
 
   const handleServiceSelect = (service: Service) => {
     setSelectedService(service);

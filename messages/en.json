@@ -33,6 +33,7 @@
   "profile": {
     "profile_picture_alt": "Profile picture",
     "default_user_name": "Username",
+    "address_label": "Address",
     "name_label": "Name",
     "logout": "Logout",
     "about_me": "About me",
@@ -91,7 +92,11 @@
     "no_changes": "No changes were made",
     "fetch_user_failed": "Failed to fetch user data",
     "name_label": "Name",
-    "name_placeholder": "Enter your name"
+    "name_placeholder": "Enter your name",
+    "select_address": "Select your address",
+    "address_label": "Address",
+    "current_address": "Current address",
+    "saving": "Saving..."
   },
   "BookAnAppointment": {
     "title": "Book your appointment in simple steps",
@@ -133,7 +138,7 @@
     "confirm_password_required": "Please confirm your password",
     "passwords_do_not_match": "Passwords do not match",
     "unexpected_error": "An unexpected error occurred",
-     "error": {
+    "error": {
       "phone_required": "Phone number is required",
       "phone_invalid": "Phone number must include more than just the country code",
       "phone_invalid_digits": "Phone number must be exactly 9 digits after the country code",
@@ -357,7 +362,9 @@
     "userNotVerified_note": "Note: Your account is not verified. Please verify your email to access our services.",
     "no_user_note": "You must be logged in to continue.",
     "login": "Login",
-    "select_location_placeholder": "Select your location",
+    "emirate": "Emirate",
+    "select_location_placeholder": "Select your emirate",
+    "enter_your_address_placeholder": "Enter your address",
     "already_booked_message": "You have already booked this service. Please wait for approval or cancellation before booking again.",
     "working_schedule": "Working Schedule",
     "day": "Day",
@@ -378,9 +385,11 @@
     "select_datetime": "Please select date and time",
     "quantity_limit_reached": "You have reached the maximum quantity limit of {limit} for this service.",
     "max_quantity": "Maximum quantity",
-    "service_addresses": "Service Addresses",
+    "service_addresses": "Service Areas",
     "view_addresses": "View Addresses",
-    "service_charge": "Service Charge"
+    "service_charge": "Service Charge",
+    "thankYou": "Thank you for your booking!",
+    "cancelDone": "Your booking has been received. A confirmation has been sent to your email."
   },
   "SubscriptionSuccessPage": {
     "title": "An email has been sent to confirm your subscription and checkout!",
@@ -717,5 +726,29 @@
     "youNeedToSelectAddress": "You need to select your address to continue",
     "cancel": "Cancel",
     "save": "Save"
+  },
+  "ForgotPassword": {
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "send_reset_link": "Send Reset Link",
+    "sending": "Sending...",
+    "reset_link_sent": "A reset link has been sent to your email.",
+    "error_occurred": "An error occurred. Please try again.",
+    "back_to_login": "Back to Login",
+    "forgot_password_illustration": "Forgot password illustration"
+  },
+  "ResetPassword": {
+    "illustration_alt": "Reset password illustration",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password",
+    "password_placeholder": "Enter your new password",
+    "confirm_password_placeholder": "Confirm your password",
+    "toggle_password": "Toggle password visibility",
+    "passwords_mismatch": "Passwords do not match",
+    "reset_password": "Reset Password",
+    "submitting": "Submitting...",
+    "password_reset_success": "Your password has been reset successfully!",
+    "error_occurred": "Something went wrong. Please try again.",
+    "back_to_login": "Back to login"
   }
 }

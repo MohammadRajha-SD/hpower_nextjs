@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const SuccessPopup = ({ onClose }) => {
-  const t = useTranslations("PartnerForm");
+  const t = useTranslations("SingleService");
 
   return (
     <motion.div

@@ -27,6 +27,7 @@ const Search = () => {
   const locale = useLocale();
   const router = useRouter();
   const { user } = useUserDetails();
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -58,55 +59,12 @@ const Search = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    const shouldFilter =
-      searchQuery.trim() !== "" ||
-      selectedEmirate.trim() !== "" ||
-      selectedCity.trim() !== "" ||
-      user?.address?.trim() !== "";
-
-    if (!shouldFilter) {
-      setFilteredServices([]);
-      setIsDropdownOpen(false);
-      return;
-    }
-
-    const locationToMatch = selectedEmirate || selectedCity || user?.address || "";
-
-    const filtered = allServices.filter((service) => {
-      const name = service.name?.toLowerCase() || "";
-      const desc = service.description?.toLowerCase() || "";
-
-      const matchesQuery = searchQuery
-        ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
-        : true;
-
-      const matchesLocation =
-        locationToMatch === ""
-          ? true
-          : service.addresses?.some((addr: any) =>
-            addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
-          );
-
-      return matchesQuery && matchesLocation;
-    });
-
-    // Only update state if filteredServices changed to prevent infinite loop
-    const isSame =
-      filtered.length === filteredServices.length &&
-      filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
-
-    if (!isSame) {
-      setFilteredServices(filtered);
-      setIsDropdownOpen(filtered.length > 0);
-    }
-  }, [searchQuery, selectedEmirate, selectedCity, allServices, user?.address]);
-
   // useEffect(() => {
   //   const shouldFilter =
   //     searchQuery.trim() !== "" ||
   //     selectedEmirate.trim() !== "" ||
-  //     selectedCity.trim() !== "";
+  //     selectedCity.trim() !== "" ||
+  //     user?.address?.trim() !== "";
 
   //   if (!shouldFilter) {
   //     setFilteredServices([]);
@@ -114,21 +72,22 @@ const Search = () => {
   //     return;
   //   }
 
+  //   const locationToMatch = selectedEmirate || selectedCity || user?.address || "";
+
   //   const filtered = allServices.filter((service) => {
   //     const name = service.name?.toLowerCase() || "";
   //     const desc = service.description?.toLowerCase() || "";
-  //     const addr = service.address?.toLowerCase() || "";
 
-  //     const matchesQuery =
-  //       searchQuery
-  //         ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
-  //         : true;
+  //     const matchesQuery = searchQuery
+  //       ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
+  //       : true;
 
   //     const matchesLocation =
-  //       selectedEmirate
-  //         ? addr.includes(selectedEmirate.toLowerCase()) ||
-  //         (selectedCity && addr.includes(selectedCity.toLowerCase()))
-  //         : true;
+  //       locationToMatch === ""
+  //         ? true
+  //         : service.addresses?.some((addr: any) =>
+  //           addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
+  //         );
 
   //     return matchesQuery && matchesLocation;
   //   });
@@ -142,8 +101,50 @@ const Search = () => {
   //     setFilteredServices(filtered);
   //     setIsDropdownOpen(filtered.length > 0);
   //   }
-  //   // **Remove filteredServices from dependencies**
-  // }, [searchQuery, selectedEmirate, selectedCity, allServices]);
+  // }, [searchQuery, selectedEmirate, selectedCity, allServices, user?.address]);
+
+  useEffect(() => {
+    const shouldFilter =
+      searchQuery.trim() !== "" ||
+      selectedEmirate.trim() !== "" ||
+      selectedCity.trim() !== "";
+
+    if (!shouldFilter) {
+      setFilteredServices([]);
+      setIsDropdownOpen(false);
+      return;
+    }
+
+    const filtered = allServices.filter((service) => {
+      const name = service.name?.toLowerCase() || "";
+      const desc = service.description?.toLowerCase() || "";
+      const addr = service.address?.toLowerCase() || "";
+
+      const matchesQuery =
+        searchQuery
+          ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
+          : true;
+
+      const matchesLocation =
+        selectedEmirate
+          ? addr.includes(selectedEmirate.toLowerCase()) ||
+          (selectedCity && addr.includes(selectedCity.toLowerCase()))
+          : true;
+
+      return matchesQuery && matchesLocation;
+    });
+
+    // Only update state if filteredServices changed to prevent infinite loop
+    const isSame =
+      filtered.length === filteredServices.length &&
+      filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
+
+    if (!isSame) {
+      setFilteredServices(filtered);
+      setIsDropdownOpen(filtered.length > 0);
+    }
+    // **Remove filteredServices from dependencies**
+  }, [searchQuery, selectedEmirate, selectedCity, allServices]);
 
   // Handle search submission
   const handleSearch = (e) => {

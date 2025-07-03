@@ -107,7 +107,7 @@ const SeekerRegisterForm = ({
   const validateForm = () => {
     const newErrors: Record<string, string[]> = {};
 
-    // Check for empty required fields
+    // Required fields
     if (!formData.name.trim()) {
       newErrors.name = [t("name_required")];
     }
@@ -122,22 +122,41 @@ const SeekerRegisterForm = ({
       newErrors.email = [t("email_invalid")];
     }
 
-    // Phone Number
+    // Phone Number validation with optional country code +971
     const phone = formData.phone_number.trim();
     const countryCode = "+971";
-    const localNumber = phone.slice(countryCode.length);
-    const prefix = localNumber.slice(0, 2);
     const validPrefixes = ["50", "54", "56", "52", "55", "58"];
-    const remainingDigits = localNumber.slice(2);
 
     if (!phone) {
       newErrors.phone_number = [t("error.phone_required")];
-    } else if (phone === countryCode || phone.length <= countryCode.length) {
-      newErrors.phone_number = [t("error.phone_invalid")];
-    } else if (!validPrefixes.includes(prefix)) {
-      newErrors.phone_number = [t("error.phone_invalid_prefix")];
-    }  else if ((phone.length - 3) !== 9) {
-      newErrors.phone_number = [t("error.phone_invalid_digits")];
+    } else {
+      let localNumber = phone;
+
+      // If starts with country code, remove it
+      if (phone.startsWith(countryCode)) {
+        localNumber = phone.slice(countryCode.length);
+      }
+
+      // Remove any leading zeros if present after country code
+      if (localNumber.startsWith("0")) {
+        localNumber = localNumber.slice(1);
+      }
+
+      const prefix = localNumber.slice(0, 2);
+      const remainingDigits = localNumber.slice(2);
+
+      // Check prefix
+      if (!validPrefixes.includes(prefix)) {
+        newErrors.phone_number = [t("error.phone_invalid_prefix")];
+      }
+      // Check total digits count (should be exactly 9 digits local number)
+      else if (localNumber.length !== 9) {
+        newErrors.phone_number = [t("error.phone_invalid_digits")];
+      }
+      // Also ensure phone number length makes sense with or without country code
+      else if (phone.length !== localNumber.length && phone.length !== localNumber.length + countryCode.length) {
+        newErrors.phone_number = [t("error.phone_invalid")];
+      }
     }
 
     if (!formData.password) {
@@ -152,6 +171,7 @@ const SeekerRegisterForm = ({
 
     return newErrors;
   };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

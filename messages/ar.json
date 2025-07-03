@@ -30,6 +30,7 @@
   "profile": {
     "profile_picture_alt": "صورة الملف الشخصي",
     "default_user_name": "اسم المستخدم",
+    "address_label": "العنوان",
     "name_label": "الإسم",
     "logout": "تسجيل الخروج",
     "about_me": "عني",
@@ -96,7 +97,11 @@
     "no_changes": "لم يتم إجراء أي تغييرات",
     "fetch_user_failed": "فشل في جلب بيانات المستخدم",
     "name_label": "الاسم",
-    "name_placeholder": "أدخل اسمك"
+    "name_placeholder": "أدخل اسمك",
+    "select_address": "اختر عنوانك",
+    "address_label": "العنوان",
+    "current_address": "العنوان الحالي",
+    "saving": "جاري الحفظ..."
   },
   "BookAnAppointment": {
     "title": "احجز موعدك بخطوات بسيطة",
@@ -325,6 +330,7 @@
   "SingleService": {
     "service_not_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
     "enter_coupon_code": "يرجى إدخال رمز القسيمة",
+    "enter_your_address_placeholder": "أدخل عنوانك",
     "coupon_applied": "تم تطبيق القسيمة بنجاح!",
     "applied": "تم تطبيق القسيمة!",
     "invalid_coupon": "رمز القسيمة غير صالح",
@@ -363,6 +369,7 @@
     "userNotVerified_note": "ملاحظة: لم يتم التحقق من حسابك. يرجى التحقق من بريدك الإلكتروني للوصول إلى خدماتنا.",
     "no_user_note": "يجب تسجيل الدخول للمتابعة.",
     "login": "تسجيل الدخول",
+    "emirate": "إمارة",
     "select_location_placeholder": "اختر موقعك",
     "already_booked_message": "لقد قمت بحجز هذه الخدمة بالفعل. يرجى الانتظار حتى يتم الموافقة أو الإلغاء قبل الحجز مرة أخرى.",
     "working_schedule": "جدول العمل",
@@ -386,7 +393,9 @@
     "max_quantity": "الكمية القصوى",
     "service_addresses": "عناوين الخدمة",
     "view_addresses": "عرض العناوين",
-    "service_charge": "رسوم الخدمة"
+    "service_charge": "رسوم الخدمة",
+    "thankYou": "شكرًا لحجزك!",
+    "cancelDone": "تم استلام حجزك. تم إرسال تأكيد إلى بريدك الإلكتروني."
   },
   "SubscriptionSuccessPage": {
     "title": "!تم إرسال إيميل إليك لتأكيد الاشتراك والدفع",
@@ -731,5 +740,29 @@
     "youNeedToSelectAddress": "يجب عليك اختيار عنوانك للمتابعة",
     "cancel": "إلغاء",
     "save": "حفظ"
+  },
+  "ForgotPassword": {
+    "email": "البريد الإلكتروني",
+    "email_placeholder": "أدخل بريدك الإلكتروني",
+    "send_reset_link": "إرسال رابط إعادة التعيين",
+    "sending": "جارٍ الإرسال...",
+    "reset_link_sent": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.",
+    "error_occurred": "حدث خطأ، يرجى المحاولة مرة أخرى.",
+    "back_to_login": "العودة لتسجيل الدخول",
+    "forgot_password_illustration": "صورة إعادة تعيين كلمة المرور"
+  },
+  "ResetPassword": {
+    "illustration_alt": "صورة إعادة تعيين كلمة المرور",
+    "new_password": "كلمة المرور الجديدة",
+    "confirm_password": "تأكيد كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور الجديدة",
+    "confirm_password_placeholder": "أعد إدخال كلمة المرور",
+    "toggle_password": "إظهار / إخفاء كلمة المرور",
+    "passwords_mismatch": "كلمتا المرور غير متطابقتين",
+    "reset_password": "إعادة تعيين كلمة المرور",
+    "submitting": "جارٍ الإرسال...",
+    "password_reset_success": "تمت إعادة تعيين كلمة المرور بنجاح!",
+    "error_occurred": "حدث خطأ ما. حاول مرة أخرى.",
+    "back_to_login": "العودة لتسجيل الدخول"
   }
 }

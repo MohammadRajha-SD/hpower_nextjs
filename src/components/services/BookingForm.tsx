@@ -14,7 +14,6 @@ import CustomButton from "../ui/CustomButton";
 import useUserDetails from "@/hooks/useUserDetails";
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon, MailCheck } from "lucide-react";
-import LocationSelector from "../home/LocationSelector";
 import { useServices } from "@/hooks/useServices";
 import { BiErrorAlt } from "react-icons/bi";
 import CancelBooking from "../profile/CancelBooking";
@@ -22,6 +21,7 @@ import Cookies from "js-cookie";
 import SuccessSendVemail from "./SuccessSendVemail";
 import parse from "html-react-parser";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
 
 interface BookingFormProps {
   couponCode: string;
@@ -35,7 +35,9 @@ interface BookingFormProps {
   quantity: number;
   setQuantity: (value: number) => void;
   address: string;
+  emirate: string;
   setAddress: (value: string) => void;
+  setEmirate: (value: string) => void;
   hint: string;
   setHint: (value: string) => void;
   loadingCheck: boolean;
@@ -61,6 +63,8 @@ const BookingForm = ({
   setHint,
   hasBookedService,
   setShowSuccessPopup,
+  emirate,
+  setEmirate,
 }: BookingFormProps) => {
   const t = useTranslations("SingleService");
   const { user, userType, loading } = useUserDetails();
@@ -188,10 +192,13 @@ const BookingForm = ({
     const formData = new FormData(e.currentTarget);
 
     const startAt = getStartAt();
+
     if (startAt) {
       formData.append("start_at", startAt);
       formData.append("ends_at", startAt);
     }
+
+    formData.append("emirate", emirate);
 
     handleBooking(formData);
   };
@@ -217,10 +224,11 @@ const BookingForm = ({
     const emirateName = Object.keys(emirates).find((key) =>
       emirates[key].some((city: any) => city.slug === emirateSlug)
     );
-    const newAddress = cityName
+    const newEmirate = cityName
       ? `${emirateName}, ${cityName}`
       : emirateName || emirateSlug;
-    setAddress(newAddress);
+
+    setEmirate(newEmirate);
     setShowLocationSelector(false);
     setZIndex(10);
   };
@@ -289,9 +297,19 @@ const BookingForm = ({
     return slot >= start && slot <= end;
   };
 
+  const formatSlug = (slug?: string) => {
+    if (!slug) return "-";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <>
       <Toaster />
+
       <div className="mb-8 p-3 rounded-xl">
         {hasBookedService && (
           <div className="mb-8 p-6 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg">
@@ -333,11 +351,10 @@ const BookingForm = ({
             value={couponCode}
             onChange={(e) => setCouponCode(e.target.value)}
             placeholder={t("enter_coupon_placeholder")}
-            className={`flex-1 px-4 py-1 border border-interactive_color rounded-lg focus:border-interactive_color bg-white focus:ring-2 focus:ring-indigo-100 outline-none transition-all duration-300 shadow-sm hover:shadow-md ${
-              appliedCoupon || userType !== "user" || userNotVerified
-                ? "opacity-50 cursor-not-allowed border-gray-400"
-                : ""
-            }`}
+            className={`flex-1 px-4 py-1 border border-interactive_color rounded-lg focus:border-interactive_color bg-white focus:ring-2 focus:ring-indigo-100 outline-none transition-all duration-300 shadow-sm hover:shadow-md ${appliedCoupon || userType !== "user" || userNotVerified
+              ? "opacity-50 cursor-not-allowed border-gray-400"
+              : ""
+              }`}
             disabled={
               appliedCoupon ||
               userNotVerified ||
@@ -357,20 +374,18 @@ const BookingForm = ({
               isBookingDisabled ||
               hasBookedService
             }
-            className={`px-6 py-3 ${
-              appliedCoupon
-                ? "bg-green-500 hover:bg-green-500"
-                : "bg-interactive_color hover:bg-active_color"
-            } text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              loadingCheck ||
-              userNotVerified ||
-              appliedCoupon ||
-              userType !== "user" ||
-              isBookingDisabled ||
-              hasBookedService
+            className={`px-6 py-3 ${appliedCoupon
+              ? "bg-green-500 hover:bg-green-500"
+              : "bg-interactive_color hover:bg-active_color"
+              } text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 ${loadingCheck ||
+                userNotVerified ||
+                appliedCoupon ||
+                userType !== "user" ||
+                isBookingDisabled ||
+                hasBookedService
                 ? "opacity-70 cursor-not-allowed"
                 : ""
-            } flex items-center justify-center gap-2`}
+              } flex items-center justify-center gap-2`}
           >
             {loadingCheck ? (
               <>
@@ -421,11 +436,10 @@ const BookingForm = ({
             </div>
             <button
               onClick={handleVerifyEmail}
-              className={`w-full sm:w-auto px-6 py-3 whitespace-nowrap ${
-                isVerifyLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-interactive_color hover:bg-active_color"
-              } text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:shadow-md flex items-center justify-center gap-2`}
+              className={`w-full sm:w-auto px-6 py-3 whitespace-nowrap ${isVerifyLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-interactive_color hover:bg-active_color"
+                } text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:shadow-md flex items-center justify-center gap-2`}
               disabled={isVerifyLoading}
             >
               <MailCheck className="h-5 w-5" />
@@ -508,11 +522,10 @@ const BookingForm = ({
                   }
                 }}
                 disabled={!agreedToTerms}
-                className={`px-4 py-2 rounded-md transition-colors ${
-                  agreedToTerms
-                    ? "bg-interactive_color text-white hover:bg-interactive_color"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                className={`px-4 py-2 rounded-md transition-colors ${agreedToTerms
+                  ? "bg-interactive_color text-white hover:bg-interactive_color"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
               >
                 {t("confirm")}
               </button>
@@ -571,20 +584,20 @@ const BookingForm = ({
             </p>
           </div>
 
-          <div className="w-full relative" ref={dropdownRef}>
+          {/* Emirate Dropdown  */}
+          {/* <div className="w-full relative" ref={dropdownRef}>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("address")}
+              {t("emirate")}
             </label>
             <div
-              onClick={isFormDisabled ? () => {} : toggleLocationSelector}
-              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 flex items justify-between transition-all duration-300 ${
-                isFormDisabled
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer hover:border-interactive_color focus:ring-2 focus:ring-indigo-100"
-              }`}
+              onClick={isFormDisabled ? () => { } : toggleLocationSelector}
+              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 flex items justify-between transition-all duration-300 ${isFormDisabled
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer hover:border-interactive_color focus:ring-2 focus:ring-indigo-100"
+                }`}
             >
-              <span className={address ? "text-gray-900" : "text-gray-500"}>
-                {address || t("select_location_placeholder")}
+              <span className={emirate ? "text-gray-900" : "text-gray-500"}>
+                {emirate || t("select_location_placeholder")}
               </span>
               <ChevronDownIcon
                 className={`h-5 w-5 text-gray-500 transition-transform ${showLocationSelector ? "rotate-180" : ""}`}
@@ -601,7 +614,58 @@ const BookingForm = ({
                 selectedEmirate={selectedCity ? selectedCity : selectedEmirate}
               />
             )}
-            <input type="hidden" name="address" value={address} required />
+            <input type="hidden" name="emirate" value={emirate} required />
+          </div> */}
+
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("emirate")}
+            </label>
+
+            <select
+              name="emirate"
+              value={emirate}
+              onChange={(e) => setEmirate(e.target.value)}
+              disabled={isFormDisabled}
+              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
+                }`}
+              required
+            >
+              <option value="">{t("select_location_placeholder")}</option>
+
+              {service.addresses && service.addresses.map((item, index) => (
+                <option key={index} value={item.address}>
+                  <span className="font-medium">{formatSlug(item?.address)}</span> — {t("service_charge")}:
+                  <Image
+                    src="/aed.svg"
+                    width={12}
+                    height={12}
+                    alt="AED"
+                    className="inline-block hover:scale-110 transition-transform duration-200"
+                  /> {item.service_charge}
+                </option>
+              ))}
+            </select>
+          </div>
+
+        </div>
+
+        <div className="flex flex-col lg:flex-row justify-between gap-10">
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("address")}
+            </label>
+            <textarea
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              disabled={isFormDisabled}
+              placeholder={t("enter_your_address_placeholder")}
+              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 resize-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
+                }`}
+              rows={3}
+              required
+            />
           </div>
         </div>
 
@@ -610,12 +674,11 @@ const BookingForm = ({
             {t("booking_datetime") || "Booking Date & Time"}
           </label>
           <div
-            onClick={isFormDisabled ? () => {} : toggleDateTimePopup}
-            className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 flex items-center justify-between transition-all duration-300 ${
-              isFormDisabled
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer hover:border-interactive_color focus:ring-2 focus:ring-indigo-100"
-            }`}
+            onClick={isFormDisabled ? () => { } : toggleDateTimePopup}
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 flex items-center justify-between transition-all duration-300 ${isFormDisabled
+              ? "opacity-50 cursor-not-allowed"
+              : "cursor-pointer hover:border-interactive_color focus:ring-2 focus:ring-indigo-100"
+              }`}
           >
             <span
               className={
@@ -664,13 +727,12 @@ const BookingForm = ({
                         <div
                           key={index}
                           onClick={() => !isClosed && handleDateSelect(dateStr)}
-                          className={`p-3 transition-colors duration-200 rounded-md mb-1 flex items-center justify-between ${
-                            isClosed
-                              ? "text-gray-400 bg-gray-100 cursor-not-allowed"
-                              : isSelected
-                                ? "bg-interactive_color text-white"
-                                : "cursor-pointer hover:bg-gray-100"
-                          }`}
+                          className={`p-3 transition-colors duration-200 rounded-md mb-1 flex items-center justify-between ${isClosed
+                            ? "text-gray-400 bg-gray-100 cursor-not-allowed"
+                            : isSelected
+                              ? "bg-interactive_color text-white"
+                              : "cursor-pointer hover:bg-gray-100"
+                            }`}
                         >
                           <span>{formatDateForDisplay(date)}</span>
                           {isSelected && <FiCheck className="h-4 w-4" />}
@@ -713,13 +775,12 @@ const BookingForm = ({
                           <div
                             key={idx}
                             onClick={() => isEnabled && handleTimeSelect(time)}
-                            className={`p-2 text-center rounded-md mb-1 ${
-                              !isEnabled
-                                ? "text-gray-400 bg-gray-100 cursor-not-allowed border border-gray-200"
-                                : isSelected
-                                  ? "bg-interactive_color text-white"
-                                  : "hover:bg-gray-100 border border-gray-200 cursor-pointer"
-                            }`}
+                            className={`p-2 text-center rounded-md mb-1 ${!isEnabled
+                              ? "text-gray-400 bg-gray-100 cursor-not-allowed border border-gray-200"
+                              : isSelected
+                                ? "bg-interactive_color text-white"
+                                : "hover:bg-gray-100 border border-gray-200 cursor-pointer"
+                              }`}
                           >
                             {time}
                           </div>
@@ -746,11 +807,10 @@ const BookingForm = ({
                     }
                   }}
                   disabled={!selectedDate || !selectedTime}
-                  className={`px-4 py-2 rounded-md transition-colors duration-200 ${
-                    selectedDate && selectedTime
-                      ? "bg-interactive_color text-white hover:bg-active_color"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }`}
+                  className={`px-4 py-2 rounded-md transition-colors duration-200 ${selectedDate && selectedTime
+                    ? "bg-interactive_color text-white hover:bg-active_color"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
                 >
                   {t("confirm") || "Confirm"}
                 </button>
@@ -806,11 +866,10 @@ const BookingForm = ({
         <div className="flex flex-col sm:flex-row gap-4">
           <button
             type="submit"
-            className={`w-full sm:w-auto px-6 py-3 ${
-              isFormDisabled
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-interactive_color hover:bg-active_color"
-            } text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:shadow-md flex items-center justify-center gap-2`}
+            className={`w-full sm:w-auto px-6 py-3 ${isFormDisabled
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-interactive_color hover:bg-active_color"
+              } text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:shadow-md flex items-center justify-center gap-2`}
             disabled={isFormDisabled}
           >
             <FiClock className="h-5 w-5" />
@@ -834,7 +893,7 @@ const BookingForm = ({
             {t("contact_provider")}
           </button>
         </div>
-      </form>
+      </form >
     </>
   );
 };

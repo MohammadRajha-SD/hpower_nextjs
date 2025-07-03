@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useServices } from "@/hooks/useServices";
 import Image from "next/image";
@@ -9,14 +9,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPinIcon, SearchIcon, FilterIcon, StarIcon } from "lucide-react";
 import LocationSelector from "../home/LocationSelector";
 import ServiceCard from "./ServiceCard";
-import useUserDetails from "@/hooks/useUserDetails";
+import AddressPromptDialog from "../home/AddressPromptDialog";
 
 const ServicesSection = () => {
   const { services, emirates } = useServices();
   const allServices = services?.services || [];
   const router = useRouter();
   const t = useTranslations("ServicesSection");
-  const { user } = useUserDetails();
 
   // State
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,49 +25,49 @@ const ServicesSection = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Filter services based on search query and location
-  // const filteredServices = useMemo(() => {
-  //   return allServices.filter((service: any) => {
-  //     // Search query filter
-  //     const matchesSearch =
-  //       searchQuery.trim() === ""
-  //         ? true
-  //         : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         service.description
-  //           .toLowerCase()
-  //           .includes(searchQuery.toLowerCase());
-
-  //     // Location filter
-  //     const matchesLocation =
-  //       selectedEmirate === ""
-  //         ? true
-  //         : service?.address?.toLowerCase() === selectedEmirate.toLowerCase();
-
-  //     return matchesSearch && matchesLocation;
-  //   });
-  // }, [allServices, searchQuery, selectedEmirate]);
-
-
   const filteredServices = useMemo(() => {
-    const locationToMatch = selectedEmirate || user?.address || "";
-
     return allServices.filter((service: any) => {
-      // 🔍 Search query filter
+      // Search query filter
       const matchesSearch =
         searchQuery.trim() === ""
           ? true
           : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          service.description?.toLowerCase().includes(searchQuery.toLowerCase());
+          service.description
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
 
-      // 📍 Location filter (match any address that includes the locationToMatch)
-      const matchesLocation = locationToMatch === ""
-        ? true
-        : service.addresses?.some((addr: any) =>
-          addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
-        );
+      // Location filter
+      const matchesLocation =
+        selectedEmirate === ""
+          ? true
+          : service?.address?.toLowerCase() === selectedEmirate.toLowerCase();
 
       return matchesSearch && matchesLocation;
     });
-  }, [allServices, searchQuery, selectedEmirate, user?.address]);
+  }, [allServices, searchQuery, selectedEmirate]);
+
+
+  // const filteredServices = useMemo(() => {
+  //   const locationToMatch = selectedEmirate || user?.address || "";
+
+  //   return allServices.filter((service: any) => {
+  //     // 🔍 Search query filter
+  //     const matchesSearch =
+  //       searchQuery.trim() === ""
+  //         ? true
+  //         : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         service.description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+  //     // 📍 Location filter (match any address that includes the locationToMatch)
+  //     const matchesLocation = locationToMatch === ""
+  //       ? true
+  //       : service.addresses?.some((addr: any) =>
+  //         addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
+  //       );
+
+  //     return matchesSearch && matchesLocation;
+  //   });
+  // }, [allServices, searchQuery, selectedEmirate, user?.address]);
 
   // Handle location selection
   const handleLocationSelect = (emirate: string, city?: string) => {
@@ -121,6 +120,7 @@ const ServicesSection = () => {
       transition: { duration: 0.2 },
     },
   };
+  
   return (
     <div className="px-5 xl:px-[3%] xxl:px-[6%] xxxl:px-[12%] mx-auto ">
       {/* Header Section */}
@@ -415,6 +415,7 @@ const ServicesSection = () => {
         )}
       </div>
 
+      <AddressPromptDialog />
     </div>
   );
 };

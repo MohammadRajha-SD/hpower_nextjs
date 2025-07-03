@@ -172,7 +172,7 @@ const LoginForm = () => {
               {/* ================ Forgot Password ================ */}
               <div className="text-right text-sm">
                 <a
-                  href="#"
+                  href="/forgot-password"
                   className="text-interactive_color hover:text-active_color"
                 >
                   {t("forgot_password")}

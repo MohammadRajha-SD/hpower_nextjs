@@ -6,7 +6,7 @@ import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocale, useTranslations } from "next-intl";
 import { BiErrorAlt } from "react-icons/bi";
@@ -29,9 +29,10 @@ import {
 } from "lucide-react";
 
 import { FaExclamation } from "react-icons/fa";
+import AddressPromptDialog from "../home/AddressPromptDialog";
 
 const SingleService = ({ serviceId }: { serviceId: string }) => {
-  const { services } = useServices();
+  const { services, emirates } = useServices();
   const { user, userType } = useUserDetails();
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(false);
@@ -48,6 +49,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
   } | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [address, setAddress] = useState("");
+  const [emirate, setEmirate] = useState("");
   const [hint, setHint] = useState("");
   const locale = useLocale();
   const isRTL = locale === "ar";
@@ -64,6 +66,8 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
       </div>
     );
   }
+
+
 
   const servicePrice = parseFloat(
     service.discount_price < 1 ? service.price : service.discount_price
@@ -129,6 +133,16 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     }
   };
 
+  // const isUserAddressSupported = () => {
+  //   if (user == null) return false;
+
+  //   if (!user?.address || !Array.isArray(service.addresses)) return false;
+
+  //   return service.addresses.some((addr: any) =>
+  //     addr.address?.toLowerCase().includes(user.address.toLowerCase())
+  //   );
+  // };
+
   const handleBooking = async (formData: FormData) => {
     if (isBookingDisabled) {
       toast.error(t("service_unavailable"));
@@ -136,6 +150,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     }
 
     const startAt = formData.get("start_at") as string;
+
     if (!startAt) {
       toast.error(t("select_datetime"));
       return;
@@ -145,7 +160,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/new-booking`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/new-booking?lang=${locale}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -175,6 +190,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
       };
 
       const emailResult = await sendBookingEmail(bookingData);
+
       if (!emailResult.success) {
         console.error("Failed to send booking email:", emailResult.error);
       }
@@ -219,28 +235,30 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     return { savings: "0", discountPercentage: 0, discountPrice: servicePrice };
   };
 
-  const isUserAddressSupported = () => {
-    if(user == null) return true;
-    if (!user?.address || !Array.isArray(service.addresses)) return false;
-
-    return service.addresses.some((addr: any) =>
-      addr.address?.toLowerCase().includes(user.address.toLowerCase())
-    );
-  };
-
   const { savings, discountPercentage, discountPrice } = calculateDiscount();
   const finalPrice = appliedCoupon ? discountPrice : servicePrice;
 
-  if (!isUserAddressSupported()) {
-    return <div className="flex justify-center text-center items-center gap-2 text-sm text-red-600 mt-4">
-      <FaExclamation className="text-yellow-500" />
-      {t("service_not_found")}
-    </div>
-  }
+  // if (!isUserAddressSupported()) {
+  //   return <AddressPromptDialog />;
+  //   //   return <div className="flex justify-center text-center items-center gap-2 text-sm text-red-600 mt-4">
+  //   //     <FaExclamation className="text-yellow-500" />
+  //   //     {t("service_not_found")}
+  //   //   </div>
+  // }
+
+  const formatSlug = (slug?: string) => {
+    if (!slug) return "-";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <div className={`w-full ${isRTL ? "text-right" : "text-left"}`}>
       <Toaster />
+
       <div className="block lg:hidden w-full h-[250px] sm:h-[350px] md:h-[450px] relative z-10">
         <Swiper
           modules={[Autoplay, Pagination]}
@@ -274,6 +292,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
           ))}
         </Swiper>
       </div>
+
       <div className="flex flex-col lg:flex-row mt-8 lg:mt-2">
         <div className="flex items-center px-8 md:ps-10 lg:w-1/2">
           <div className="w-full max-w-6xl mx-auto">
@@ -342,6 +361,8 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
               quantity={quantity}
               setQuantity={setQuantity}
               address={address}
+              emirate={emirate}
+              setEmirate={setEmirate}
               setAddress={setAddress}
               hint={hint}
               setHint={setHint}
@@ -470,7 +491,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                         className="flex justify-between items-center p-3 rounded-lg bg-blue-50 text-gray-700"
                       >
                         <div className="flex flex-col">
-                          <span className="font-medium">{item.address}</span>
+                          <span className="font-medium">{formatSlug(item?.address)}</span>
                           <span className="text-sm text-gray-500 inline-flex items-center gap-1">
                             {t("service_charge")}:
                             <Image
@@ -490,6 +511,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
             </div>
           </div>
         </div>
+
         <div className="order-1 lg:order-2 w-full lg:w-1/2 relative lg:h-[90vh]">
           <div
             className="hidden lg:block h-full w-full"
@@ -532,11 +554,14 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
               ))}
             </Swiper>
           </div>
+
           {showSuccessPopup && (
             <SuccessPopup onClose={() => setShowSuccessPopup(false)} />
           )}
         </div>
       </div>
+
+      <AddressPromptDialog />
     </div>
   );
 };

@@ -12,12 +12,18 @@ import { useTranslations } from "next-intl";
 import CancelBooking from "./CancelBooking";
 import { getStatusStyles } from "@/utils/helper";
 import SuccessPopup from "../services/SuccessPopup";
+import { MapPin } from "lucide-react";
 
 const Profile: React.FC = () => {
   const t = useTranslations("profile");
   const { services } = useServices();
   const { user, setUser, userType } = useUserDetails();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+  useEffect(() => {
+
+    console.log(user);
+  }, [user]);
 
   // Services provided by the user (for providers)
   const providerServices =
@@ -73,6 +79,7 @@ const Profile: React.FC = () => {
     username?: string;
     name?: string;
     password?: string;
+    address?: string;
     userType?: string;
   }) => {
     if (user) {
@@ -83,6 +90,7 @@ const Profile: React.FC = () => {
         phone_number: data.phoneNumber ?? user.phone_number,
         username: data.username ?? user.username,
         name: data.name ?? user.name,
+        address: data.address ?? user.address,
         user_type: data.userType ?? user.user_type ?? userType,
       };
       console.log("Updating user state with:", updatedUser); // Debug log
@@ -98,7 +106,17 @@ const Profile: React.FC = () => {
     setUser(null);
     router.push("/sign-in");
   }
-  
+
+  const formatSlug = (slug?: string) => {
+    if (!slug) return "-";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+
   return (
     <motion.div
       className="relative rounded-xl w-full p-6 bg-white shadow-lg"
@@ -138,6 +156,7 @@ const Profile: React.FC = () => {
               phoneNumber={user?.phone_number || ""}
               username={user?.username || ""}
               name={user?.name || ""}
+              address={user?.address || ""}
               userType={userType || ""}
               onUpdateProfile={handleUpdateProfile}
             />
@@ -232,6 +251,23 @@ const Profile: React.FC = () => {
                     <p className="text-sm text-gray-500">{t("phone_label")}</p>
                     <p className="text-gray-800 font-medium" dir="ltr">
                       {user?.phone_number || t("phone_not_provided")}
+                    </p>
+                  </div>
+                </motion.li>
+
+                <motion.li
+                  className="flex items-center gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.0, duration: 0.3 }}
+                >
+                  <div className="bg-interactive_color hover:bg-active_color p-2 rounded-full">
+                    <MapPin className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">{t("address_label")}</p>
+                    <p className="text-gray-800 font-medium" dir="ltr">
+                      {formatSlug(user?.address)}
                     </p>
                   </div>
                 </motion.li>

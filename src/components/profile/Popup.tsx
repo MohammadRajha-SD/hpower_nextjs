@@ -12,11 +12,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { motion } from "framer-motion";
-import { Edit } from "lucide-react";
+import { ChevronDown, Edit, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useServices } from "@/hooks/useServices";
+import LocationSelector from "../home/LocationSelector";
 
 interface EditProfileModalProps {
   email: string;
@@ -24,6 +26,7 @@ interface EditProfileModalProps {
   username: string;
   name: string;
   userType: string;
+  address?: string;
   onUpdateProfile: (data: {
     email?: string;
     phoneNumber?: string;
@@ -31,6 +34,7 @@ interface EditProfileModalProps {
     name?: string;
     password?: string;
     userType?: string;
+    address?: string;
   }) => void;
 }
 
@@ -40,18 +44,22 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   username,
   name,
   userType,
+  address,
   onUpdateProfile,
 }) => {
   const t = useTranslations("editProfile");
   const [newEmail, setNewEmail] = useState(email);
   const [newPhoneNumber, setNewPhoneNumber] = useState(phoneNumber);
   const [newName, setNewName] = useState(name);
+  const [newAddress, setNewAddress] = useState(address);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [activeTab, setActiveTab] = useState<"contact" | "password">("contact");
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { emirates } = useServices();
+
   const router = useRouter();
   // Get auth token
   const getAuthToken = () => Cookies.get("authToken") || "";
@@ -61,7 +69,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     setNewEmail(email);
     setNewPhoneNumber(phoneNumber);
     setNewName(name);
-  }, [email, phoneNumber, username, name]);
+    setNewAddress(address);
+  }, [email, phoneNumber, username, name, address]);
 
   // Reset password fields when dialog opens or closes
   useEffect(() => {
@@ -81,12 +90,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       username?: string;
       name?: string;
       password?: string;
+      address?: string;
       current_password?: string;
       user_type?: string;
-    } = { user_type: userType }; // Always include user_type
+    } = { user_type: userType };
 
     if (activeTab === "contact") {
       if (newEmail !== email) updateData.email = newEmail;
+      if (newAddress !== address) updateData.address = newAddress;
       if (newPhoneNumber !== phoneNumber)
         updateData.phone_number = newPhoneNumber;
       if (newName !== name) updateData.name = newName;
@@ -125,13 +136,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message_en || t("update_success"));
+        throw new Error(result.message || t("update_success"));
       }
 
       if (result.success) {
         // Fetch the latest user data to ensure consistency
         const userResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/profile`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/${userType}/me`,
           {
             headers: {
               Authorization: `Bearer ${getAuthToken()}`,
@@ -150,19 +161,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
           phoneNumber: userResult.data.phone_number,
           username: userResult.data.username,
           name: userResult.data.name,
+          address: userResult.data?.address,
           userType: userResult.data.user_type,
         };
 
         onUpdateProfile(updatedUserData);
         toast.success(t("update_success"));
-        router.push("/profilee");
+        router.push("/profile");
         setOpen(false);
       } else {
         throw new Error(t("update_failed"));
       }
     } catch (error: any) {
-      toast.success(error.message || t("update_failed"));
-      router.prefetch("/profileeee");
+      toast.error(error.message || t("update_failed"));
+      router.prefetch("/profile");
     } finally {
       setIsLoading(false);
     }
@@ -195,21 +207,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
         <div className="flex border-b mb-4">
           <button
-            className={`py-2 px-4 transition-colors duration-200 ${
-              activeTab === "contact"
-                ? "border-b-2 border-interactive_color text-interactive_color font-medium"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
+            className={`py-2 px-4 transition-colors duration-200 ${activeTab === "contact"
+              ? "border-b-2 border-interactive_color text-interactive_color font-medium"
+              : "text-gray-500 hover:text-gray-700"
+              }`}
             onClick={() => setActiveTab("contact")}
           >
             {t("contact_info")}
           </button>
           <button
-            className={`py-2 px-4 transition-colors duration-200 ${
-              activeTab === "password"
-                ? "border-b-2 border-interactive_color text-interactive_color font-medium"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
+            className={`py-2 px-4 transition-colors duration-200 ${activeTab === "password"
+              ? "border-b-2 border-interactive_color text-interactive_color font-medium"
+              : "text-gray-500 hover:text-gray-700"
+              }`}
             onClick={() => setActiveTab("password")}
           >
             {t("change_password")}
@@ -218,6 +228,36 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
         {activeTab === "contact" ? (
           <div className="space-y-4 py-2">
+            {/* show address dropdown */}
+            <div>
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700 mb-1"
+                dir="auto"
+              >
+                {t("address_label")}
+              </label>
+              <select
+                id="address"
+                value={newAddress || ""}
+                onChange={(e) => setNewAddress(e.target.value)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-interactive_color focus:border-interactive_color transition-colors duration-200"
+              >
+                <option value="">{t("select_address")}</option>
+
+                {emirates?.emirates &&
+                  Object.entries(emirates.emirates).map(([emirateName, cities]) => (
+                    <optgroup key={emirateName} label={emirateName}>
+                      {cities && cities?.map((city: any) => (
+                        <option key={city.slug} value={city.slug}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+              </select>
+            </div>
+
             <div>
               <label
                 htmlFor="name"
@@ -253,6 +293,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 placeholder={t("email_placeholder")}
               />
             </div>
+
             <div>
               <label
                 htmlFor="phone"
@@ -341,9 +382,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
           <AlertDialogAction
             onClick={handleSubmit}
             disabled={isLoading}
-            className={`px-4 py-2 bg-interactive_color text-white rounded-lg hover:bg-active_color transition-colors duration-200 ${
-              isLoading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`px-4 py-2 bg-interactive_color text-white rounded-lg hover:bg-active_color transition-colors duration-200 ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             {isLoading ? t("saving") : t("save_changes")}
           </AlertDialogAction>
