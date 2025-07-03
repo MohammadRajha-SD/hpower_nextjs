@@ -53,7 +53,10 @@
     "status_paid": "Paid",
     "status_cancelled": "Cancelled",
     "status_approved": "Approved",
-    "status_in_progress": "In Progress"
+    "status_in_progress": "In Progress",
+    "booking_status": "Booking Status",
+    "payment_status": "Payment Status",
+    "payment_link": "Pay Now"
   },
   "cancelBooking": {
     "cancel_booking_button": "Cancel Booking",

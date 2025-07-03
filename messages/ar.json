@@ -50,7 +50,10 @@
     "status_paid": "مدفوع",
     "status_cancelled": "ملغى",
     "status_approved": "موافق عليه",
-    "status_in_progress": "قيد التقدم"
+    "status_in_progress": "قيد التقدم",
+    "booking_status": "حـالة الحجز",
+    "payment_status": "حـالة الدفع",
+    "payment_link": "ادفع الآن"
   },
   "cancelBooking": {
     "cancel_booking_button": "إلغاء الحجز",

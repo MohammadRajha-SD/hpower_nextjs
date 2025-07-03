@@ -10,20 +10,15 @@ import EditProfileModal from "./Popup";
 import { useServices } from "@/hooks/useServices";
 import { useTranslations } from "next-intl";
 import CancelBooking from "./CancelBooking";
-import { getStatusStyles } from "@/utils/helper";
+import { getStatus, getStatusStyles } from "@/utils/helper";
 import SuccessPopup from "./SuccessPopup";
-import { MapPin } from "lucide-react";
+import { MapPin, CreditCard } from "lucide-react";
 
 const Profile: React.FC = () => {
   const t = useTranslations("profile");
   const { services } = useServices();
   const { user, setUser, userType } = useUserDetails();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
-  useEffect(() => {
-
-    console.log(user);
-  }, [user]);
 
   // Services provided by the user (for providers)
   const providerServices =
@@ -46,6 +41,8 @@ const Profile: React.FC = () => {
         acc[serviceId].bookings.push({
           id: booking.id,
           status: booking.booking_status,
+          payment_status: booking.payment_status,
+          payment_link: booking.payment_link
         });
         return acc;
       },
@@ -57,13 +54,17 @@ const Profile: React.FC = () => {
       .filter((service: any) => bookingAggregation[service.id])
       .map((service: any) => {
         const { count, bookings } = bookingAggregation[service.id];
+
         // Sort bookings by id (descending) to get the latest
         const latestBooking = bookings.sort((a: any, b: any) => b.id - a.id)[0];
+
         return {
           id: service.id,
           name: service.name,
           quantity: count,
           status: latestBooking.status,
+          payment_status: latestBooking.payment_status,
+          payment_link: latestBooking.payment_link,
           providerEmail: service.provider.email,
           providerName: service.provider.name,
           providerPhone: service.provider.phone_number,
@@ -94,6 +95,7 @@ const Profile: React.FC = () => {
         user_type: data.userType ?? user.user_type ?? userType,
       };
       console.log("Updating user state with:", updatedUser); // Debug log
+
       setUser(updatedUser);
       // Persist updated user data in cookies
       Cookies.set("userData", JSON.stringify(updatedUser), { expires: 7 });
@@ -184,6 +186,7 @@ const Profile: React.FC = () => {
               <span className="w-1 h-6 bg-interactive_color rounded-full mr-2"></span>
               {t("contact_information")}
             </h2>
+
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
               <ul className="space-y-4">
                 <motion.li
@@ -202,6 +205,7 @@ const Profile: React.FC = () => {
                     </p>
                   </div>
                 </motion.li>
+
                 <motion.li
                   className="flex items-center gap-3"
                   initial={{ opacity: 0, x: -20 }}
@@ -324,41 +328,94 @@ const Profile: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        <span
-                          className={`px-2 py-1 text-xs rounded-full flex items-center gap-2 ${getStatusStyles(
-                            service.status
-                          )}`}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-3 w-3 mr-1"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                      {/* Booking Status */}
+                      <div className="mt-2">
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {t("booking_status")} {/* حـالة الحجز */}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          <span
+                            className={`px-2 py-1 text-xs rounded-full flex items-center gap-2 ${getStatusStyles(
+                              service.status.toLowerCase()
+                            )}`}
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                          </svg>
-                          {t(`status_${service.status.toLowerCase()}`)}
-                        </span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-3 w-3 mr-1"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            {t(`status_${getStatus(service.status.toLowerCase())}`)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Payment Status */}
+                      <div className="mt-2">
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {t("payment_status")} {/* حـالة الدفع */}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          <span
+                            className={`px-2 py-1 text-xs rounded-full flex items-center gap-2 ${getStatusStyles(
+                              service.payment_status.toLowerCase()
+                            )}`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-3 w-3 mr-1"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            {t(`status_${getStatus(service.payment_status.toLowerCase())}`)}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Cancel Button */}
-                      <CancelBooking
-                        serviceName={service.name}
-                        userName={user.name}
-                        userEmail={user.email}
-                        userPhone={user.phone_number}
-                        providerEmail={service?.providerEmail}
-                        providerName={service?.providerName}
-                        providerPhone={service.providerPhone}
-                        setShowSuccessPopup={() => setShowSuccessPopup(true)}
-                      />
+                      {service.payment_status.toLowerCase() == 'paid' &&
+                        <CancelBooking
+                          serviceName={service.name}
+                          userName={user.name}
+                          userEmail={user.email}
+                          userPhone={user.phone_number}
+                          providerEmail={service?.providerEmail}
+                          providerName={service?.providerName}
+                          providerPhone={service.providerPhone}
+                          setShowSuccessPopup={() => setShowSuccessPopup(true)}
+                        />}
+
+                      {service.payment_status.toLowerCase() == 'pending' &&
+                        <motion.a
+                          href={service.payment_link ?? "#"}
+                          target="_blank"
+                          className="mt-3 flex items-center justify-center gap-2 w-full px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md transition-all duration-300 ease-in-out text-sm font-medium"
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+
+                        >
+                          <CreditCard className="h-4 w-4 mr-1" />
+
+                          {t("payment_link")}
+                        </motion.a>
+                      }
                     </div>
                   ))
                 ) : (

@@ -59,13 +59,29 @@ export const getStatusStyles = (status: string) => {
       return "bg-red-200 text-red-800";
     case "approved":
       return "bg-blue-200 text-blue-800 ";
-    case "in_progress":
+    case "in progress":
       return "bg-orange-200 text-orange-800";
     default:
       return "bg-gray-200 text-gray-800";
   }
 };
 
+export const getStatus = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "paid":
+      return "paid";
+    case "pending":
+      return "pending";
+    case "cancelled":
+      return "cancelled";
+    case "approved":
+      return "approved";
+    case "in progress":
+      return "in_progress";
+    default:
+      return "pending";
+  }
+};
 export const getInitial = (name: string) =>
   name && typeof name === "string" ? name.charAt(0).toUpperCase() : "U";
 

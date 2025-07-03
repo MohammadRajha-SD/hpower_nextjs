@@ -157,11 +157,10 @@ const CancelBooking: React.FC<CancelBookingProps> = ({
             {t("cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
-            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-              isFormValid
+            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${isFormValid
                 ? "bg-red-500 text-white hover:bg-red-600"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
+              }`}
             onClick={handleCancelBooking}
             disabled={!isFormValid}
           >
