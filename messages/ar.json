@@ -328,6 +328,7 @@
     ]
   },
   "SingleService": {
+    "no_addresses": "لا توجد عناوين متاحة",
     "service_not_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
     "enter_coupon_code": "يرجى إدخال رمز القسيمة",
     "enter_your_address_placeholder": "أدخل عنوانك",

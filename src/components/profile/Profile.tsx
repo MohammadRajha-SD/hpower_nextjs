@@ -11,7 +11,7 @@ import { useServices } from "@/hooks/useServices";
 import { useTranslations } from "next-intl";
 import CancelBooking from "./CancelBooking";
 import { getStatusStyles } from "@/utils/helper";
-import SuccessPopup from "../services/SuccessPopup";
+import SuccessPopup from "./SuccessPopup";
 import { MapPin } from "lucide-react";
 
 const Profile: React.FC = () => {
@@ -310,7 +310,8 @@ const Profile: React.FC = () => {
                 <span className="w-1 h-6 bg-interactive_color rounded-full mr-2"></span>
                 {t("userServices")}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
                 {userServices?.length > 0 ? (
                   userServices.map((service: any) => (
                     <div
@@ -322,6 +323,7 @@ const Profile: React.FC = () => {
                           {service.name}
                         </span>
                       </div>
+
                       <div className="mt-2 flex flex-wrap gap-2">
                         <span
                           className={`px-2 py-1 text-xs rounded-full flex items-center gap-2 ${getStatusStyles(
@@ -345,6 +347,7 @@ const Profile: React.FC = () => {
                           {t(`status_${service.status.toLowerCase()}`)}
                         </span>
                       </div>
+
                       {/* Cancel Button */}
                       <CancelBooking
                         serviceName={service.name}
@@ -389,6 +392,7 @@ const Profile: React.FC = () => {
           )}
         </div>
       </div>
+
       {showSuccessPopup && (
         <SuccessPopup onClose={() => setShowSuccessPopup(false)} />
       )}

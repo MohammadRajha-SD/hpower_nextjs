@@ -322,6 +322,7 @@
     ]
   },
   "SingleService": {
+    "no_addresses": "No addresses available",
     "service_not_found": "Service is not available in your area yet. Coming soon!",
     "enter_coupon_code": "Please enter a coupon code",
     "coupon_applied": "Coupon applied successfully!",

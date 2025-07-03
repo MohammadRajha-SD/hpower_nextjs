@@ -118,16 +118,17 @@ const BookingModal: FC<BookingModalProps> = ({
     const isService = "price" in item;
     const isSelected = isService && selectedService?.id === item.id;
 
+    // todo
+
     return (
       <div
         key={item.id}
-        className={`border rounded-lg cursor-pointer transition-all duration-300 shadow-lg p-4 ${
-          isService
-            ? isSelected
-              ? "bg-[#f57f1e5b] border-interactive_color"
-              : "bg-transparent"
-            : "bg-white border-gray-200"
-        } hover:bg-gray-100 active:bg-[var(--active-color)] transform hover:scale-105`}
+        className={`border rounded-lg cursor-pointer transition-all duration-300 shadow-lg p-4 ${isService
+          ? isSelected
+            ? "bg-[#f57f1e5b] border-interactive_color"
+            : "bg-transparent"
+          : "bg-white border-gray-200"
+          } hover:bg-gray-100 active:bg-[var(--active-color)] transform hover:scale-105`}
         onClick={() =>
           isService
             ? handleServiceSelect(item as Service)
@@ -154,6 +155,11 @@ const BookingModal: FC<BookingModalProps> = ({
             </div>
           </div>
         </div>
+
+        <p className="text-center shadow-text">
+          {typeof item.name === "string" ? item.name : item.name.en}
+        </p>
+
         {isService && (
           <div className="mt-2 text-sm text-gray-600 flex justify-between">
             <span>{t("price")}:</span>
@@ -213,9 +219,8 @@ const BookingModal: FC<BookingModalProps> = ({
           <AlertDialogAction
             onClick={handleBook}
             disabled={!selectedService}
-            className={`bg-interactive_color disabled:bg-[#5c4255] text-white disabled:cursor-not-allowed hover:bg-active_color transition-colors ${
-              !selectedService ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`bg-interactive_color disabled:bg-[#5c4255] text-white disabled:cursor-not-allowed hover:bg-active_color transition-colors ${!selectedService ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             {t("bookAppointment")}
           </AlertDialogAction>
