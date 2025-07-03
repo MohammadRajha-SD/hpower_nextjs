@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   FiCheck,
   FiClock,
@@ -70,6 +70,8 @@ const BookingForm = ({
   const { user, userType, loading } = useUserDetails();
   const [showLocationSelector, setShowLocationSelector] = useState(false);
   const [zIndex, setZIndex] = useState(10);
+  const locale = useLocale();
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { emirates: data } = useServices();
   const emirates = data?.emirates;
@@ -140,7 +142,7 @@ const BookingForm = ({
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?email=${user.email}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?email=${user.email}&lang=${locale}`,
         {
           headers: {
             "Content-Type": "application/json",

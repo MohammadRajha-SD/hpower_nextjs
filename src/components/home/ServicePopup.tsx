@@ -126,38 +126,38 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
   // }, [isOpen, selectedCategory, t, user?.address]);
 
 
-//   const handleCategorySelect = (category: Category) => {
-//   if (category.children && category.children.length > 0) {
-//     setNavigationStack((prev) => [...prev, currentLevel]);
-//     setCurrentLevel(category.children);
-//   } else if (
-//     category.has_services &&
-//     category.services &&
-//     category.services.length > 0
-//   ) {
-//     const filteredServices = category.services.filter((service) =>
-//       service.addresses?.some((addr) =>
-//         addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
-//       )
-//     );
+  //   const handleCategorySelect = (category: Category) => {
+  //   if (category.children && category.children.length > 0) {
+  //     setNavigationStack((prev) => [...prev, currentLevel]);
+  //     setCurrentLevel(category.children);
+  //   } else if (
+  //     category.has_services &&
+  //     category.services &&
+  //     category.services.length > 0
+  //   ) {
+  //     const filteredServices = category.services.filter((service) =>
+  //       service.addresses?.some((addr) =>
+  //         addr.address?.toLowerCase().includes(user?.address?.toLowerCase() || "")
+  //       )
+  //     );
 
-//     if (filteredServices.length === 0) {
-//       toast.error(t("noServicesAvailable"));
+  //     if (filteredServices.length === 0) {
+  //       toast.error(t("noServicesAvailable"));
 
-//     }
+  //     }
 
-//     setNavigationStack((prev) => [...prev, currentLevel]);
-//     setCurrentLevel(
-//       filteredServices.map((service) => ({
-//         ...service,
-//         name: service.name,
-//         image_path: service.image_path,
-//       }))
-//     );
-//   } else if (!category.has_services) {
-//     toast.error(t("noServicesAvailable"));
-//   }
-// };
+  //     setNavigationStack((prev) => [...prev, currentLevel]);
+  //     setCurrentLevel(
+  //       filteredServices.map((service) => ({
+  //         ...service,
+  //         name: service.name,
+  //         image_path: service.image_path,
+  //       }))
+  //     );
+  //   } else if (!category.has_services) {
+  //     toast.error(t("noServicesAvailable"));
+  //   }
+  // };
 
   const handleCategorySelect = (category: Category) => {
     if (category.children && category.children.length > 0) {
@@ -273,14 +273,24 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
             <h3 className="text-lg font-medium text-gray-800">
               {t("selectCategoryService")}
             </h3>
-            {navigationStack.length > 0 && (
-              <button
-                onClick={handleBack}
-                className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+
+            <div >
+              {navigationStack.length > 0 && (
+                <button
+                  onClick={handleBack}
+                  className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                >
+                  {t("back")}
+                </button>
+              )}
+
+              <a
+                href={"/services"}
+                className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
               >
-                {t("back")}
-              </button>
-            )}
+                {t("show_all")}
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto">

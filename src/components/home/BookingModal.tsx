@@ -197,14 +197,25 @@ const BookingModal: FC<BookingModalProps> = ({
             <h3 className="text-lg font-medium text-gray-800">
               {t("selectCategoryService")}
             </h3>
-            {navigationStack.length > 0 && (
-              <button
-                onClick={handleBack}
-                className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+
+            <div>
+
+              {navigationStack.length > 0 && (
+                <button
+                  onClick={handleBack}
+                  className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                >
+                  {t("back")}
+                </button>
+              )}
+
+              <a
+                href={"/services"}
+                className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
               >
-                {t("back")}
-              </button>
-            )}
+                {t("show_all")}
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto">

@@ -477,6 +477,7 @@
     "selectCategoryService": "اختر فئة أو خدمة",
     "back": "رجوع",
     "cancel": "إلغاء",
+    "show_all": "إظهار الكل",
     "selectService": "اختر الخدمة",
     "price": "السعر",
     "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!"
@@ -486,6 +487,7 @@
     "selectedDate": "تاريخ حجز الموعد المختار",
     "instructions": "يرجى اختيار فئة أو خدمة ثم انقر على 'احجز الموعد' للمتابعة.",
     "selectCategoryService": "اختر فئة أو خدمة",
+    "show_all": "إظهار الكل",
     "back": " رجوع",
     "cancel": "إلغاء",
     "bookAppointment": "احجز الموعد",
