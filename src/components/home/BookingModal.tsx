@@ -44,6 +44,7 @@ interface Service {
   name: string;
   description?: string;
   price?: string;
+  discount_price?: string;
   image_path?: string;
 }
 
@@ -118,8 +119,6 @@ const BookingModal: FC<BookingModalProps> = ({
     const isService = "price" in item;
     const isSelected = isService && selectedService?.id === item.id;
 
-    // todo
-
     return (
       <div
         key={item.id}
@@ -164,7 +163,15 @@ const BookingModal: FC<BookingModalProps> = ({
           <div className="mt-2 text-sm text-gray-600 flex justify-between">
             <span>{t("price")}:</span>
             <span className="font-semibold">
-              {formatCurrency(parseInt(item?.price), locale, 16)}
+              {formatCurrency(
+                parseInt(
+                  (item.discount_price != null && parseInt(item?.discount_price) > 0)
+                    ? item.discount_price
+                    : item.price
+                ),
+                locale,
+                16
+              )}
             </span>
           </div>
         )}
@@ -174,7 +181,7 @@ const BookingModal: FC<BookingModalProps> = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-[90%] max-h-[80vh] overflow-y-auto">
+      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[90vh] overflow-y-auto p-0">
         <AlertDialogHeader className="p-6 bg-interactive_color text-white hover:bg-active_color rounded-t-xl">
           <AlertDialogTitle className="text-2xl font-bold text-center">
             {t("title")}
@@ -192,14 +199,13 @@ const BookingModal: FC<BookingModalProps> = ({
           </p>
         </AlertDialogHeader>
 
-        <div className="space-y-6 p-6">
+        <div className="space-y-6 px-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-800">
+            <h3 className=" font-medium text-gray-800">
               {t("selectCategoryService")}
             </h3>
 
             <div>
-
               {navigationStack.length > 0 && (
                 <button
                   onClick={handleBack}

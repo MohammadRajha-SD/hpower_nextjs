@@ -246,7 +246,9 @@
     "search_placeholder": "ابحث عن الخدمات...",
     "select_location": "اختر الموقع",
     "active_filters": "فلاتر البحث :",
-    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!",
+    "noServicesAvailable": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!",
+    "no_services_found": "لا توجد خدمات متاحة حالياً.",
+    "stay_tuned_for_updates": "تابعونا للمزيد من التحديثات!",
     "showing": "عرض",
     "service": "خدمة",
     "services": "خدمات",
@@ -257,7 +259,6 @@
     "clear_location": "مسح الموقع",
     "view_grid": "عرض كشبكة",
     "view_list": "عرض كقائمة",
-    "no_services_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
     "featured": "مميز",
     "service_busy": "هذه الخدمة مشغولة"
   },
@@ -332,7 +333,7 @@
   },
   "SingleService": {
     "no_addresses": "لا توجد عناوين متاحة",
-    "service_not_found": "الخدمة غير متوفرة في منطقتك بعد. قريبًا!",
+    "service_not_found": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!",
     "enter_coupon_code": "يرجى إدخال رمز القسيمة",
     "enter_your_address_placeholder": "أدخل عنوانك",
     "coupon_applied": "تم تطبيق القسيمة بنجاح!",
@@ -480,7 +481,7 @@
     "show_all": "إظهار الكل",
     "selectService": "اختر الخدمة",
     "price": "السعر",
-    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!"
+    "noServicesAvailable": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!"
   },
   "BookingModal": {
     "title": "احجز موعدًا",
@@ -493,7 +494,7 @@
     "bookAppointment": "احجز الموعد",
     "price": "السعر",
     "selectServiceFirst": "يرجى اختيار خدمة أولاً!",
-    "noServicesAvailable": "الخدمة غير متوفرة حاليًا في منطقتك، سيتم إطلاقها قريبًا!"
+    "noServicesAvailable": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!"
   },
   "BecomeAPartner": {
     "header": "كن شريكًا في HPOWER",

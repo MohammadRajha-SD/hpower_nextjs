@@ -241,7 +241,9 @@
     "search_placeholder": "Search services...",
     "select_location": "Select location",
     "active_filters": "Search filters:",
-    "no_services_found": "Service is not available in your area yet. Coming soon!",
+    "noServicesAvailable": "No services available at the moment. Stay tuned for updates!",
+    "no_services_found": "No services available at the moment.",
+    "stay_tuned_for_updates": "Stay tuned for updates!",
     "showing": "Showing",
     "service": "service",
     "services": "services",
@@ -326,7 +328,7 @@
   },
   "SingleService": {
     "no_addresses": "No addresses available",
-    "service_not_found": "Service is not available in your area yet. Coming soon!",
+    "service_not_found": "No services available at the moment. Stay tuned for updates!",
     "enter_coupon_code": "Please enter a coupon code",
     "coupon_applied": "Coupon applied successfully!",
     "applied": "Coupon applied!",
@@ -462,11 +464,11 @@
     "instructions": "Browse categories and select the service you need",
     "selectCategoryService": "Select Category or Service",
     "back": "Back",
-    "show_all" : "Show All",
+    "show_all": "Show All",
     "cancel": "Cancel",
     "selectService": "Select Service",
     "price": "Price",
-    "noServicesAvailable": "Service is not available in your area yet. Coming soon!"
+    "noServicesAvailable": "No services available at the moment. Stay tuned for updates!"
   },
   "BookingModal": {
     "title": "Book an Appointment",
@@ -474,12 +476,12 @@
     "instructions": "Please select a category or service and then click 'Book Appointment' to proceed.",
     "selectCategoryService": "Select a Category/Service",
     "back": "Back",
-    "show_all" : "Show All",
+    "show_all": "Show All",
     "cancel": "Cancel",
     "bookAppointment": "Book Appointment",
     "price": "Price",
     "selectServiceFirst": "Please select a service first!",
-    "noServicesAvailable": "Service is not available in your area yet. Coming soon!"
+    "noServicesAvailable": "No services available at the moment. Stay tuned for updates!"
   },
   "BecomeAPartner": {
     "header": "Become a HPOWER partner",

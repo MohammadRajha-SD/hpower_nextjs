@@ -258,7 +258,7 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-[90%] max-h-[80vh] overflow-y-auto">
+      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[90vh] overflow-y-auto p-0">
         <AlertDialogHeader className="p-6 bg-interactive_color text-white hover:bg-active_color rounded-t-xl">
           <AlertDialogTitle className="text-2xl font-bold text-center">
             {t("title")}
@@ -268,9 +268,9 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
           </p>
         </AlertDialogHeader>
 
-        <div className="space-y-6 p-6">
+        <div className="space-y-6 px-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-800">
+            <h3 className="font-medium text-gray-800">
               {t("selectCategoryService")}
             </h3>
 

@@ -43,7 +43,7 @@ export const providerRegister = async (formData: any) => {
 
 export const userRegister = async (formData: any, locale) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/register`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/register?lang=${locale}`;
     
     formData.lang = locale;
 

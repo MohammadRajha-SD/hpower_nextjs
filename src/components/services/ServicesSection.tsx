@@ -120,7 +120,7 @@ const ServicesSection = () => {
       transition: { duration: 0.2 },
     },
   };
-  
+
   return (
     <div className="px-5 xl:px-[3%] xxl:px-[6%] xxxl:px-[12%] mx-auto ">
       {/* Header Section */}
@@ -295,12 +295,17 @@ const ServicesSection = () => {
 
       {/* Results count */}
       <div className="flex justify-between items-center mb-6 ">
-        <p className="text-interactive_color text-center mx-auto bg-green-300/60 p-2 rounded-xl">
-          {filteredServices.length === 0
-            ? t("no_services_found")
-            : `${t("showing")} ${filteredServices.length} ${filteredServices.length === 1 ? t("service") : t("services")}`}
-        </p>
-
+        {filteredServices.length === 0
+          ?
+          <div className="mx-auto text-center max-w-md bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded-xl shadow-sm">
+            <p className="font-semibold text-lg">{t("no_services_found")}</p>
+            <p className="text-sm">{t("stay_tuned_for_updates")}</p>
+          </div>
+          :
+          <p className="text-interactive_color  bg-green-300/60 p-2 rounded-xl">
+            {`${t("showing")} ${filteredServices.length} ${filteredServices.length === 1 ? t("service") : t("services")}`}
+          </p>
+        }
         {/* View toggle (visible on desktop only) */}
         <div className="hidden md:flex gap-2">
           <button

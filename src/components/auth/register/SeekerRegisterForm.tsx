@@ -14,8 +14,13 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { userRegister } from "@/actions/auth";
+import PhoneInput from "react-phone-input-2";
+import FormField from "@/components/partners/FormField";
+import { FaGlobe } from "react-icons/fa";
+import { motion } from "framer-motion";
+import "react-phone-input-2/lib/style.css";
+import { useForm, Controller } from "react-hook-form";
 
-// 
 interface FormData {
   name: string;
   username: string;
@@ -33,6 +38,17 @@ const SeekerRegisterForm = ({
   header: string;
   description: string;
 }) => {
+  const {
+    control,
+    register,
+    handleSubmit: onSSS,
+    formState: { errors: e1 },
+  } = useForm({
+    defaultValues: {
+      phone_number: "",
+    },
+  });
+
   const locale = useLocale();
   const isRTL = locale === "ar";
   const t = useTranslations("RegisterForm");
@@ -122,42 +138,42 @@ const SeekerRegisterForm = ({
       newErrors.email = [t("email_invalid")];
     }
 
-    // Phone Number validation with optional country code +971
-    const phone = formData.phone_number.trim();
-    const countryCode = "+971";
-    const validPrefixes = ["50", "54", "56", "52", "55", "58"];
+    // // Phone Number validation with optional country code +971
+    // const phone = formData.phone_number.trim();
+    // const countryCode = "+971";
+    // const validPrefixes = ["50", "54", "56", "52", "55", "58"];
 
-    if (!phone) {
-      newErrors.phone_number = [t("error.phone_required")];
-    } else {
-      let localNumber = phone;
+    // if (!phone) {
+    //   newErrors.phone_number = [t("error.phone_required")];
+    // } else {
+    //   let localNumber = phone;
 
-      // If starts with country code, remove it
-      if (phone.startsWith(countryCode)) {
-        localNumber = phone.slice(countryCode.length);
-      }
+    //   // If starts with country code, remove it
+    //   if (phone.startsWith(countryCode)) {
+    //     localNumber = phone.slice(countryCode.length);
+    //   }
 
-      // Remove any leading zeros if present after country code
-      if (localNumber.startsWith("0")) {
-        localNumber = localNumber.slice(1);
-      }
+    //   // Remove any leading zeros if present after country code
+    //   if (localNumber.startsWith("0")) {
+    //     localNumber = localNumber.slice(1);
+    //   }
 
-      const prefix = localNumber.slice(0, 2);
-      const remainingDigits = localNumber.slice(2);
+    //   const prefix = localNumber.slice(0, 2);
+    //   const remainingDigits = localNumber.slice(2);
 
-      // Check prefix
-      if (!validPrefixes.includes(prefix)) {
-        newErrors.phone_number = [t("error.phone_invalid_prefix")];
-      }
-      // Check total digits count (should be exactly 9 digits local number)
-      else if (localNumber.length !== 9) {
-        newErrors.phone_number = [t("error.phone_invalid_digits")];
-      }
-      // Also ensure phone number length makes sense with or without country code
-      else if (phone.length !== localNumber.length && phone.length !== localNumber.length + countryCode.length) {
-        newErrors.phone_number = [t("error.phone_invalid")];
-      }
-    }
+    //   // Check prefix
+    //   if (!validPrefixes.includes(prefix)) {
+    //     newErrors.phone_number = [t("error.phone_invalid_prefix")];
+    //   }
+    //   // Check total digits count (should be exactly 9 digits local number)
+    //   else if (localNumber.length !== 9) {
+    //     newErrors.phone_number = [t("error.phone_invalid_digits")];
+    //   }
+    //   // Also ensure phone number length makes sense with or without country code
+    //   else if (phone.length !== localNumber.length && phone.length !== localNumber.length + countryCode.length) {
+    //     newErrors.phone_number = [t("error.phone_invalid")];
+    //   }
+    // }
 
     if (!formData.password) {
       newErrors.password = [t("password_required")];
@@ -172,10 +188,29 @@ const SeekerRegisterForm = ({
     return newErrors;
   };
 
+  // Define what to do on valid data
+  const onValid = (data: { phone_number: string }) => {
+    console.log("Valid data:", data);
+    // You can proceed with submit here
+  };
+
+  // Define what to do on invalid data (optional)
+  const onInvalid = (errors: any) => {
+    console.log("Validation errors:", errors['phone_number']['message']);
+    // Handle errors here
+    const newErrors: Record<string, string[]> = {};
+    newErrors.phone_number = [errors['phone_number']['message']];
+
+    setErrors(newErrors);
+  };
+
+  // Trigger validation and submission programmatically
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    onSSS(onValid, onInvalid)();
 
     // Validate form first
     const validationErrors = validateForm();
@@ -191,8 +226,8 @@ const SeekerRegisterForm = ({
       return;
     }
 
+    // Map form fields to API expected format
     try {
-      // Map form fields to API expected format
       const apiFormData = {
         name: formData.name,
         username: formData.username,
@@ -200,7 +235,7 @@ const SeekerRegisterForm = ({
         password: formData.password,
         password_confirmation: formData.confirm_password,
         phone_number: formData.phone_number,
-        language: formData.language,
+        lang: formData.language,
       };
 
       const result = await userRegister(apiFormData, locale);
@@ -352,40 +387,102 @@ const SeekerRegisterForm = ({
                 </div>
 
 
-                {/* PHONe */}
+
+                {/* Phone */}
                 <div className="flex gap-2 w-full flex-col md:flex-row">
-                  {/* Phone Input */}
                   <div className="flex flex-col w-full md:w-1/2">
+
                     <label
                       htmlFor="phone_number"
-                      className="mb-1 text-xs sm:text-sm text-gray-600"
+                      className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      {t("phone_number")}:
+                      {t("phone_number")} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                        <PhoneIcon size={18} />
-                      </div>
-                      <input
-                        id="phone_number"
-                        type="tel"
+                      <Controller
                         name="phone_number"
-                        value={formData.phone_number}
-                        onChange={handleChange}
-                        className={`w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-lg border ${errors.phone_number
-                          ? "border-red-500"
-                          : "border-gray-400"
-                          } placeholder-gray-500 focus:outline-none focus:border-active_color`}
-                        placeholder={t("enter_phone_number")}
-                        required
-                        dir="ltr"
+                        control={control}
+                        rules={{
+                          required: t("error.phone_required"),
+                          validate: (value) => {
+                            const countryCode = "+971";
+                            const localNumber = value.slice(countryCode.length - 1);
+                            const prefix = localNumber.slice(0, 2);
+                            const validPrefixes = ["50", "54", "56", "52", "55", "58"];
+                            const remainingDigits = localNumber.slice(2);
+
+                            if (value === countryCode || value.length <= countryCode.length) {
+                              return t("error.phone_invalid") || "Phone number must include more than just the country code";
+                            }
+                            if (!validPrefixes.includes(prefix)) {
+                              return t("error.phone_invalid_prefix") || "Phone number prefix is invalid.";
+                            }
+                            if (!/^\d{7}$/.test(remainingDigits)) {
+                              return t("error.phone_invalid_format") || "Phone number must have exactly 7 digits after the prefix";
+                            }
+                            if (value.length - 3 !== 9) {
+                              return t("error.phone_invalid_digits") || "Phone number must be exactly 9 digits after the country code";
+                            }
+                            return true;
+                          },
+                        }}
+                        render={({ field: { onChange, value } }) => (
+                          <PhoneInput
+                            country={"ae"}
+                            value={value}
+                            onChange={(val) => {
+                              onChange(val);
+                              setFormData((prev) => ({
+                                ...prev,
+                                phone_number: val,
+                              }));
+                              if (errors.phone_number) {
+                                setErrors((prev) => {
+                                  const newErrors = { ...prev };
+                                  delete newErrors.phone_number;
+                                  return newErrors;
+                                });
+                              }
+                            }}
+                            containerStyle={{ width: "100%" }}
+                            inputStyle={{
+                              width: "100%",
+                              height: "48px",
+                              fontSize: "1rem",
+                              borderRadius: "0.375rem",
+                              border: "1px solid #e5e7eb",
+                              paddingLeft: "48px",
+                              backgroundColor: "white",
+                              outline: "none",
+                            }}
+                            buttonStyle={{
+                              background: "white",
+                              border: "1px solid #e5e7eb",
+                              borderRight: "none",
+                              borderRadius: "0.375rem 0 0 0.375rem",
+                            }}
+                            dropdownStyle={{ width: "300px" }}
+                            inputProps={{
+                              required: true,
+                              name: "phone",
+                              className:
+                                "focus:ring-2 focus:ring-interactive_color focus:border-interactive_color transition-all duration-200",
+                            }}
+                            placeholder={t("phone_number_placeholder")}
+                          />
+                        )}
                       />
+                      {errors.phone_number && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="text-red-500 text-sm mt-1"
+                        >
+                          {errors.phone_number[0]}
+                        </motion.p>
+                      )}
+
                     </div>
-                    {errors.phone_number && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.phone_number[0]}
-                      </p>
-                    )}
                   </div>
 
                   {/* Email Input */}
