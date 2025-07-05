@@ -245,7 +245,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               >
                 <option value="">{t("select_address")}</option>
 
-                {emirates?.emirates &&
+                {/* {emirates?.emirates &&
                   Object.entries(emirates.emirates).map(([emirateName, cities]) => (
                     <optgroup key={emirateName} label={emirateName}>
                       {cities && cities?.map((city: any) => (
@@ -254,7 +254,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </option>
                       ))}
                     </optgroup>
+                  ))} */}
+
+                {emirates?.emirates &&
+                  Object.entries(emirates.emirates).map(([emirateName, cities]) => (
+                    <optgroup key={emirateName} label={emirateName}>
+                      {(cities as Array<{ slug: string; name: string }>).map((city) => (
+                        <option key={city.slug} value={city.slug}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </optgroup>
                   ))}
+
               </select>
             </div>
 
