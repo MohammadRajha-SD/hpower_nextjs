@@ -41,7 +41,15 @@ const AutoSlider = ({ data }) => {
   return (
     <div className="">
       <div className="mx-auto px-4">
+
         <div className="w-full overflow-hidden relative">
+  <a
+            href={"/services"}
+            className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+          >
+            {/* {t("show_all")} */}
+            show_all
+          </a>
           <div
             className="absolute left-0 top-0 w-12 lg:w-60 h-full z-10 pointer-events-none"
             style={{
@@ -96,7 +104,7 @@ const AutoSlider = ({ data }) => {
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button> */}
-
+        
           <Swiper
             ref={swiperRef}
             modules={[Navigation, Autoplay]}
@@ -144,11 +152,15 @@ const AutoSlider = ({ data }) => {
             }}
             className="w-full py-10"
           >
+
+
+
             {data?.map((item: any, index) => (
               <SwiperSlide
                 key={`swiper_slide_1_${item.id}_${index}`}
                 className="flex justify-center items-center"
               >
+
                 <div
                   className="w-[200px] h-[200px] flex flex-col gap-3 items-center justify-center group cursor-pointer"
                   onClick={() => handleCategoryClick(item)}

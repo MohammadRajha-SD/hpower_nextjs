@@ -146,6 +146,7 @@ const Search = () => {
       setFilteredServices(filtered);
       setIsDropdownOpen(filtered.length > 0);
     }
+    
     // **Remove filteredServices from dependencies**
   }, [searchQuery, selectedEmirate, selectedCity, allServices]);
 
