@@ -64,7 +64,7 @@ const Footer = () => {
                       className="group text-sm text-gray-500 hover:text-gray-900 transition-all duration-300 w-fit relative"
                     >
                       <Link
-                        href={`services/${item.id}`}
+                        href={`/services/${item.id}`}
                         aria-label={`Visit ${item.name}`}
                         className="block px-1 py-0.5"
                       >
@@ -159,7 +159,7 @@ const Footer = () => {
               height={40}
             />
           </div>
-           <div>
+          <div>
             <Image
               quality={100}
               src={"/images/home/google-pay.svg"}
@@ -168,7 +168,7 @@ const Footer = () => {
               height={40}
             />
           </div>
-           <div>
+          <div>
             <Image
               quality={100}
               src={"/images/home/apple-pay.webp"}
@@ -177,7 +177,7 @@ const Footer = () => {
               height={40}
             />
           </div>
-           <div>
+          <div>
             <Image
               quality={100}
               src={"/images/home/logo-samsung.png"}

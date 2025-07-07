@@ -75,7 +75,7 @@ const LocationSelector = ({
     return (
         <motion.div
             ref={dropdownRef}
-            className="w-full max-w-full bg-white rounded-lg shadow-xl max-h-[24rem] overflow-auto z-[1000]"
+            className="w-full max-w-full bg-white rounded-lg shadow-xl  overflow-auto z-[1000]"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -182,6 +182,7 @@ const AddressPromptDialog = () => {
     const t = useTranslations("AddressPrompt");
     const { emirates } = useServices();
     const { user, setUser, userType } = useUserDetails();
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         if (user && !user.address) {
@@ -233,7 +234,7 @@ const AddressPromptDialog = () => {
 
     return (
         <AlertDialog open={isOpen} onOpenChange={handleClose}>
-            <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-[90%] max-h-[80vh] overflow-y-auto">
+            <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[90vh] overflow-y-auto">
                 <AlertDialogHeader className="p-6 bg-interactive_color text-white hover:bg-active_color rounded-t-xl">
                     <AlertDialogTitle className="text-2xl font-bold text-center">
                         {t("pleaseSelectAddress")}
@@ -243,14 +244,37 @@ const AddressPromptDialog = () => {
                     </p>
                 </AlertDialogHeader>
 
-                <div className="flex flex-col items-center justify-center space-y-6 p-6 w-full">
+                <div className="relative w-full">
+                    <button
+                        onClick={() => setIsDropdownOpen((prev) => !prev)}
+                        className="w-full border border-gray-300 p-3 rounded-lg text-left"
+                    >
+                        {selectedEmirate ? selectedEmirate : t("select_location_title")}
+                    </button>
+
+                    {isDropdownOpen && (
+                        <div className="absolute mt-2 w-full z-50">
+                            <LocationSelector
+                                emirates={emirates?.emirates || {}}
+                                onSelect={(slug, name) => {
+                                    handleLocationSelect(slug);
+                                    setIsDropdownOpen(false);
+                                }}
+                                onClose={() => setIsDropdownOpen(false)}
+                                selectedEmirate={selectedEmirate}
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* <div className="flex flex-col items-center justify-center space-y-6 p-6 w-full">
                     <LocationSelector
                         emirates={emirates?.emirates || {}}
                         onSelect={handleLocationSelect}
                         onClose={() => setIsOpen(false)}
                         selectedEmirate={selectedEmirate}
                     />
-                </div>
+                </div> */}
 
                 <AlertDialogFooter className="p-6 bg-gray-50 rounded-b-xl border-t border-gray-200 flex gap-3 items-center justify-end">
                     <AlertDialogCancel

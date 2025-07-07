@@ -118,18 +118,21 @@ const Search = () => {
     const filtered = allServices.filter((service) => {
       const name = service.name?.toLowerCase() || "";
       const desc = service.description?.toLowerCase() || "";
-      const addr = service.address?.toLowerCase() || "";
+      const addresses = service.addresses || [];
 
       const matchesQuery =
         searchQuery
           ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
           : true;
 
+
+      // Location filter
       const matchesLocation =
-        selectedEmirate
-          ? addr.includes(selectedEmirate.toLowerCase()) ||
-          (selectedCity && addr.includes(selectedCity.toLowerCase()))
-          : true;
+        selectedEmirate === ""
+          ? true
+          : addresses?.some((addr) =>
+            addr?.address?.toLowerCase() === selectedEmirate.toLowerCase()
+          );
 
       return matchesQuery && matchesLocation;
     });

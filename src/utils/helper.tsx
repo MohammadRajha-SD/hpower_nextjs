@@ -57,6 +57,8 @@ export const getStatusStyles = (status: string) => {
       return " text-yellow-800 !bg-yellow-500 ";
     case "cancelled":
       return "bg-red-200 text-red-800";
+    case "refunded":
+      return "bg-red-200 text-red-800";
     case "approved":
       return "bg-blue-200 text-blue-800 ";
     case "in progress":
@@ -76,6 +78,8 @@ export const getStatus = (status: string) => {
       return "cancelled";
     case "approved":
       return "approved";
+    case "refunded":
+      return "refunded";
     case "in progress":
       return "in_progress";
     default:

@@ -20,7 +20,7 @@ const transitionVariants = {
 const Transition = () => {
   return (
     <>
-      <motion.div
+      {/* <motion.div
         className="fixed top-16 bottom-0 right-full w-screen h-screen z-20 bg-active_color"
         variants={transitionVariants}
         initial="initial"
@@ -35,7 +35,8 @@ const Transition = () => {
         animate="animate"
         exit="exit"
         transition={{ delay: 0.4, duration: 0.9, ease: "easeInOut" }}
-      ></motion.div>
+      ></motion.div> */}
+      
     </>
   );
 };

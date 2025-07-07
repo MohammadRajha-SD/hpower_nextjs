@@ -13,13 +13,19 @@ const ServiceCard = ({ service, viewMode, router }: any) => {
   const handleClick = () => {
     router.push(`/services/${service.id}`);
   };
+  const formatSlug = (slug?: string) => {
+    if (!slug) return "-";
 
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   return (
     <div
       onClick={handleClick}
-      className={`bg-white rounded-xl shadow cursor-pointer overflow-hidden transition ${
-        isGrid ? "" : "flex"
-      } ${isBusy ? "opacity-50 cursor-not-allowed" : ""}`}
+      className={`bg-white rounded-xl shadow cursor-pointer overflow-hidden transition ${isGrid ? "" : "flex"
+        } ${isBusy ? "opacity-50 cursor-not-allowed" : ""}`}
     >
       <div className={`${isGrid ? "h-48 w-full" : "w-1/3 min-h-40"}`}>
         <div className="w-full h-48 overflow-hidden">
@@ -80,7 +86,11 @@ const ServiceCard = ({ service, viewMode, router }: any) => {
 
         <div className="mt-2 flex items-center text-sm text-gray-600">
           <MapPinIcon className="w-4 h-4 mr-1 text-gray-400" />
-          <span>{service.address}</span>
+          <span>
+            {service.addresses && service.addresses?.map((address, index) => (
+              <span key={index}>{formatSlug(address.address)}{index < service.addresses.length - 1 ? ', ' : ''}</span>
+            ))}
+          </span>
         </div>
       </div>
     </div>

@@ -42,6 +42,7 @@ interface Service {
   name: string;
   description?: string;
   price?: string;
+  discount_price?: string;
   image_path?: string;
   addresses?: any[];
 }
@@ -248,7 +249,15 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
           <div className="mt-2 text-sm text-gray-600 flex justify-between">
             <span>{t("price")}:</span>
             <span className="font-semibold">
-              {formatCurrency(parseInt(item.price), locale, 16)}
+              {formatCurrency(
+                parseInt(
+                  (item.discount_price != null && parseInt(item?.discount_price) > 0)
+                    ? item.discount_price
+                    : item.price
+                ),
+                locale,
+                16
+              )}
             </span>
           </div>
         )}
@@ -258,7 +267,7 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[90vh] overflow-y-auto p-0">
+      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[80vh] overflow-y-auto p-0">
         <AlertDialogHeader className="p-6 bg-interactive_color text-white hover:bg-active_color rounded-t-xl">
           <AlertDialogTitle className="text-2xl font-bold text-center">
             {t("title")}
@@ -266,6 +275,7 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
           <p className="mt-1 text-sm opacity-90 text-center">
             {t("instructions")}
           </p>
+
         </AlertDialogHeader>
 
         <div className="space-y-6 px-2">
@@ -278,6 +288,14 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
               {navigationStack.length > 0 && (
                 <button
                   onClick={handleBack}
+                  className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                >
+                  {t("back")}
+                </button>
+              )}
+              {navigationStack.length <= 0 && (
+                <button
+                  onClick={() => onOpenChange(false)}
                   className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
                 >
                   {t("back")}

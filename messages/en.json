@@ -56,7 +56,11 @@
     "status_in_progress": "In Progress",
     "booking_status": "Booking Status",
     "payment_status": "Payment Status",
-    "payment_link": "Pay Now"
+    "payment_link": "Pay Now",
+    "orders": "Orders",
+    "status_booked": "Booked",
+    "status_completed": "Completed",
+    "status_refunded": "Refunded"
   },
   "cancelBooking": {
     "cancel_booking_button": "Cancel Booking",
@@ -68,6 +72,7 @@
     "cancel": "Cancel",
     "confirm_cancel": "Confirm Cancellation",
     "toast_success": "Booking cancellation request sent successfully!",
+    "toast_success2": "Your booking has been successfully canceled.",
     "toast_error": "Failed to send cancellation request. Please try again."
   },
   "editProfile": {
@@ -733,7 +738,8 @@
     "pleaseSelectAddress": "Please select your address",
     "youNeedToSelectAddress": "You need to select your address to continue",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "select_location_title": "Select Your Location"
   },
   "ForgotPassword": {
     "email": "Email",

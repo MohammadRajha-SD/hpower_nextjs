@@ -316,9 +316,25 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
 
             <div className="mb-2 p-2 rounded-xl flex flex-col justify-center items-center">
               <div className="flex items-end gap-4 mb-2 flex-col sm:flex-row">
-                <p className="text-2xl font-bold text-interactive_color bg-gradient-to-r from-green-50 to-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out tracking-wide hover:scale-105">
+                {/* <p className="text-2xl font-bold text-interactive_color bg-gradient-to-r from-green-50 to-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out tracking-wide hover:scale-105">
                   {formatCurrency(finalPrice, locale, 20)}
-                </p>
+                </p> */}
+
+                <div className="flex items-center space-x-3">
+                  {/* Old Price */}
+                  {/* servicePrice */}
+                  {parseInt(service.price) > parseInt(service.discount_price) &&
+                    <p className="text-lg line-through text-gray-400">
+                      {formatCurrency(parseInt(service.price), locale, 20)}
+                    </p>
+                  }
+
+                  {/* New Final Price */}
+                  <p className="text-2xl font-bold text-interactive_color bg-gradient-to-r from-green-50 to-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out tracking-wide hover:scale-105">
+                    {formatCurrency(finalPrice, locale, 20)}
+                  </p>
+                </div>
+
                 {appliedCoupon && (
                   <span className="text-xl text-gray-500 line-through">
                     {formatCurrency(servicePrice, locale, 20)}

@@ -53,7 +53,11 @@
     "status_in_progress": "قيد التقدم",
     "booking_status": "حـالة الحجز",
     "payment_status": "حـالة الدفع",
-    "payment_link": "ادفع الآن"
+    "payment_link": "ادفع الآن",
+    "orders": "الطلبات",
+    "status_booked": "محجوز",
+    "status_completed": "مكتمل",
+    "status_refunded": "تم الاسترداد"
   },
   "cancelBooking": {
     "cancel_booking_button": "إلغاء الحجز",
@@ -65,6 +69,7 @@
     "cancel": "إلغاء",
     "confirm_cancel": "تأكيد الإلغاء",
     "toast_success": "تم إرسال طلب إلغاء الحجز بنجاح!",
+    "toast_success2": "تم إلغاء الحجز الخاص بك.",
     "toast_error": "فشل إرسال طلب الإلغاء. يرجى المحاولة مرة أخرى."
   },
   "FirstSection": {
@@ -746,7 +751,8 @@
     "pleaseSelectAddress": "يرجى اختيار عنوانك",
     "youNeedToSelectAddress": "يجب عليك اختيار عنوانك للمتابعة",
     "cancel": "إلغاء",
-    "save": "حفظ"
+    "save": "حفظ",
+    "select_location_title": "اختر موقعك"
   },
   "ForgotPassword": {
     "email": "البريد الإلكتروني",

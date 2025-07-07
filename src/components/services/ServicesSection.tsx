@@ -22,7 +22,7 @@ const ServicesSection = () => {
   const [selectedEmirate, setSelectedEmirate] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   // Filter services based on search query and location
   const filteredServices = useMemo(() => {
@@ -40,7 +40,9 @@ const ServicesSection = () => {
       const matchesLocation =
         selectedEmirate === ""
           ? true
-          : service?.address?.toLowerCase() === selectedEmirate.toLowerCase();
+          : service?.addresses?.some((addr) =>
+            addr?.address?.toLowerCase() === selectedEmirate.toLowerCase()
+          );
 
       return matchesSearch && matchesLocation;
     });

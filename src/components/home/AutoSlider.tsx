@@ -57,7 +57,7 @@ const AutoSlider = ({ data }) => {
             }}
           />
 
-          <button
+          {/* <button
             ref={navigationPrevRef}
             className="absolute left-4 lg:left-16 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full shadow-md w-10 h-10 flex items-center justify-center focus:outline-none transition-all duration-300 hover:bg-active_color hover:text-white hover:scale-110"
             aria-label="Previous slide"
@@ -95,7 +95,7 @@ const AutoSlider = ({ data }) => {
             >
               <path d="M9 18l6-6-6-6" />
             </svg>
-          </button>
+          </button> */}
 
           <Swiper
             ref={swiperRef}

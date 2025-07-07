@@ -181,7 +181,7 @@ const BookingModal: FC<BookingModalProps> = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[90vh] overflow-y-auto p-0">
+      <AlertDialogContent className="bg-white max-w-3xl rounded-xl shadow-2xl w-md-[90%] max-h-[80vh] overflow-y-auto p-0">
         <AlertDialogHeader className="p-6 bg-interactive_color text-white hover:bg-active_color rounded-t-xl">
           <AlertDialogTitle className="text-2xl font-bold text-center">
             {t("title")}
@@ -210,6 +210,15 @@ const BookingModal: FC<BookingModalProps> = ({
                 <button
                   onClick={handleBack}
                   className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                >
+                  {t("back")}
+                </button>
+              )}
+
+              {navigationStack.length <= 0 && (
+                <button
+                  onClick={() => onOpenChange(false)}
+                  className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
                 >
                   {t("back")}
                 </button>

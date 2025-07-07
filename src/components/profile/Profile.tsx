@@ -19,6 +19,7 @@ const Profile: React.FC = () => {
   const { services } = useServices();
   const { user, setUser, userType } = useUserDetails();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [activeTab, setActiveTab] = useState("booked");
 
   // Services provided by the user (for providers)
   const providerServices =
@@ -68,6 +69,7 @@ const Profile: React.FC = () => {
           providerEmail: service.provider.email,
           providerName: service.provider.name,
           providerPhone: service.provider.phone_number,
+          booking_id: latestBooking.id
         };
       });
   })();
@@ -118,6 +120,9 @@ const Profile: React.FC = () => {
       .join(" ");
   };
 
+  const filteredServices = userServices?.filter(
+    (service) => activeTab === 'booked' ? service.payment_status.toLowerCase() === "paid" && service.status.toLowerCase() !== "approved" : activeTab === 'completed' ? service.status.toLowerCase() === "approved" : service.status.toLowerCase() === activeTab
+  );
 
   return (
     <motion.div
@@ -310,14 +315,32 @@ const Profile: React.FC = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="mb-8"
             >
+              {/* Title */}
               <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-1 h-6 bg-interactive_color rounded-full mr-2"></span>
-                {t("userServices")}
+                {t("orders")}
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
-                {userServices?.length > 0 ? (
-                  userServices.map((service: any) => (
+              {/* TABS */}
+              <div className="mb-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {["booked", "completed", "cancelled", "pending"].map((status) => (
+                  <button
+                    key={status}
+                    onClick={() => setActiveTab(status)}
+                    className={`px-4 py-2 rounded-lg border text-sm font-medium capitalize transition-all duration-200 ${activeTab === status
+                      ? "bg-interactive_color text-white"
+                      : "bg-white text-gray-600 border-gray-300 hover:bg-gray-100"
+                      }`}
+                  >
+                    {t(`status_${status}`)}
+                  </button>
+                ))}
+              </div>
+
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-2">
+                {filteredServices?.length > 0 ? (
+                  filteredServices.map((service: any) => (
                     <div
                       key={service.name}
                       className={`relative p-4 border rounded-lg flex flex-col w-full border-gray-200 bg-white shadow-sm hover:border-blue-500 hover:shadow-md transition-all duration-200`}
@@ -390,9 +413,11 @@ const Profile: React.FC = () => {
                       </div>
 
                       {/* Cancel Button */}
-                      {service.payment_status.toLowerCase() == 'paid' &&
+                      {(service.payment_status.toLowerCase() == 'paid' || service.payment_status.toLowerCase() == 'pending') &&
                         <CancelBooking
                           serviceName={service.name}
+                          bookingId={service.booking_id}
+                          status={service.payment_status.toLowerCase()}
                           userName={user.name}
                           userEmail={user.email}
                           userPhone={user.phone_number}
@@ -400,7 +425,8 @@ const Profile: React.FC = () => {
                           providerName={service?.providerName}
                           providerPhone={service.providerPhone}
                           setShowSuccessPopup={() => setShowSuccessPopup(true)}
-                        />}
+                        />
+                      }
 
                       {service.payment_status.toLowerCase() == 'pending' &&
                         <motion.a
