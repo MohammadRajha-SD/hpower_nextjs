@@ -246,19 +246,29 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
         </h4>
 
         {isService && (
-          <div className="mt-2 text-sm text-gray-600 flex justify-between">
-            <span>{t("price")}:</span>
-            <span className="font-semibold">
-              {formatCurrency(
-                parseInt(
-                  (item.discount_price != null && parseInt(item?.discount_price) > 0)
-                    ? item.discount_price
-                    : item.price
-                ),
-                locale,
-                16
+          <div>
+            <div className="mt-2 text-sm text-gray-600 flex justify-between">
+              <span>{t("price")}:</span>
+              <span className="text-interactive_color font-semibold">
+                {formatCurrency(
+                  parseFloat(
+                    parseInt(item.discount_price) < 1
+                      ? item.price
+                      : item.discount_price
+                  ),
+                  locale,
+                  16
+                )}
+              </span>
+            </div>
+
+            <div className="flex justify-end">
+              {parseInt(item.discount_price) > 1 && (
+                <span className="text-gray-500 line-through" style={{ fontSize: "12px" }}>
+                  {formatCurrency(parseFloat(item.price), locale, 14)}
+                </span>
               )}
-            </span>
+            </div>
           </div>
         )}
       </div>

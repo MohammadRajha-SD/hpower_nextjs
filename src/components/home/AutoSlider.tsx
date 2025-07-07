@@ -43,13 +43,6 @@ const AutoSlider = ({ data }) => {
       <div className="mx-auto px-4">
 
         <div className="w-full overflow-hidden relative">
-  <a
-            href={"/services"}
-            className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
-          >
-            {/* {t("show_all")} */}
-            show_all
-          </a>
           <div
             className="absolute left-0 top-0 w-12 lg:w-60 h-full z-10 pointer-events-none"
             style={{
