@@ -25,12 +25,12 @@ const OurServices = () => {
           {tr("explore_our_collection")}
         </h2> */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-mobile_header lg:text-header text-interactive_color mb-6">
+          <h2 className="text-mobile_header lg:text-header text-interactive_color">
             {tr("explore_our_collection")}
           </h2>
           <a
             href="/services"
-            className="text-interactive_color font-medium hover:underline hidden md:block"
+            className="text-interactive_color font-medium hover:underline"
           >
             {tr("view_all")} →
           </a>
