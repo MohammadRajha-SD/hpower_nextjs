@@ -324,6 +324,8 @@ const BookingForm = ({
               </div>
             </div>
             <CancelBooking
+              bookingId={service.booking_id}
+              status={service.payment_status.toLowerCase()}
               serviceName={service.name}
               userName={user?.name}
               userEmail={user?.email}
