@@ -428,7 +428,7 @@ const Profile: React.FC = () => {
                         />
                       }
 
-                      {service.payment_status.toLowerCase() == 'pending' &&
+                      {service.payment_status.toLowerCase() == 'pending' && service.status.toLowerCase() != 'cancelled' &&
                         <motion.a
                           href={service.payment_link ?? "#"}
                           target="_blank"

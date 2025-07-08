@@ -10,6 +10,8 @@ import { MapPinIcon, SearchIcon, FilterIcon, StarIcon } from "lucide-react";
 import LocationSelector from "../home/LocationSelector";
 import ServiceCard from "./ServiceCard";
 import AddressPromptDialog from "../home/AddressPromptDialog";
+import CategoriesSlider from "./CategoriesSlider";
+import { useSearchParams } from "next/navigation";
 
 const ServicesSection = () => {
   const { services, emirates } = useServices();
@@ -24,17 +26,20 @@ const ServicesSection = () => {
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get("category");
+  const subcategoryId = searchParams.get("subcategory");
+
   // Filter services based on search query and location
   const filteredServices = useMemo(() => {
     return allServices.filter((service: any) => {
+      console.log(service);
       // Search query filter
       const matchesSearch =
         searchQuery.trim() === ""
           ? true
           : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          service.description
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase());
+          service.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       // Location filter
       const matchesLocation =
@@ -44,32 +49,20 @@ const ServicesSection = () => {
             addr?.address?.toLowerCase() === selectedEmirate.toLowerCase()
           );
 
-      return matchesSearch && matchesLocation;
+      let matchesCategory = true;
+
+      if (subcategoryId != null) {
+        matchesCategory = service.category_id == subcategoryId;
+      } else if (categoryId != null) {
+        matchesCategory = service.parent_category_id == categoryId;
+      } else {
+        matchesCategory = true;
+      }
+
+      return matchesSearch && matchesLocation && matchesCategory;
     });
-  }, [allServices, searchQuery, selectedEmirate]);
+  }, [allServices, searchQuery, selectedEmirate, categoryId, subcategoryId]);
 
-
-  // const filteredServices = useMemo(() => {
-  //   const locationToMatch = selectedEmirate || user?.address || "";
-
-  //   return allServices.filter((service: any) => {
-  //     // 🔍 Search query filter
-  //     const matchesSearch =
-  //       searchQuery.trim() === ""
-  //         ? true
-  //         : service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         service.description?.toLowerCase().includes(searchQuery.toLowerCase());
-
-  //     // 📍 Location filter (match any address that includes the locationToMatch)
-  //     const matchesLocation = locationToMatch === ""
-  //       ? true
-  //       : service.addresses?.some((addr: any) =>
-  //         addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
-  //       );
-
-  //     return matchesSearch && matchesLocation;
-  //   });
-  // }, [allServices, searchQuery, selectedEmirate, user?.address]);
 
   // Handle location selection
   const handleLocationSelect = (emirate: string, city?: string) => {
@@ -84,6 +77,7 @@ const ServicesSection = () => {
     setSelectedEmirate("");
     setSelectedCity("");
   };
+
   // Update zIndex when opening/closing selector
   const handleToggleSelector = () => {
     setIsLocationSelectorOpen((prev) => {
@@ -125,6 +119,7 @@ const ServicesSection = () => {
 
   return (
     <div className="px-5 xl:px-[3%] xxl:px-[6%] xxxl:px-[12%] mx-auto ">
+
       {/* Header Section */}
       <motion.div
         className="text-center mb-8 md:mb-12"
@@ -295,8 +290,15 @@ const ServicesSection = () => {
         )}
       </motion.div>
 
+      {/* Main Categories Section */}
+      <CategoriesSlider />
+
+      <h2 className="text-mobile_header lg:text-header text-interactive_color">
+        <h1>{t("allServices")}</h1>
+      </h2>
+
       {/* Results count */}
-      <div className="flex justify-between items-center mb-6 ">
+      <div className="flex justify-between items-center mb-5 mt-2">
         {filteredServices.length === 0
           ?
           <div className="mx-auto text-center max-w-md bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded-xl shadow-sm">
@@ -309,7 +311,7 @@ const ServicesSection = () => {
           </p>
         }
         {/* View toggle (visible on desktop only) */}
-        <div className="hidden md:flex gap-2">
+        <div className="hidden md:flex gap-2 ml-3">
           <button
             onClick={() => setViewMode("grid")}
             className={`p-2 rounded-lg ${viewMode === "grid" ? "bg-interactive_color text-white" : "bg-gray-100 text-gray-500"}`}
@@ -332,6 +334,7 @@ const ServicesSection = () => {
               <rect x="14" y="14" width="7" height="7"></rect>
             </svg>
           </button>
+
           <button
             onClick={() => setViewMode("list")}
             className={`p-2 rounded-lg ${viewMode === "list" ? "bg-interactive_color text-white" : "bg-gray-100 text-gray-500"}`}

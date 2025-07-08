@@ -199,7 +199,8 @@
     "search_button": "Search",
     "select_emirate": "Select Emirate",
     "search": "Search",
-    "provided_by": "Provided By"
+    "provided_by": "Provided By",
+    "noServicesAvailable": "No services available at the moment. Stay tuned for updates!"
   },
   "Loading": {
     "loading": "Loading..."
@@ -261,7 +262,11 @@
     "view_grid": "View as grid",
     "view_list": "View as list",
     "featured": "Featured",
-    "service_busy": "This service is busy"
+    "service_busy": "This service is busy",
+    "allServices": "All Services",
+    "mainCategories": "Main Categories",
+    "subCategories": "Sub Categories",
+    "reset_filters": "Reset Filters"
   },
   "LocationSelector": {
     "select_location_title": "Select Location",

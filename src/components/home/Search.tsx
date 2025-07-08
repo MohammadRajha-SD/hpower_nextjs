@@ -10,7 +10,6 @@ import CustomButton from "../ui/CustomButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/utils/helper";
-import useUserDetails from "@/hooks/useUserDetails";
 
 const Search = () => {
   const t = useTranslations("Search");
@@ -26,7 +25,6 @@ const Search = () => {
   const allServices = useMemo(() => searchServices?.services || [], [searchServices]);
   const locale = useLocale();
   const router = useRouter();
-  const { user } = useUserDetails();
 
   // Animation variants
   const containerVariants = {
@@ -58,50 +56,6 @@ const Search = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  // useEffect(() => {
-  //   const shouldFilter =
-  //     searchQuery.trim() !== "" ||
-  //     selectedEmirate.trim() !== "" ||
-  //     selectedCity.trim() !== "" ||
-  //     user?.address?.trim() !== "";
-
-  //   if (!shouldFilter) {
-  //     setFilteredServices([]);
-  //     setIsDropdownOpen(false);
-  //     return;
-  //   }
-
-  //   const locationToMatch = selectedEmirate || selectedCity || user?.address || "";
-
-  //   const filtered = allServices.filter((service) => {
-  //     const name = service.name?.toLowerCase() || "";
-  //     const desc = service.description?.toLowerCase() || "";
-
-  //     const matchesQuery = searchQuery
-  //       ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
-  //       : true;
-
-  //     const matchesLocation =
-  //       locationToMatch === ""
-  //         ? true
-  //         : service.addresses?.some((addr: any) =>
-  //           addr.address?.toLowerCase().includes(locationToMatch.toLowerCase())
-  //         );
-
-  //     return matchesQuery && matchesLocation;
-  //   });
-
-  //   // Only update state if filteredServices changed to prevent infinite loop
-  //   const isSame =
-  //     filtered.length === filteredServices.length &&
-  //     filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
-
-  //   if (!isSame) {
-  //     setFilteredServices(filtered);
-  //     setIsDropdownOpen(filtered.length > 0);
-  //   }
-  // }, [searchQuery, selectedEmirate, selectedCity, allServices, user?.address]);
 
   useEffect(() => {
     const shouldFilter =
@@ -146,13 +100,14 @@ const Search = () => {
       setFilteredServices(filtered);
       setIsDropdownOpen(filtered.length > 0);
     }
-    
+
     // **Remove filteredServices from dependencies**
   }, [searchQuery, selectedEmirate, selectedCity, allServices]);
 
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
+
     // Since filtering is already handled in useEffect, we just ensure dropdown stays open
     if (filteredServices.length > 0) {
       setIsDropdownOpen(true);
@@ -268,6 +223,22 @@ const Search = () => {
               ))}
             </motion.div>
           )}
+
+          {(searchQuery?.trim() !== "" ||
+            selectedEmirate?.trim() !== "" ||
+            selectedCity?.trim() !== "") && filteredServices.length === 0 && (
+              <motion.div
+                className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto"
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <div className="p-4 text-center text-gray-500">
+                  {t("noServicesAvailable")}
+                </div>
+              </motion.div>
+            )}
+
         </div>
 
         {/* Location Selector */}

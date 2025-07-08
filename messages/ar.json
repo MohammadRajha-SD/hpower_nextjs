@@ -204,7 +204,8 @@
     "search": "بحث",
     "select_location": "اختر الموقع",
     "search_button": "بحث",
-    "provided_by": "مقدمة من"
+    "provided_by": "مقدمة من",
+    "noServicesAvailable": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!"
   },
   "Loading": {
     "loading": "جاري التحميل..."
@@ -266,7 +267,11 @@
     "view_grid": "عرض كشبكة",
     "view_list": "عرض كقائمة",
     "featured": "مميز",
-    "service_busy": "هذه الخدمة مشغولة"
+    "service_busy": "هذه الخدمة مشغولة",
+    "allServices": "جميع الخدمات",
+    "mainCategories": "الفئات الرئيسية",
+    "subCategories": "الفئات الفرعية",
+    "reset_filters": "إعادة تعيين الفلاتر"
   },
   "LocationSelector": {
     "select_location_title": "اختر الموقع",

@@ -10,9 +10,8 @@ import {
   UserCircle2Icon,
   LogOut,
 } from "lucide-react";
-import NavLinks from "./NavLinks";
+import NavLinksMobile from "./NavLinksMobile";
 import LanguageSwitcher from "./LanguageSwitcher";
-import CustomButton from "@/components/ui/CustomButton";
 import { useTranslations } from "next-intl";
 import useUserDetails from "@/hooks/useUserDetails";
 import { dropdownVariants, getInitial } from "@/utils/helper";
@@ -105,10 +104,10 @@ const MobileNavigation: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex flex-col p-4 gap-6 bg-white min-h-screen items-center">
+        <div className="flex flex-col p-4 gap-6 bg-white min-h-screen items-start">
           {/* Additional Action Buttons */}
           {user ? (
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative " ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 transition-all duration-300 hover:bg-gray-100 rounded-lg pl-2 px-2 py-1 border border-interactive_color hover:border-active_color"
@@ -132,7 +131,7 @@ const MobileNavigation: React.FC = () => {
               <AnimatePresence>
                 {dropdownOpen && (
                   <motion.div
-                    className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
+                    className="absolute  right-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -190,7 +189,7 @@ const MobileNavigation: React.FC = () => {
             </Link>
           )}
           {/* Navigation Links */}
-          <NavLinks className="flex flex-col gap-4" onClick={closeMenu} />
+          <NavLinksMobile className="flex flex-col gap-4  w-full" onClick={closeMenu} />
           {/* Service provider button */}
           <LanguageSwitcher />
           {/* <div className="flex flex-col gap-5">
