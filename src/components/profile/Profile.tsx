@@ -13,6 +13,7 @@ import CancelBooking from "./CancelBooking";
 import { getStatus, getStatusStyles } from "@/utils/helper";
 import SuccessPopup from "./SuccessPopup";
 import { MapPin, CreditCard } from "lucide-react";
+import ProfileImage from "./ProfileImage";
 
 const Profile: React.FC = () => {
   const t = useTranslations("profile");
@@ -96,9 +97,24 @@ const Profile: React.FC = () => {
         address: data.address ?? user.address,
         user_type: data.userType ?? user.user_type ?? userType,
       };
-      console.log("Updating user state with:", updatedUser); // Debug log
 
       setUser(updatedUser);
+
+      // Persist updated user data in cookies
+      Cookies.set("userData", JSON.stringify(updatedUser), { expires: 7 });
+    }
+  };
+
+
+  const handleUpdateProfileImage = (data) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        image_path: data.image,
+      };
+
+      setUser(updatedUser);
+
       // Persist updated user data in cookies
       Cookies.set("userData", JSON.stringify(updatedUser), { expires: 7 });
     }
@@ -134,20 +150,7 @@ const Profile: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-around gap-20">
         {/* Left Column - Profile Info */}
         <div className="md:w-1/3 flex flex-col items-center">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-            className="relative group"
-          >
-            <img
-              src={user?.image_path || "/user.png"}
-              alt={t("profile_picture_alt")}
-              className="rounded-full w-40 h-40 object-cover border-4 border-intebg-interactive_color shadow-md"
-            />
-            <div className="absolute inset-0 bg-interactive_color bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <Edit className="w-8 h-8 text-white" />
-            </div>
-          </motion.div>
+          <ProfileImage user={user} handleUpdateProfileImage={handleUpdateProfileImage} />
 
           <h1 className="text-2xl font-bold text-gray-800 mt-4 mb-1">
             {user?.name || t("default_user_name")}

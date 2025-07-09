@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation";
 // Define the User type based on your useUserDetails hook
 interface User {
   name: string;
-  // Add other fields as needed (e.g., email, id) based on your useUserDetails hook
 }
 
 const MobileNavigation: React.FC = () => {
@@ -90,9 +89,8 @@ const MobileNavigation: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex justify-end p-4">
           <button
@@ -131,10 +129,11 @@ const MobileNavigation: React.FC = () => {
               <AnimatePresence>
                 {dropdownOpen && (
                   <motion.div
-                    className="absolute  right-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
+                    className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
+                    style={{ zIndex: 100 }}
                     variants={dropdownVariants}
                   >
                     <div className="py-1 divide-y divide-activbg-active_color">
@@ -150,7 +149,10 @@ const MobileNavigation: React.FC = () => {
                       <div className="py-1">
                         <Link
                           href="/profile"
-                          onClick={() => setDropdownOpen(false)}
+                          onClick={() => {
+                            toggleMenu();
+                            setDropdownOpen(false);
+                          }}
                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-interactive_color hover:bg-active_color hover:text-white w-full text-left group"
                         >
                           <div className="bg-blue-50 p-1.5 rounded-md group-hover:bg-blue-100 transition-colors">

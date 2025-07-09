@@ -47,6 +47,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     discountType: string;
     expires_at: string;
   } | null>(null);
+
   const [quantity, setQuantity] = useState(1);
   const [address, setAddress] = useState("");
   const [emirate, setEmirate] = useState("");
@@ -66,8 +67,6 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
       </div>
     );
   }
-
-
 
   const servicePrice = parseFloat(
     service.discount_price < 1 ? service.price : service.discount_price

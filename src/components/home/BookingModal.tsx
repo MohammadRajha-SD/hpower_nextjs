@@ -107,10 +107,36 @@ const BookingModal: FC<BookingModalProps> = ({
       setSelectedService(null);
     }
   };
-
   const handleBook = () => {
+    let dateObj = new Date(selectedDate);
+    let formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+
+    if (formattedDate.toString() == 'NaN-NaN-NaN') {
+      dateObj = new Date();
+      formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate() + 1}`;
+    }
+
     if (selectedService) {
-      router.push(`/services/${selectedService.id}`);
+      router.push(`/services/${selectedService.id}?date=${formattedDate.toString()}`);
+      onBookAppointment();
+    } else {
+      console.warn("No selected service to book");
+    }
+  };
+
+  const handleBook1 = () => {
+    // if (selectedService) {
+    //   router.push(`/services/${selectedService.id}?date=${selectedDate}`);
+    //   onBookAppointment();
+    // }
+
+    const dateObj = new Date(selectedDate);
+    const formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+
+    console.log(formattedDate);
+
+    if (selectedService && formattedDate) {
+      router.push(`/services/${selectedService.id}?date=${formattedDate.toString()}`);
       onBookAppointment();
     }
   };
@@ -178,7 +204,7 @@ const BookingModal: FC<BookingModalProps> = ({
 
             <div className="flex justify-end">
               {parseInt(item.discount_price) > 1 && (
-                <span className="text-gray-500 line-through" style={{fontSize:"12px"}}>
+                <span className="text-gray-500 line-through" style={{ fontSize: "12px" }}>
                   {formatCurrency(parseFloat(item.price), locale, 14)}
                 </span>
               )}

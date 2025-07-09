@@ -32,6 +32,7 @@
     "skin": "Body & Hair Care"
   },
   "profile": {
+    "updating": "Updating...",
     "profile_picture_alt": "Profile picture",
     "default_user_name": "Username",
     "address_label": "Address",
@@ -61,7 +62,13 @@
     "orders": "Orders",
     "status_booked": "Booked",
     "status_completed": "Completed",
-    "status_refunded": "Refunded"
+    "status_refunded": "Refunded",
+    "update_profile_image": "Update Profile Image",
+    "preview": "Preview",
+    "no_image": "No image",
+    "choose_image": "Choose Image",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "cancelBooking": {
     "cancel_booking_button": "Cancel Booking",
@@ -407,6 +414,8 @@
     "service_charge": "Service Charge",
     "thankYou": "Thank you for your booking!",
     "cancelDone": "Your booking has been received. A confirmation has been sent to your email."
+    ,
+      "date_closed_message": "This date is closed."
   },
   "SubscriptionSuccessPage": {
     "title": "An email has been sent to confirm your subscription and checkout!",

@@ -22,6 +22,7 @@ import SuccessSendVemail from "./SuccessSendVemail";
 import parse from "html-react-parser";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 interface BookingFormProps {
   couponCode: string;
@@ -90,6 +91,76 @@ const BookingForm = ({
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const getAuthToken = () => Cookies.get("authToken") || "";
 
+  const searchParams = useSearchParams();
+  const dateFromUrl = searchParams.get("date");
+
+  const getNextTwoWeeks = () => {
+    const dates = [];
+    const today = new Date();
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
+  };
+
+  const nextTwoWeeks = getNextTwoWeeks();
+
+  useEffect(() => {
+    if (dateFromUrl && service?.provider?.schedules) {
+      const dateObj = new Date(dateFromUrl);
+
+      if (!isNaN(dateObj.getTime())) {
+        // dateObj.setDate(dateObj.getHours() + 24);
+        const formattedDate = formatDateValue2(dateObj);
+
+        const isInRange = nextTwoWeeks.some(
+          (d) => formatDateValue2(d) === formattedDate
+        );
+
+        if (!isInRange) return;
+
+        const isToday =
+          new Date().toDateString() === dateObj.toDateString();
+
+        const dayOfWeek = [
+          "SUN",
+          "MON",
+          "TUE",
+          "WED",
+          "THU",
+          "FRI",
+          "SAT",
+        ][dateObj.getDay()];
+
+        const schedule = service.provider.schedules.find(
+          (s: any) => s.day === dayOfWeek
+        );
+
+        const isClosed =
+          schedule?.working_hours === "Closed" || isToday;
+
+        if (!isClosed) {
+          setSelectedDate(formattedDate);
+          if (!selectedDate && !selectedTime) {
+            setShowDateTimePopup(true);
+          }
+        }
+      }
+    }
+  }, [dateFromUrl, nextTwoWeeks]);
+
+  const formatDateValue2 = (date: Date): string => {
+    const correctedDate = new Date(date);
+    correctedDate.setDate(correctedDate.getDate() + 1); 
+    return correctedDate.toISOString().split("T")[0];
+  };
+
+  const formatDateValue21 = (date: Date): string => {
+    return date.toISOString().split("T")[0];
+  };
+
   const generateTimeSlots = () => {
     const slots = [];
     for (let hour = 8; hour <= 20; hour++) {
@@ -104,19 +175,6 @@ const BookingForm = ({
   };
 
   const timeSlots = generateTimeSlots();
-
-  const getNextTwoWeeks = () => {
-    const dates = [];
-    const today = new Date();
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      dates.push(date);
-    }
-    return dates;
-  };
-
-  const nextTwoWeeks = getNextTwoWeeks();
 
   const convertTo24HourFormat = (timeStr: string): string => {
     const [time, modifier] = timeStr.split(" ");
@@ -476,6 +534,7 @@ const BookingForm = ({
       {showVerifyEmailPopup && (
         <SuccessSendVemail onClose={() => setShowVerifyEmailPopup(false)} />
       )}
+
       {showTermsPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-5xl w-full max-h-[80vh] overflow-y-auto border border-gray-200">
@@ -537,6 +596,7 @@ const BookingForm = ({
           </div>
         </div>
       )}
+
       <form
         id="booking-form"
         onSubmit={handleBookingSubmit}
@@ -709,8 +769,10 @@ const BookingForm = ({
                   <div className="p-2 max-h-72 overflow-y-auto">
                     {nextTwoWeeks.map((date, index) => {
                       const dateStr = formatDateValue(date);
+
                       const isToday =
                         new Date().toDateString() === date.toDateString();
+
                       const dayOfWeek = [
                         "SUN",
                         "MON",
@@ -720,11 +782,14 @@ const BookingForm = ({
                         "FRI",
                         "SAT",
                       ][date.getDay()];
+
                       const schedule = service.provider.schedules.find(
                         (s: any) => s.day === dayOfWeek
                       );
+
                       const isClosed =
                         schedule?.working_hours === "Closed" || isToday;
+
                       const isSelected = selectedDate === dateStr;
 
                       return (
