@@ -416,7 +416,7 @@ const Profile: React.FC = () => {
                       </div>
 
                       {/* Cancel Button */}
-                      {(service.payment_status.toLowerCase() == 'paid' || service.payment_status.toLowerCase() == 'pending') &&
+                      {(service.payment_status.toLowerCase() == 'paid' || (service.payment_status.toLowerCase() == 'pending' && service.status.toLowerCase() != 'cancelled')) &&
                         <CancelBooking
                           serviceName={service.name}
                           bookingId={service.booking_id}
@@ -441,7 +441,6 @@ const Profile: React.FC = () => {
 
                         >
                           <CreditCard className="h-4 w-4 mr-1" />
-
                           {t("payment_link")}
                         </motion.a>
                       }
