@@ -371,8 +371,9 @@ const BookingForm = ({
     null
   );
 
-  console.log("Latest booking:", latestBooking);
-  console.log("Latest booking address:", latestBooking?.address);
+  useEffect(() => {
+    setEmirate(emirate ? emirate : user?.address)
+  }, [user?.address]);
 
   return (
     <>
@@ -696,7 +697,7 @@ const BookingForm = ({
 
             <select
               name="emirate"
-              value={emirate ? emirate : user?.address}
+              value={emirate}
               onChange={(e) => setEmirate(e.target.value)}
               disabled={isFormDisabled}
               className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
