@@ -153,7 +153,7 @@ const BookingForm = ({
 
   const formatDateValue2 = (date: Date): string => {
     const correctedDate = new Date(date);
-    correctedDate.setDate(correctedDate.getDate() + 1); 
+    correctedDate.setDate(correctedDate.getDate() + 1);
     return correctedDate.toISOString().split("T")[0];
   };
 
@@ -365,6 +365,14 @@ const BookingForm = ({
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+
+  const latestBooking = user?.bookings?.reduce((latest, current) =>
+    current.id > (latest?.id ?? 0) ? current : latest,
+    null
+  );
+
+  console.log("Latest booking:", latestBooking);
+  console.log("Latest booking address:", latestBooking?.address);
 
   return (
     <>
@@ -688,7 +696,7 @@ const BookingForm = ({
 
             <select
               name="emirate"
-              value={emirate}
+              value={emirate ? emirate : user?.address}
               onChange={(e) => setEmirate(e.target.value)}
               disabled={isFormDisabled}
               className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
@@ -721,7 +729,7 @@ const BookingForm = ({
             </label>
             <textarea
               name="address"
-              value={address}
+              value={address ? address : latestBooking?.address}
               onChange={(e) => setAddress(e.target.value)}
               disabled={isFormDisabled}
               placeholder={t("enter_your_address_placeholder")}
