@@ -189,9 +189,18 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
 
       const fullAddress = `${address}${apartmentName ? `, ${apartmentName}` : ""}${buildingNumber ? `, ${buildingNumber}` : ""}`;
 
-      if (selectedSavedAddressId == null) {
+      const alreadyExists = user.addresses?.some((a: any) => {
+        return (
+          a.address?.toLowerCase() === address?.toLowerCase() &&
+          a.apartment_name?.toLowerCase() === apartmentName?.toLowerCase() &&
+          a.building_number?.toLowerCase() === buildingNumber?.toLowerCase()
+        );
+      });
+
+      if (selectedSavedAddressId == null || !alreadyExists) {
         await handleAddAddress();
       }
+
 
       const bookingData = {
         serviceName: service.name,
