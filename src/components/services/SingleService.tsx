@@ -189,7 +189,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
 
       const fullAddress = `${address}${apartmentName ? `, ${apartmentName}` : ""}${buildingNumber ? `, ${buildingNumber}` : ""}`;
 
-      if (selectedSavedAddressId != null) {
+      if (selectedSavedAddressId == null) {
         await handleAddAddress();
       }
 
