@@ -41,6 +41,9 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
   const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
+  const [selectedSavedAddressId, setSelectedSavedAddressId] = useState("");
+  const [apartmentName, setApartmentName] = useState("");
+  const [buildingNumber, setBuildingNumber] = useState("");
 
   const [couponData, setCouponData] = useState<{
     discount: number;
@@ -132,15 +135,27 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     }
   };
 
-  // const isUserAddressSupported = () => {
-  //   if (user == null) return false;
+  const handleAddAddress = async () => {
+    const updateData = {
+      address: address,
+      apartment_name: apartmentName,
+      building_number: buildingNumber,
+    };
 
-  //   if (!user?.address || !Array.isArray(service.addresses)) return false;
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/add-address`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+        body: JSON.stringify(updateData),
+      });
 
-  //   return service.addresses.some((addr: any) =>
-  //     addr.address?.toLowerCase().includes(user.address.toLowerCase())
-  //   );
-  // };
+      const result = await response.json();
+    } catch (error) {
+    }
+  };
 
   const handleBooking = async (formData: FormData) => {
     if (isBookingDisabled) {
@@ -172,6 +187,12 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
       if (!response.ok)
         throw new Error(result.message_en || t("booking_failed"));
 
+      const fullAddress = `${address}${apartmentName ? `, ${apartmentName}` : ""}${buildingNumber ? `, ${buildingNumber}` : ""}`;
+
+      if (selectedSavedAddressId != null) {
+        await handleAddAddress();
+      }
+
       const bookingData = {
         serviceName: service.name,
         userName: user?.name || "Unknown User",
@@ -179,8 +200,11 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
         userPhone: user?.phone_number || "",
         providerEmail: service.provider.email,
         providerName: service.provider.name,
+        address: fullAddress,
+        // address: formData.get("address") as string,
+        // apartment_name: apartmentName,
+        // building_number: buildingNumber,
         quantity: parseInt(formData.get("quantity") as string) || 1,
-        address: formData.get("address") as string,
         hint: formData.get("hint") as string,
         start_at: startAt,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -236,14 +260,6 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
 
   const { savings, discountPercentage, discountPrice } = calculateDiscount();
   const finalPrice = appliedCoupon ? discountPrice : servicePrice;
-
-  // if (!isUserAddressSupported()) {
-  //   return <AddressPromptDialog />;
-  //   //   return <div className="flex justify-center text-center items-center gap-2 text-sm text-red-600 mt-4">
-  //   //     <FaExclamation className="text-yellow-500" />
-  //   //     {t("service_not_found")}
-  //   //   </div>
-  // }
 
   const formatSlug = (slug?: string) => {
     if (!slug) return "-";
@@ -364,6 +380,8 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
             </div>
 
             <BookingForm
+              selectedSavedAddressId={selectedSavedAddressId}
+              setSelectedSavedAddressId={setSelectedSavedAddressId}
               couponCode={couponCode}
               setCouponCode={setCouponCode}
               appliedCoupon={appliedCoupon}
@@ -381,6 +399,10 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
               setAddress={setAddress}
               hint={hint}
               setHint={setHint}
+              apartmentName={apartmentName}
+              setApartmentName={setApartmentName}
+              buildingNumber={buildingNumber}
+              setBuildingNumber={setBuildingNumber}
               hasBookedService={hasBookedService}
               setShowSuccessPopup={setShowSuccessPopup}
             />

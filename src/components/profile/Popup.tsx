@@ -18,7 +18,6 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useServices } from "@/hooks/useServices";
-import LocationSelector from "../home/LocationSelector";
 
 interface EditProfileModalProps {
   email: string;
@@ -48,6 +47,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   onUpdateProfile,
 }) => {
   const t = useTranslations("editProfile");
+  const t2 = useTranslations("profile");
+  
   const [newEmail, setNewEmail] = useState(email);
   const [newPhoneNumber, setNewPhoneNumber] = useState(phoneNumber);
   const [newName, setNewName] = useState(name);
@@ -55,7 +56,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [activeTab, setActiveTab] = useState<"contact" | "password">("contact");
+  const [activeTab, setActiveTab] = useState<"contact" | "password" | "addresses">("contact");
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { emirates } = useServices();
@@ -205,7 +206,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <div className="flex border-b mb-4">
+        <div className="flex border-b mb-2">
           <button
             className={`py-2 px-4 transition-colors duration-200 ${activeTab === "contact"
               ? "border-b-2 border-interactive_color text-interactive_color font-medium"
@@ -226,10 +227,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
           </button>
         </div>
 
-        {activeTab === "contact" ? (
+        {activeTab === "contact" && (
           <div className="space-y-4 py-2">
             {/* show address dropdown */}
-            <div>
+            {/* <div>
               <label
                 htmlFor="address"
                 className="block text-sm font-medium text-gray-700 mb-1"
@@ -243,9 +244,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 onChange={(e) => setNewAddress(e.target.value)}
                 className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-interactive_color focus:border-interactive_color transition-colors duration-200"
               >
-                <option value="">{t("select_address")}</option>
+                <option value="">{t("select_address")}</option> */}
 
-                {/* {emirates?.emirates &&
+            {/* {emirates?.emirates &&
                   Object.entries(emirates.emirates).map(([emirateName, cities]) => (
                     <optgroup key={emirateName} label={emirateName}>
                       {cities && cities?.map((city: any) => (
@@ -256,7 +257,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                     </optgroup>
                   ))} */}
 
-                {emirates?.emirates &&
+            {/* {emirates?.emirates &&
                   Object.entries(emirates.emirates).map(([emirateName, cities]) => (
                     <optgroup key={emirateName} label={emirateName}>
                       {(cities as Array<{ slug: string; name: string }>).map((city) => (
@@ -265,10 +266,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </option>
                       ))}
                     </optgroup>
-                  ))}
-
+                  ))} */}
+            {/* 
               </select>
-            </div>
+            </div> */}
 
             <div>
               <label
@@ -324,7 +325,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               />
             </div>
           </div>
-        ) : (
+        )}
+
+        {activeTab === "password" && (
           <div className="space-y-4 py-2">
             <div>
               <label

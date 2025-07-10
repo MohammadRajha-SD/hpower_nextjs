@@ -17,6 +17,7 @@ import useUserDetails from "@/hooks/useUserDetails";
 import { dropdownVariants, getInitial } from "@/utils/helper";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useLocale } from 'next-intl';
 
 // Define the User type based on your useUserDetails hook
 interface User {
@@ -30,7 +31,11 @@ const MobileNavigation: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const t = useTranslations("Navbar");
-
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  
+  const locale = useLocale();
+  const isRTL = locale === 'ar';
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -38,6 +43,23 @@ const MobileNavigation: React.FC = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+        setDropdownOpen(false); // close dropdown inside menu as well
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -89,9 +111,15 @@ const MobileNavigation: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+        ref={mobileMenuRef}
+        className={`fixed top-0 ${isRTL ? "left-0" : "right-0"} h-full w-4/5 max-w-sm bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
+    ${isOpen ? "translate-x-0" : isRTL ? "-translate-x-full" : "translate-x-full"}`}
       >
+
+        {/* <div
+        ref={mobileMenuRef}
+        className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      > */}
         <div className="flex justify-end p-4">
           <button
             onClick={toggleMenu}

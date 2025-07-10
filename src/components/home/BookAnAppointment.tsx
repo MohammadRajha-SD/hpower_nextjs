@@ -4,14 +4,15 @@ import React, { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { format, addDays, isPast, isToday } from "date-fns";
 import { useTranslations } from "next-intl";
-import { toast } from "react-hot-toast";
 import BookingModal from "./BookingModal";
 
 const BookAnAppointment = () => {
   const t = useTranslations("BookAnAppointment");
+
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     addDays(new Date(), 1)
   );
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -20,6 +21,7 @@ const BookAnAppointment = () => {
   };
 
   const handleBookAppointment = () => {
+    setSelectedDate(addDays(new Date(), 1));
     setIsDialogOpen(false);
   };
 
@@ -67,9 +69,10 @@ const BookAnAppointment = () => {
       {/* BookingModal Component */}
       <BookingModal
         isOpen={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
+        onOpenChange={handleBookAppointment}
         selectedDate={selectedDate}
         onBookAppointment={handleBookAppointment}
+        handleDateSelect={handleDateSelect}
       />
     </div>
   );

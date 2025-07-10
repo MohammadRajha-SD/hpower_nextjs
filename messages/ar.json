@@ -7,11 +7,15 @@
     "register_create_account": "التسجيل / إنشاء حساب",
     "im_provider": "أنا مقدم خدمة",
     "profile": "الملف الشخصي",
+    "addresses": "العناوين",
+    "no_addresses_found": "لم يتم العثور على عناوين.",
+    "created_at": "تاريخ الإضافة",
     "logout": "تسجيل الخروج",
     "signed_in_as": "مسجل الدخول كـ",
     "becomeParter": "كن شريكنا",
     "registerButton": "تسجيل / إنشاء حساب",
-    "search_placeholder": "ابحث عن الخدمات..."
+    "search_placeholder": "ابحث عن الخدمات...",
+    "all": "الجميع"
   },
   "slider": {
     "explore_more": "تصفح المزيد"
@@ -29,14 +33,22 @@
     "skin": "العناية بالجسم والشعر"
   },
   "profile": {
+    "edit":"تعديل",
     "profile_picture_alt": "صورة الملف الشخصي",
     "update_profile_image": "تحديث صورة الملف الشخصي",
     "preview": "معاينة",
     "no_image": "لا توجد صورة",
     "choose_image": "اختر صورة",
+    "delete": "حذف",
     "updating": "جارٍ التحديث...",
     "cancel": "إلغاء",
+      "edit_address": "تعديل العنوان",
+  "update_address_details": "قم بتحديث تفاصيل العنوان أدناه.",
+  "edit_your_address_placeholder": "قم بتعديل عنوانك الكامل",
+  "update": "تحديث",
     "save": "حفظ",
+    "apartment_name": "اسم الشقة",
+    "building_number": "رقم المبنى",
     "default_user_name": "اسم المستخدم",
     "address_label": "العنوان",
     "name_label": "الإسم",
@@ -48,6 +60,7 @@
     "contact_information": "معلومات التواصل",
     "username_label": "اسم المستخدم",
     "default_username": "اسم المستخدم",
+    "saved_addresses": "العناوين المحفوظة",
     "email_label": "البريد الإلكتروني",
     "default_email": "email@example.com",
     "phone_label": "الهاتف",
@@ -65,7 +78,22 @@
     "orders": "الطلبات",
     "status_booked": "محجوز",
     "status_completed": "مكتمل",
-    "status_refunded": "تم الاسترداد"
+    "status_refunded": "تم الاسترداد",
+    "addresses": "العناوين",
+    "add_address": "إضافة عنوان",
+    "add_new_address": "إضافة عنوان جديد",
+    "enter_address_details": "أدخل معلومات العنوان الجديد أدناه.",
+    "street": "الشارع",
+    "city": "المدينة",
+    "confirm_deletion": "هل أنت متأكد؟",
+    "delete_address_confirmation": "هل تريد بالتأكيد حذف هذا العنوان؟",
+    "confirm_delete": "نعم، احذف",
+    "adding": "جارٍ الإضافة...",
+    "add": "إضافة",
+    "delete_address_warning": "هل تريد حذف هذا العنوان؟ لا يمكن التراجع عن هذا الإجراء.",
+    "deleting": "جارٍ الحذف...",
+    "delete_address_success": "تم حذف العنوان بنجاح.",
+    "delete_address_error": "العنوان غير موجود أو ليس لديك صلاحية."
   },
   "cancelBooking": {
     "cancel_booking_button": "إلغاء الحجز",
@@ -350,7 +378,11 @@
     ]
   },
   "SingleService": {
+     "apartment_name": "اسم الشقة",
+    "building_number": "رقم المبنى",
     "no_addresses": "لا توجد عناوين متاحة",
+    "saved_addresses": "العناوين المحفوظة",
+    "select_saved_address": "اختر من العناوين المحفوظة",
     "service_not_found": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!",
     "enter_coupon_code": "يرجى إدخال رمز القسيمة",
     "enter_your_address_placeholder": "أدخل عنوانك",

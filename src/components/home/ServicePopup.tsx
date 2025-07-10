@@ -152,8 +152,8 @@ const ServicesPopup: FC<ServicesPopupProps> = ({
             alt={typeof item.name === "string" ? item.name : item.name.en}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={false}
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={true}
+            className={`${isService ? "object-cover" : "object-contain"} transition-transform duration-500 group-hover:scale-110`}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center p-3 opacity-0 group-hover:opacity-100 transition-all duration-300"

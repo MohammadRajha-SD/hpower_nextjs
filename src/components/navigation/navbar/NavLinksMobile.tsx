@@ -57,11 +57,10 @@ const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
                   setServicesOpen(!servicesOpen);
                   setOpenMainCategory(null);
                 }}
-                className={`w-full flex justify-between items-center text-left font-medium px-4 py-2 md:hidden ${
-                  isActive(link.href)
-                    ? "text-active_color font-bold"
-                    : "text-interactive_color"
-                }`}
+                className={`w-full flex justify-between items-center text-left font-medium px-4 py-2 lg:hidden ${isActive(link.href)
+                  ? "text-active_color font-bold"
+                  : "text-interactive_color"
+                  }`}
               >
                 <span>{link.label}</span>
                 {servicesOpen ? (
@@ -73,7 +72,15 @@ const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
 
               {/* Dropdown container visible only on mobile */}
               {servicesOpen && (
-                <div className="max-h-[500px] overflow-y-auto transition-all duration-300 ease-in-out pt-1 md:hidden">
+                <div className="max-h-[500px] overflow-y-auto transition-all duration-300 ease-in-out pt-1 lg:hidden">
+                  <div className="border-t border-gray-200 px-4 py-2">
+                    <a
+                      href="/services"
+                      className="w-full flex justify-between items-center text-left text-sm font-semibold text-gray-700"
+                    >
+                      {t("all")}
+                    </a>
+                  </div>
                   {mainCategories.map((category) => {
                     const isOpen = openMainCategory === category.id;
 
@@ -123,11 +130,10 @@ const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
           <Link
             key={link.href}
             href={`/${locale}${link.href}`}
-            className={`block font-medium px-4 py-2 transition duration-300 ease-in-out ${
-              isActive(link.href)
-                ? "text-active_color font-bold border-b-2 border-active_color"
-                : "text-interactive_color hover:text-active_color"
-            } ${link.dropdown ? "hidden md:block" : ""}`} // hide dropdown link on desktop if needed
+            className={`block font-medium px-4 py-2 transition duration-300 ease-in-out ${isActive(link.href)
+              ? "text-active_color font-bold border-b-2 border-active_color"
+              : "text-interactive_color hover:text-active_color"
+              } ${link.dropdown ? "hidden md:block" : ""}`} // hide dropdown link on desktop if needed
             onClick={onClick}
           >
             {link.label}

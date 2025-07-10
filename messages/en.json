@@ -11,7 +11,8 @@
     "signed_in_as": "Signed in as",
     "becomeParter": "Become a Partner",
     "registerButton": "Register / Create Account",
-    "search_placeholder": "Search for services..."
+    "search_placeholder": "Search for services...",
+    "all": "All"
   },
   "slider": {
     "explore_more": "Explore More"
@@ -34,8 +35,16 @@
   "profile": {
     "updating": "Updating...",
     "profile_picture_alt": "Profile picture",
+    "saved_addresses": "Saved Addresses",
     "default_user_name": "Username",
     "address_label": "Address",
+    "addresses": "Addresses",
+    "no_addresses_found": "No addresses found.",
+    "created_at": "Created at",
+    "delete": "Delete",
+    "add_address": "Add Address",
+    "apartment_name": "Apartment Name",
+    "building_number": "Building Number",
     "name_label": "Name",
     "logout": "Logout",
     "about_me": "About me",
@@ -67,8 +76,26 @@
     "preview": "Preview",
     "no_image": "No image",
     "choose_image": "Choose Image",
+    "save": "Save",
+    "add_new_address": "Add New Address",
+    "enter_address_details": "Enter the new address information below.",
+    "street": "Street",
+    "city": "City",
+    "delete_address_confirmation": "Do you really want to delete this address?",
+    "adding": "Adding...",
+    "add": "Add",
+    "edit": "Edit",
+    "edit_address": "Edit Address",
+    "update_address_details": "Update the address information below.",
+    "edit_your_address_placeholder": "Edit your full address",
+    "update": "Update",
+    "confirm_deletion": "Are you sure?",
+    "delete_address_warning": "Do you really want to delete this address? This action cannot be undone.",
+    "confirm_delete": "Yes, delete",
     "cancel": "Cancel",
-    "save": "Save"
+    "deleting": "Deleting...",
+    "delete_address_success": "Address deleted successfully.",
+    "delete_address_error": "Address not found or unauthorized."
   },
   "cancelBooking": {
     "cancel_booking_button": "Cancel Booking",
@@ -345,10 +372,14 @@
     ]
   },
   "SingleService": {
+    "saved_addresses": "Saved Addresses",
+    "select_saved_address": "Select from your saved addresses",
     "no_addresses": "No addresses available",
     "service_not_found": "No services available at the moment. Stay tuned for updates!",
     "enter_coupon_code": "Please enter a coupon code",
     "coupon_applied": "Coupon applied successfully!",
+    "apartment_name": "Apartment Name",
+    "building_number": "Building Number",
     "applied": "Coupon applied!",
     "invalid_coupon": "Invalid coupon code",
     "off": "OFF",
@@ -413,9 +444,8 @@
     "view_addresses": "View Addresses",
     "service_charge": "Service Charge",
     "thankYou": "Thank you for your booking!",
-    "cancelDone": "Your booking has been received. A confirmation has been sent to your email."
-    ,
-      "date_closed_message": "This date is closed."
+    "cancelDone": "Your booking has been received. A confirmation has been sent to your email.",
+    "date_closed_message": "This date is closed."
   },
   "SubscriptionSuccessPage": {
     "title": "An email has been sent to confirm your subscription and checkout!",

@@ -4,16 +4,18 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { SearchIcon, MapPin, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import { useServices } from "@/hooks/useServices";
 import LocationSelector from "./LocationSelector";
 import CustomButton from "../ui/CustomButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/utils/helper";
+import { useServicesSearch } from "@/hooks/useServicesSearch";
+import { Button } from "../ui/button";
 
 const Search = () => {
   const t = useTranslations("Search");
-  const { emirates, services: searchServices } = useServices();
+  const { emirates, services: searchServices } = useServicesSearch();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEmirate, setSelectedEmirate] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -70,17 +72,20 @@ const Search = () => {
     }
 
     const filtered = allServices.filter((service) => {
-      const name = service.name?.toLowerCase() || "";
-      const desc = service.description?.toLowerCase() || "";
+      const nameEn = service.name?.toLowerCase() || "";
+      const nameAr = service.name_ar || "";
+      const descEn = service.description?.toLowerCase() || "";
+      const descAr = service.description_ar || "";
       const addresses = service.addresses || [];
 
+      const query = searchQuery.toLowerCase();
+
       const matchesQuery =
-        searchQuery
-          ? name.includes(searchQuery.toLowerCase()) || desc.includes(searchQuery.toLowerCase())
-          : true;
+        nameEn.includes(query) ||
+        nameAr.includes(query) ||
+        descEn.includes(query) ||
+        descAr.includes(query);
 
-
-      // Location filter
       const matchesLocation =
         selectedEmirate === ""
           ? true
@@ -91,7 +96,6 @@ const Search = () => {
       return matchesQuery && matchesLocation;
     });
 
-    // Only update state if filteredServices changed to prevent infinite loop
     const isSame =
       filtered.length === filteredServices.length &&
       filtered.every((service, idx) => service.id === filteredServices[idx]?.id);
@@ -100,8 +104,6 @@ const Search = () => {
       setFilteredServices(filtered);
       setIsDropdownOpen(filtered.length > 0);
     }
-
-    // **Remove filteredServices from dependencies**
   }, [searchQuery, selectedEmirate, selectedCity, allServices]);
 
   // Handle search submission
@@ -120,12 +122,6 @@ const Search = () => {
     setSelectedCity(city || "");
     setIsLocationOpen(false);
   };
-
-  // Focus input on mount
-  useEffect(() => {
-    searchInputRef.current?.focus();
-  }, []);
-
 
   return (
     <motion.div
@@ -170,7 +166,7 @@ const Search = () => {
                   {service.images?.[0] && (
                     <Image
                       src={service.images[0]}
-                      alt={service.name}
+                      alt={""}
                       width={80}
                       height={80}
                       className="object-cover rounded-md mr-4"
@@ -179,7 +175,7 @@ const Search = () => {
 
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-text-active_color">
-                      {service.name}
+                      {locale == "ar" ? service.name_ar : service.name}
                     </h3>
                     {/* <p className="text-sm text-gray-600">
                       {parse(service.description.slice(0, 100) + "...")}
@@ -281,9 +277,15 @@ const Search = () => {
         </div>
 
         {/* Search Button */}
-        <CustomButton style="!px-6 !py-3" aria-label={t("search_button")}>
-          {t("search_button")}
-        </CustomButton>
+        <div
+          className={`bg-white rounded-full shadow-md hover:shadow-lg transition duration-300 ease-in-out px-1 py-1  border border-interactive_color `}
+        >
+          <Button
+            className={`px-6 py-3 bg-interactive_color text-white text-sm lg:text-xs xxl:text-sm rounded-full  font-medium hover:bg-active_color flex gap-2 shadow-xl whitespace-nowrap `}
+          >
+            {t("search_button")}
+          </Button>
+        </div>
       </form>
     </motion.div>
   );

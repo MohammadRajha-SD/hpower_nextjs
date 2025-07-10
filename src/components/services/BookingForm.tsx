@@ -23,6 +23,7 @@ import parse from "html-react-parser";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import ProfileAddresses from "../profile/ProfileAddresses";
 
 interface BookingFormProps {
   couponCode: string;
@@ -44,6 +45,12 @@ interface BookingFormProps {
   loadingCheck: boolean;
   hasBookedService: boolean;
   setShowSuccessPopup: (showSuccessPopup: boolean) => void;
+  buildingNumber: string;
+  setBuildingNumber: (value: string) => void;
+  setApartmentName: (value: string) => void;
+  apartmentName: string;
+  setSelectedSavedAddressId: (value: string) => void;
+  selectedSavedAddressId: string;
 }
 
 const BookingForm = ({
@@ -51,6 +58,8 @@ const BookingForm = ({
   setCouponCode,
   appliedCoupon,
   bookingLoading,
+  setSelectedSavedAddressId,
+  selectedSavedAddressId,
   service,
   loadingCheck,
   isBookingDisabled,
@@ -62,6 +71,10 @@ const BookingForm = ({
   setAddress,
   hint,
   setHint,
+  buildingNumber,
+  setBuildingNumber,
+  apartmentName,
+  setApartmentName,
   hasBookedService,
   setShowSuccessPopup,
   emirate,
@@ -149,16 +162,12 @@ const BookingForm = ({
         }
       }
     }
-  }, [dateFromUrl, nextTwoWeeks]);
+  }, []);
 
   const formatDateValue2 = (date: Date): string => {
     const correctedDate = new Date(date);
     correctedDate.setDate(correctedDate.getDate() + 1);
     return correctedDate.toISOString().split("T")[0];
-  };
-
-  const formatDateValue21 = (date: Date): string => {
-    return date.toISOString().split("T")[0];
   };
 
   const generateTimeSlots = () => {
@@ -244,6 +253,7 @@ const BookingForm = ({
 
   const handleBookingSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!agreedToTerms) {
       setShowTermsPopup(true);
       return;
@@ -372,8 +382,43 @@ const BookingForm = ({
   );
 
   useEffect(() => {
-    setEmirate(emirate ? emirate : user?.address)
+    setEmirate(emirate ? emirate : user?.address);
+    // setAddress(address ? address : latestBooking?.address);
   }, [user?.address]);
+
+  const handleSavedAddressChange = (e) => {
+    const selectedId = e.target.value;
+    setSelectedSavedAddressId(selectedId);
+
+    const selected = user.addresses.find((a) => a.id == selectedId);
+    if (selected) {
+      setAddress(selected.address || "");
+      setApartmentName(selected.apartment_name || "");
+      setBuildingNumber(selected.building_number || "");
+    }
+  };
+
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dateTimePopupRef.current &&
+        !dateTimePopupRef.current.contains(event.target as Node)
+      ) {
+        setShowDateTimePopup(false);
+      }
+    }
+
+    if (showDateTimePopup) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDateTimePopup]);
 
   return (
     <>
@@ -657,39 +702,6 @@ const BookingForm = ({
             </p>
           </div>
 
-          {/* Emirate Dropdown  */}
-          {/* <div className="w-full relative" ref={dropdownRef}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("emirate")}
-            </label>
-            <div
-              onClick={isFormDisabled ? () => { } : toggleLocationSelector}
-              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 flex items justify-between transition-all duration-300 ${isFormDisabled
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer hover:border-interactive_color focus:ring-2 focus:ring-indigo-100"
-                }`}
-            >
-              <span className={emirate ? "text-gray-900" : "text-gray-500"}>
-                {emirate || t("select_location_placeholder")}
-              </span>
-              <ChevronDownIcon
-                className={`h-5 w-5 text-gray-500 transition-transform ${showLocationSelector ? "rotate-180" : ""}`}
-              />
-            </div>
-            {showLocationSelector && (
-              <LocationSelector
-                emirates={emirates}
-                onSelect={handleLocationSelect}
-                onClose={() => {
-                  setShowLocationSelector(false);
-                  setZIndex(10);
-                }}
-                selectedEmirate={selectedCity ? selectedCity : selectedEmirate}
-              />
-            )}
-            <input type="hidden" name="emirate" value={emirate} required />
-          </div> */}
-
           <div className="w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {t("emirate")}
@@ -720,17 +732,39 @@ const BookingForm = ({
               ))}
             </select>
           </div>
-
         </div>
 
-        <div className="flex flex-col lg:flex-row justify-between gap-10">
+        <div className="flex flex-col gap-4 justify-between">
+          {/* Saved Address Selector */}
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("saved_addresses")}
+            </label>
+            <select
+              name="saved_address"
+              value={selectedSavedAddressId}
+              onChange={handleSavedAddressChange}
+              disabled={isFormDisabled}
+              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
+                }`}
+            >
+              <option value="">{t("select_saved_address")}</option>
+              {user?.addresses?.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.address}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Address Textarea */}
           <div className="w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {t("address")}
             </label>
             <textarea
               name="address"
-              value={address ? address : latestBooking?.address}
+              value={address}
               onChange={(e) => setAddress(e.target.value)}
               disabled={isFormDisabled}
               placeholder={t("enter_your_address_placeholder")}
@@ -740,7 +774,37 @@ const BookingForm = ({
               required
             />
           </div>
+
+          {/* Apartment & Building */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t("apartment_name")}
+              </label>
+              <input
+                type="text"
+                value={apartmentName}
+                onChange={(e) => setApartmentName(e.target.value)}
+                disabled={isFormDisabled}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t("building_number")}
+              </label>
+              <input
+                type="text"
+                value={buildingNumber}
+                onChange={(e) => setBuildingNumber(e.target.value)}
+                disabled={isFormDisabled}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              />
+            </div>
+          </div>
         </div>
+
 
         <div className="w-full relative">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -770,12 +834,13 @@ const BookingForm = ({
               ref={dateTimePopupRef}
               className="absolute z-50 mt-2 w-full max-w-lg bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
             >
-              <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 border-r border-gray-200">
-                  <div className="p-3 bg-interactive_color text-white text-center font-medium">
+              <div className="flex flex-col md:flex-row max-h-[75vh] overflow-y-auto">
+                {/* Left side – Dates */}
+                <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-gray-200">
+                  <div className="p-3 bg-interactive_color text-white text-center text-sm md:text-base font-medium">
                     {t("select_date") || "Select Date"}
                   </div>
-                  <div className="p-2 max-h-72 overflow-y-auto">
+                  <div className="p-2 max-h-72 overflow-y-auto space-y-1">
                     {nextTwoWeeks.map((date, index) => {
                       const dateStr = formatDateValue(date);
 
@@ -821,11 +886,11 @@ const BookingForm = ({
                 </div>
 
                 <div className="w-full md:w-1/2">
-                  <div className="p-3 bg-interactive_color text-white text-center font-medium">
+                  <div className="p-3 bg-interactive_color text-white text-center text-sm md:text-base font-medium">
                     {t("select_time") || "Select Time"}
                   </div>
                   <div className="p-2 max-h-72 overflow-y-auto">
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                       {timeSlots.map((time, idx) => {
                         const selectedDay = new Date(
                           selectedDate || Date.now()
@@ -869,11 +934,11 @@ const BookingForm = ({
                 </div>
               </div>
 
-              <div className="p-3 border-t border-gray-200 flex justify-end gap-2">
+              <div className="p-3 border-t border-gray-200 flex flex-col sm:flex-row justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowDateTimePopup(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm"
                 >
                   {t("cancel") || "Cancel"}
                 </button>
@@ -885,7 +950,7 @@ const BookingForm = ({
                     }
                   }}
                   disabled={!selectedDate || !selectedTime}
-                  className={`px-4 py-2 rounded-md transition-colors duration-200 ${selectedDate && selectedTime
+                  className={`w-full sm:w-auto px-4 py-2 rounded-md text-sm transition-colors duration-200 ${selectedDate && selectedTime
                     ? "bg-interactive_color text-white hover:bg-active_color"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                     }`}

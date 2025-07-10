@@ -14,6 +14,7 @@ import { getStatus, getStatusStyles } from "@/utils/helper";
 import SuccessPopup from "./SuccessPopup";
 import { MapPin, CreditCard } from "lucide-react";
 import ProfileImage from "./ProfileImage";
+import ProfileAddresses from "./ProfileAddresses";
 
 const Profile: React.FC = () => {
   const t = useTranslations("profile");
@@ -140,6 +141,7 @@ const Profile: React.FC = () => {
     (service) => activeTab === 'booked' ? service.payment_status.toLowerCase() === "paid" && service.status.toLowerCase() !== "approved" : activeTab === 'completed' ? service.status.toLowerCase() === "approved" : service.status.toLowerCase() === activeTab
   );
 
+  console.log(user);
   return (
     <motion.div
       className="relative rounded-xl w-full p-6 bg-white shadow-lg"
@@ -157,7 +159,7 @@ const Profile: React.FC = () => {
           </h1>
 
           <div className="bg-interactive_color hover:bg-active_color text-white px-3 py-1 rounded-full text-sm font-medium mb-6">
-            {userType || t("default_user_type")}
+            {userType || "user"}
           </div>
 
           <div className="space-y-3 w-full">
@@ -228,7 +230,7 @@ const Profile: React.FC = () => {
                       {t("username_label")}
                     </p>
                     <p className="text-gray-800 font-medium">
-                      {user?.username || t("default_username")}
+                      {user?.username?.toLowerCase() || t("default_username")}
                     </p>
                   </div>
                 </motion.li>
@@ -267,7 +269,7 @@ const Profile: React.FC = () => {
                   </div>
                 </motion.li>
 
-                <motion.li
+                {/* <motion.li
                   className="flex items-center gap-3"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -282,7 +284,7 @@ const Profile: React.FC = () => {
                       {formatSlug(user?.address)}
                     </p>
                   </div>
-                </motion.li>
+                </motion.li> */}
               </ul>
             </div>
           </motion.div>
@@ -318,6 +320,8 @@ const Profile: React.FC = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="mb-8"
             >
+
+              {/* Orders start */}
               {/* Title */}
               <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-1 h-6 bg-interactive_color rounded-full mr-2"></span>
@@ -473,6 +477,9 @@ const Profile: React.FC = () => {
                   </motion.div>
                 )}
               </div>
+              {/* Orders end */}
+
+              <ProfileAddresses user={user} />
             </motion.div>
           )}
         </div>

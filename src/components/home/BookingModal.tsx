@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC, useEffect, useState } from "react";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -23,6 +23,7 @@ interface BookingModalProps {
   onOpenChange: (open: boolean) => void;
   selectedDate: Date | undefined;
   onBookAppointment: () => void;
+  handleDateSelect: (date: Date | undefined) => void;
 }
 
 interface Category {
@@ -53,6 +54,7 @@ const BookingModal: FC<BookingModalProps> = ({
   onOpenChange,
   selectedDate,
   onBookAppointment,
+  handleDateSelect
 }) => {
   const t = useTranslations("BookingModal");
   const { categories } = useCategories();
@@ -107,6 +109,7 @@ const BookingModal: FC<BookingModalProps> = ({
       setSelectedService(null);
     }
   };
+
   const handleBook = () => {
     let dateObj = new Date(selectedDate);
     let formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
@@ -124,22 +127,6 @@ const BookingModal: FC<BookingModalProps> = ({
     }
   };
 
-  const handleBook1 = () => {
-    // if (selectedService) {
-    //   router.push(`/services/${selectedService.id}?date=${selectedDate}`);
-    //   onBookAppointment();
-    // }
-
-    const dateObj = new Date(selectedDate);
-    const formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
-
-    console.log(formattedDate);
-
-    if (selectedService && formattedDate) {
-      router.push(`/services/${selectedService.id}?date=${formattedDate.toString()}`);
-      onBookAppointment();
-    }
-  };
 
   const renderCard = (item: Category | Service) => {
     const isService = "price" in item;
@@ -167,7 +154,7 @@ const BookingModal: FC<BookingModalProps> = ({
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={false}
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className={`${isService ? "object-cover" : "object-contain"} transition-transform duration-500 group-hover:scale-110`}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center p-3 opacity-0 group-hover:opacity-100 transition-all duration-300"
@@ -226,8 +213,13 @@ const BookingModal: FC<BookingModalProps> = ({
             <span className="font-semibold">{t("selectedDate")}:</span>{" "}
             {selectedDate && (
               <span className="text-yellow-200">
-                {format(selectedDate, "PPP 'at' p")}
+                {format(selectedDate, "PPP")}
               </span>
+            )}
+
+            {!selectedDate && (
+              <span className="text-yellow-200">
+                {format(addDays(new Date(), 1), "PPP")}</span>
             )}
           </div>
           <p className="mt-1 text-sm opacity-90 text-center">
@@ -244,11 +236,12 @@ const BookingModal: FC<BookingModalProps> = ({
             <div>
               {navigationStack.length > 0 && (
                 <button
-                  onClick={handleBack}
+                  onClick={() => { handleBack();
+                  }}
                   className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
                 >
                   {t("back")}
-                </button>
+                </button> 
               )}
 
               {navigationStack.length <= 0 && (

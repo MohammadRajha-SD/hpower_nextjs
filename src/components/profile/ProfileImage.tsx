@@ -61,7 +61,7 @@ export default function ProfileImage({ user, handleUpdateProfileImage }) {
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
-            
+
             toast.success(t2("update_success"));
         } catch (error) {
             console.error("Upload Error:", error);
@@ -78,11 +78,14 @@ export default function ProfileImage({ user, handleUpdateProfileImage }) {
                 className="relative group cursor-pointer"
                 onClick={handleImageClick}
             >
-                <img
-                    src={user?.image_path || "/user.png"}
-                    alt={t("profile_picture_alt")}
-                    className="rounded-full w-40 h-40 object-cover border-4 border-intebg-interactive_color shadow-md"
-                />
+                {/* || "/user.png" */}
+                {user?.image_path &&
+                    <img
+                        src={user?.image_path}
+                        alt={t("profile_picture_alt")}
+                        className="rounded-full w-40 h-40 object-cover border-4 border-intebg-interactive_color shadow-md"
+                    />
+                }
                 <div className="absolute inset-0 bg-interactive_color bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Edit className="w-8 h-8 text-white" />
                 </div>

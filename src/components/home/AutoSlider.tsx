@@ -97,7 +97,6 @@ const AutoSlider = ({ data }) => {
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button> */}
-        
           <Swiper
             ref={swiperRef}
             modules={[Navigation, Autoplay]}
@@ -109,7 +108,6 @@ const AutoSlider = ({ data }) => {
               pauseOnMouseEnter: false,
             }}
             speed={3000}
-            slidesPerView={1}
             allowTouchMove={true}
             navigation={{
               prevEl: navigationPrevRef.current
@@ -130,36 +128,43 @@ const AutoSlider = ({ data }) => {
               }
             }}
             breakpoints={{
+              0: {
+                slidesPerView: 1,
+                centeredSlides: true,
+                centeredSlidesBounds: true,
+                spaceBetween: 0,
+              },
               640: {
                 slidesPerView: 2,
                 spaceBetween: 20,
+                centeredSlides: false,
               },
               768: {
                 slidesPerView: 3,
                 spaceBetween: 25,
+                centeredSlides: false,
               },
               1280: {
                 slidesPerView: 4,
                 spaceBetween: 30,
+                centeredSlides: false,
               },
             }}
             className="w-full py-10"
           >
-
-
 
             {data?.map((item: any, index) => (
               <SwiperSlide
                 key={`swiper_slide_1_${item.id}_${index}`}
                 className="flex justify-center items-center"
               >
-
                 <div
-                  className="w-[200px] h-[200px] flex flex-col gap-3 items-center justify-center group cursor-pointer"
+                  className="w-full max-w-[200px] h-[200px] mx-auto flex flex-col gap-3 items-center justify-center group cursor-pointer"
+
                   onClick={() => handleCategoryClick(item)}
                   aria-label={item.name}
                 >
-                  <div className="relative overflow-hidden min-w-[120px] min-h-[120px] transition-all duration-300 group-hover:scale-110">
+                  <div className="relative overflow-hidden min-w-[160px] min-h-[160px] transition-all duration-300 group-hover:scale-110">
                     <Image
                       src={
                         item.image_path || item.images[0] || "/placeholder.png"

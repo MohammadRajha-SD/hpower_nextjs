@@ -33,7 +33,6 @@ const ServicesSection = () => {
   // Filter services based on search query and location
   const filteredServices = useMemo(() => {
     return allServices.filter((service: any) => {
-      console.log(service);
       // Search query filter
       const matchesSearch =
         searchQuery.trim() === ""
@@ -76,6 +75,7 @@ const ServicesSection = () => {
     setSearchQuery("");
     setSelectedEmirate("");
     setSelectedCity("");
+    window.location.href = "/services";
   };
 
   // Update zIndex when opening/closing selector
@@ -291,11 +291,11 @@ const ServicesSection = () => {
       </motion.div>
 
       {/* Main Categories Section */}
-      <CategoriesSlider />
+      {/* <CategoriesSlider /> */}
 
-      <h2 className="text-mobile_header lg:text-header text-interactive_color">
+      {/* <h2 className="text-mobile_header lg:text-header text-interactive_color">
         <h1>{t("allServices")}</h1>
-      </h2>
+      </h2> */}
 
       {/* Results count */}
       <div className="flex justify-between items-center mb-5 mt-2">
@@ -367,9 +367,6 @@ const ServicesSection = () => {
         {filteredServices.length === 0 && (
           <div
             className={`text-center py-16 bg-gray-50 rounded-xl `}
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: 1 }}
-          // transition={{ duration: 0.5 }}
           >
             <div className="mx-auto h-24 w-24 text-gray-300 mb-4">
               <svg
