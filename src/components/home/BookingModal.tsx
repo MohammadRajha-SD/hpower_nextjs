@@ -238,7 +238,7 @@ const BookingModal: FC<BookingModalProps> = ({
                 <button
                   onClick={() => { handleBack();
                   }}
-                  className="text-sm ml-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                  className="text-sm mx-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
                 >
                   {t("back")}
                 </button> 
@@ -247,7 +247,7 @@ const BookingModal: FC<BookingModalProps> = ({
               {navigationStack.length <= 0 && (
                 <button
                   onClick={() => onOpenChange(false)}
-                  className="text-sm text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
+                  className="text-sm mx-2 text-[var(--interactive-color)] underline hover:text-[var(--active-color)] transition-colors"
                 >
                   {t("back")}
                 </button>

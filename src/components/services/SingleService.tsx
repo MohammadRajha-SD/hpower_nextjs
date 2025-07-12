@@ -76,7 +76,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
     service.discount_price < 1 ? service.price : service.discount_price
   );
 
-  const isBookingDisabled = service.enable_booking === 0;
+  const isBookingDisabled = service.enable_booking == 0;
 
   const images: string[] = service.images?.length
     ? service.images
