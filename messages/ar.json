@@ -33,7 +33,7 @@
     "skin": "العناية بالجسم والشعر"
   },
   "profile": {
-    "edit":"تعديل",
+    "edit": "تعديل",
     "profile_picture_alt": "صورة الملف الشخصي",
     "update_profile_image": "تحديث صورة الملف الشخصي",
     "preview": "معاينة",
@@ -42,10 +42,10 @@
     "delete": "حذف",
     "updating": "جارٍ التحديث...",
     "cancel": "إلغاء",
-      "edit_address": "تعديل العنوان",
-  "update_address_details": "قم بتحديث تفاصيل العنوان أدناه.",
-  "edit_your_address_placeholder": "قم بتعديل عنوانك الكامل",
-  "update": "تحديث",
+    "edit_address": "تعديل العنوان",
+    "update_address_details": "قم بتحديث تفاصيل العنوان أدناه.",
+    "edit_your_address_placeholder": "قم بتعديل عنوانك الكامل",
+    "update": "تحديث",
     "save": "حفظ",
     "apartment_name": "اسم الشقة",
     "building_number": "رقم المبنى",
@@ -378,9 +378,10 @@
     ]
   },
   "SingleService": {
-     "apartment_name": "اسم الشقة",
+    "apartment_name": "اسم الشقة",
     "building_number": "رقم المبنى",
     "no_addresses": "لا توجد عناوين متاحة",
+    "save_address_label": "حفظ العنوان",
     "saved_addresses": "العناوين المحفوظة",
     "select_saved_address": "اختر من العناوين المحفوظة",
     "service_not_found": "لا توجد خدمات متاحة حاليًا. ترقبوا التحديثات!",

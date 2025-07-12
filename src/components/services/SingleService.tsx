@@ -44,6 +44,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
   const [selectedSavedAddressId, setSelectedSavedAddressId] = useState("");
   const [apartmentName, setApartmentName] = useState("");
   const [buildingNumber, setBuildingNumber] = useState("");
+  const [saveAddress, setSaveAddress] = useState(true);
 
   const [couponData, setCouponData] = useState<{
     discount: number;
@@ -197,7 +198,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
         );
       });
 
-      if (selectedSavedAddressId == null || !alreadyExists) {
+      if (saveAddress && selectedSavedAddressId == null && !alreadyExists) {
         await handleAddAddress();
       }
 
@@ -389,6 +390,8 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
             </div>
 
             <BookingForm
+              saveAddress={saveAddress}
+              setSaveAddress={setSaveAddress}
               selectedSavedAddressId={selectedSavedAddressId}
               setSelectedSavedAddressId={setSelectedSavedAddressId}
               couponCode={couponCode}

@@ -23,11 +23,12 @@ import parse from "html-react-parser";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import ProfileAddresses from "../profile/ProfileAddresses";
 
 interface BookingFormProps {
   couponCode: string;
   setCouponCode: (value: string) => void;
+  saveAddress: boolean;
+  setSaveAddress: (value: boolean) => void;
   appliedCoupon: boolean;
   bookingLoading: boolean;
   service: any;
@@ -56,6 +57,8 @@ interface BookingFormProps {
 const BookingForm = ({
   couponCode,
   setCouponCode,
+  saveAddress,
+  setSaveAddress,
   appliedCoupon,
   bookingLoading,
   setSelectedSavedAddressId,
@@ -736,43 +739,61 @@ const BookingForm = ({
 
         <div className="flex flex-col gap-4 justify-between">
           {/* Saved Address Selector */}
-          <div className="w-full">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("saved_addresses")}
-            </label>
-            <select
-              name="saved_address"
-              value={selectedSavedAddressId}
-              onChange={handleSavedAddressChange}
-              disabled={isFormDisabled}
-              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
-                }`}
-            >
-              <option value="">{t("select_saved_address")}</option>
-              {user?.addresses?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.address}
-                </option>
-              ))}
-            </select>
-          </div>
+          {user?.addresses?.length > 0 &&
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t("saved_addresses")}
+              </label>
+              <select
+                name="saved_address"
+                value={selectedSavedAddressId}
+                onChange={handleSavedAddressChange}
+                disabled={isFormDisabled}
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
+                  }`}
+              >
+                <option value="">{t("select_saved_address")}</option>
+                {user?.addresses?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.address}
+                  </option>
+                ))}
+              </select>
+            </div>}
 
           {/* Address Textarea */}
-          <div className="w-full">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("address")}
-            </label>
-            <textarea
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              disabled={isFormDisabled}
-              placeholder={t("enter_your_address_placeholder")}
-              className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 resize-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
-                }`}
-              rows={3}
-              required
-            />
+          <div className="flex  flex-col  ">
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t("address")}
+              </label>
+              <textarea
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                disabled={isFormDisabled}
+                placeholder={t("enter_your_address_placeholder")}
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 resize-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-100 ${isFormDisabled ? "opacity-50 cursor-not-allowed" : "hover:border-interactive_color"
+                  }`}
+                rows={3}
+                required
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="save_address"
+                name="save_address"
+                checked={saveAddress}
+                onChange={(e) => setSaveAddress(e.target.checked)}
+                className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              
+              <label htmlFor="save_address" className="text-sm text-gray-700">
+                {t("save_address_label")}
+              </label>
+            </div>
           </div>
 
           {/* Apartment & Building */}
