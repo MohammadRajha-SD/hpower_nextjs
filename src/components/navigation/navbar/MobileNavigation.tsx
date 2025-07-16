@@ -34,7 +34,7 @@ const MobileNavigation: React.FC = () => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   
   const locale = useLocale();
-  const isRTL = locale === 'ar';
+  const isRTL = locale === 'en';
   
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -43,6 +43,7 @@ const MobileNavigation: React.FC = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

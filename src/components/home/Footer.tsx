@@ -15,9 +15,10 @@ interface Service {
 // Dummy data for company sections with translatable titles and items
 const com_data = (t: (key: string) => string) => [
   {
-    title: t("Customer_Service"),
+    title: t("quickLinks"),
     items: [
       { name: t("Common_Questions"), link: "/faqs" },
+      { name: t("becomeAParter"), link: "/become-a-partner" },
       { name: t("Return_Policy"), link: "/return-policy" },
       { name: t("Privacy_Policy"), link: "/privacy-policy" },
       { name: t("Terms_and_Conditions"), link: "/terms" },
