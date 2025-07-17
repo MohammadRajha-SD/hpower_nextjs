@@ -6,10 +6,12 @@ import Image from "next/image";
 import SocialLinks from "./SocialsLinks";
 import { useServices } from "@/hooks/useServices";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 interface Service {
   id: string | number;
   name: string;
+  name_ar: string;
 }
 
 // Dummy data for company sections with translatable titles and items
@@ -30,8 +32,8 @@ const Footer = () => {
   const { services } = useServices();
   const featuredServices = services?.services?.slice(0, 4);
   const t = useTranslations("Footer");
-
-  const whatsappNumber = "971506164629"; // Remove '+' and spaces from +971 50 616 4629
+  const locale = useLocale();
+  const whatsappNumber = "971506164629";
 
   return (
     <>
@@ -59,21 +61,22 @@ const Footer = () => {
                   {t("products")}
                 </h2>
                 <ul className="flex flex-col gap-2 items-center md:items-start">
-                  {featuredServices?.map((item: Service) => (
-                    <li
-                      key={"footer_feateured_service_" + item.id}
-                      className="group text-sm text-gray-500 hover:text-gray-900 transition-all duration-300 w-fit relative"
-                    >
-                      <Link
-                        href={`/services/${item.id}`}
-                        aria-label={`Visit ${item.name}`}
-                        className="block px-1 py-0.5"
+                  {featuredServices?.length > 0 &&
+                    featuredServices?.map((item: Service) => (
+                      <li
+                        key={"footer_feateured_service_" + item.id}
+                        className="group text-sm text-gray-500 hover:text-gray-900 transition-all duration-300 w-fit relative"
                       >
-                        {item.name}
-                      </Link>
-                      <span className="block h-[1px] w-0 bg-gray-500 transition-all duration-300 group-hover:w-full group-hover:start-0 end-0 absolute -bottom-1" />
-                    </li>
-                  ))}
+                        <Link
+                          href={`/services/${item.id}`}
+                          aria-label={`Visit ${item.name}`}
+                          className="block px-1 py-0.5"
+                        >
+                          {locale == 'ar' ? (item?.name_ar ?? item.name) : item.name}
+                        </Link>
+                        <span className="block h-[1px] w-0 bg-gray-500 transition-all duration-300 group-hover:w-full group-hover:start-0 end-0 absolute -bottom-1" />
+                      </li>
+                    ))}
                 </ul>
               </div>
 
