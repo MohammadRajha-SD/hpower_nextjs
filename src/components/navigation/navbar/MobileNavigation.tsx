@@ -18,6 +18,7 @@ import { dropdownVariants, getInitial } from "@/utils/helper";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useLocale } from 'next-intl';
+import Image from "next/image";
 
 // Define the User type based on your useUserDetails hook
 interface User {
@@ -32,10 +33,10 @@ const MobileNavigation: React.FC = () => {
   const router = useRouter();
   const t = useTranslations("Navbar");
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  
+
   const locale = useLocale();
   const isRTL = locale === 'en';
-  
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -88,11 +89,11 @@ const MobileNavigation: React.FC = () => {
   };
 
   return (
-    <div className="relative z-50">
+    <div className="relative flex z-50" style={{ justifyContent: "space-between" }}>
       {/* Burger Menu Button */}
       <button
         onClick={toggleMenu}
-        className="p-2 text-gray-700 focus:outline-none"
+        className="p-2  text-gray-700 focus:outline-none"
         aria-label="Toggle menu"
       >
         {isOpen ? (
@@ -101,6 +102,14 @@ const MobileNavigation: React.FC = () => {
           <Menu size={24} className="text-gray-700" />
         )}
       </button>
+
+      <div className="flex relative w-20 h-8 lg:w-36 lg:h-8 xxl:w-44 items-center mt-2">
+        <Link href="/">
+          <Image src={"/new-logo.png"} fill alt="HPOWER" className="h-auto" />
+        </Link>
+      </div>
+
+      <LanguageSwitcher />
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
@@ -222,7 +231,7 @@ const MobileNavigation: React.FC = () => {
           {/* Navigation Links */}
           <NavLinksMobile className="flex flex-col gap-4  w-full" onClick={closeMenu} />
           {/* Service provider button */}
-          <LanguageSwitcher />
+          {/* <LanguageSwitcher /> */}
           {/* <div className="flex flex-col gap-5">
             <CustomButton
               actionLink="/become-a-partner"

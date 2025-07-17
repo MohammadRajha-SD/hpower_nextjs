@@ -47,7 +47,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 z-50 bg-white lg:bg-white/70 backdrop-blur-md flex items-center justify-between w-full py-3 shadow-sm px-5 xl:px-[3%] xxl:px-[6%] xxxl:px-[12%] mx-auto border-b border-white/10">
-      <div className="relative w-20 h-8 lg:w-36 lg:h-8 xxl:w-44 flex items-center mt-2">
+      <div className="hidden lg:flex relative w-20 h-8 lg:w-36 lg:h-8 xxl:w-44 items-center mt-2">
         <Link href="/">
           <Image src={"/new-logo.png"} fill alt="HPOWER" className="h-auto" />
         </Link>
@@ -151,8 +151,8 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="lg:hidden">
-        <MobileNavigation/>
+      <div className="lg:hidden w-full">
+        <MobileNavigation />
       </div>
     </nav>
   );
