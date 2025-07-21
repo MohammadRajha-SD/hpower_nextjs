@@ -222,14 +222,14 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
         BookingData: new Date().toISOString(),
       };
 
-      const emailResult = await sendBookingEmail(bookingData);
+      // const emailResult = await sendBookingEmail(bookingData);
 
-      if (!emailResult.success) {
-        console.error("Failed to send booking email:", emailResult.error);
-      }
+      // if (!emailResult.success) {
+      //   console.error("Failed to send booking email:", emailResult.error);
+      // }
 
       toast.success(t("booking_successful"));
-      setShowSuccessPopup(true);
+      // setShowSuccessPopup(true);
       setQuantity(1);
       setAddress("");
       setHint("");

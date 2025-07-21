@@ -33,15 +33,8 @@ const MobileNavigation: React.FC = () => {
   const router = useRouter();
   const t = useTranslations("Navbar");
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const locale = useLocale();
   const isRTL = locale === 'en';
-
-  useEffect(() => {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    setIsDarkMode(isDark);
-  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -109,9 +102,9 @@ const MobileNavigation: React.FC = () => {
         )}
       </button>
 
-      <div className="flex relative w-32 h-10 lg:w-36 lg:h-8 xxl:w-44 items-center ">
+      <div className="flex relative w-28 h-10 lg:w-36 lg:h-8 xxl:w-44 items-center ">
         <Link href="/">
-          <Image src={isDarkMode == true ? "/new-logo-2.png" : "/new-logo.png"} fill alt="HPOWER" className="h-auto" />
+          <Image src={"/new-logo.png"} fill alt="HPOWER" className="h-auto" />
         </Link>
       </div>
 
