@@ -326,14 +326,14 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
             </h1>
 
             {isBookingDisabled && (
-              <div className="mb-8 p-6 bg-red-50 border-l-4 border-red-500 rounded-lg">
+              <div className="mb-8 p-6 bg-red-50 border-l-4 border-interactive_color rounded-lg">
                 <div className="flex items-start gap-3">
-                  <BiErrorAlt className="flex-shrink-0 h-6 w-6 text-red-500 mt-0.5" />
+                  <BiErrorAlt className="flex-shrink-0 h-6 w-6 text-interactive_color mt-0.5" />
                   <div>
-                    <h3 className="text-lg font-medium text-red-800 mb-1">
+                    <h3 className="text-lg font-medium text-interactive_color mb-1">
                       {t("service_busy_title")}
                     </h3>
-                    <p className="text-red-600">{t("service_busy_message")}</p>
+                    <p className="text-interactive_color">{t("service_busy_message")}</p>
                   </div>
                 </div>
               </div>
@@ -585,7 +585,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                     style={{ backgroundImage: `url(${img})` }}
                   >
                     <div className="absolute inset-0 bg-black opacity-25" />
-                    {isBookingDisabled && (
+                    {/* {isBookingDisabled && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="text-center p-6 bg-white bg-opacity-90 rounded-lg max-w-md">
                           <BiErrorAlt className="mx-auto h-12 w-12 text-red-500 mb-3" />
@@ -597,7 +597,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                           </p>
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </SwiperSlide>
               ))}
