@@ -9,7 +9,7 @@ import ProgressBar from "./ProgressBar";
 import CompanyDetailsStep from "./CompanyDetailsStep";
 import CoverageAndServicesStep from "./CoverageAndServicesStep";
 import FinalStep from "./FinalStep";
-import SuccessPopup from "./SuccessPopup";
+import SuccessPopup2 from "./SuccessPopup2";
 import { sendContactForm } from "@/actions/sendMail";
 import { sendVerificationCodeEmail } from "@/actions/sendVerificationCode";
 import EmailVerificationStep from "./EmailVerificationStep";
@@ -89,6 +89,7 @@ const PartnerForm = () => {
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
+    setIsSuccess(false); // reset success
 
     try {
       const formData = new FormData();
@@ -125,8 +126,19 @@ const PartnerForm = () => {
       const backendResult = await backendResponse.json();
 
       if (!backendResponse.ok) {
+        if (backendResponse.status === 422 && backendResult.errors) {
+          // Show validation errors
+          Object.entries(backendResult.errors).forEach(([field, messages]) => {
+            const message = Array.isArray(messages) ? messages[0] : messages;
+            toast.error(`${message}`);
+          });
+          return;
+        }
+
+        // Other error (500 or custom)
         throw new Error(backendResult.message || "Backend submission failed");
       }
+
 
       // 5. إرسال البيانات عبر الإيميل
       const emailFormData = new FormData();
@@ -367,7 +379,7 @@ const PartnerForm = () => {
       </motion.div>
 
       <AnimatePresence>
-        {showSuccessPopup && <SuccessPopup onClose={closeSuccessPopup} />}
+        {showSuccessPopup && <SuccessPopup2 onClose={closeSuccessPopup} />}
       </AnimatePresence>
     </div>
   );

@@ -166,7 +166,7 @@ const MobileNavigation: React.FC = () => {
               <AnimatePresence>
                 {dropdownOpen && (
                   <motion.div
-                    className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
+                    className="absolute  mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden origin-top-right"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -227,6 +227,7 @@ const MobileNavigation: React.FC = () => {
               </span>
             </Link>
           )}
+
           {/* Navigation Links */}
           <NavLinksMobile className="flex flex-col gap-4  w-full" onClick={closeMenu} />
           {/* Service provider button */}

@@ -780,7 +780,8 @@
     "Signing": {
       "close": "Close",
       "thankYou": "Thank you for signing!",
-      "successMessage": "Your agreement has been successfully submitted. We appreciate your trust."
+      "successMessage2": "Your agreement has been successfully submitted. We appreciate your trust.",
+      "successMessage": "Thank you for submitting the application. We have received it and will contact you within 1-2 working days."
     },
     "AddressPrompt": {
       "pleaseSelectAddress": "Please select your address",
