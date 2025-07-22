@@ -299,7 +299,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                 style={{ backgroundImage: `url(${img})` }}
               >
                 <div className="absolute inset-0 bg-black opacity-25" />
-                {isBookingDisabled && (
+                {/* {isBookingDisabled && (
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="text-center p-4 sm:p-6 bg-white bg-opacity-90 rounded-lg max-w-[90%] sm:max-w-md">
                       <BiErrorAlt className="mx-auto h-10 w-10 text-red-500 mb-3" />
@@ -311,7 +311,7 @@ const SingleService = ({ serviceId }: { serviceId: string }) => {
                       </p>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </SwiperSlide>
           ))}
