@@ -74,14 +74,6 @@ const SuccessPopup = ({ onClose }) => {
           >
             {t("thankYou")}
           </motion.h3>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-gray-600"
-          >
-            {t("successMessage")}
-          </motion.p>
         </div>
       </motion.div>
     </motion.div>

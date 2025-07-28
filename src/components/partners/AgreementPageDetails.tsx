@@ -32,6 +32,7 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
     const [formValues, setFormValues] = useState({
         legal_business_name: agreement && agreement['legal_business_name'] || null,
         trade_license_number: agreement && agreement['trade_license_number'] || null,
+        plan_name: agreement && agreement['plan_name'] || null,
         company_address: agreement && agreement['company_address'] || null,
         contact_email: agreement && agreement['contact_email'] || null,
         contact_phone_number: agreement && agreement['contact_phone_number'] || null,
@@ -44,6 +45,7 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
     useEffect(() => {
         setFormValues({
             legal_business_name: agreement && agreement['legal_business_name'] || null,
+            plan_name: agreement && agreement['plan_name'] || null,
             trade_license_number: agreement && agreement['trade_license_number'] || null,
             company_address: agreement && agreement['company_address'] || null,
             contact_email: agreement && agreement['contact_email'] || null,
@@ -110,6 +112,8 @@ const AgreementPageDetails = ({ uid }: { uid: string }) => {
                                         <Field label={tF("contact_email")} value={formValues.contact_email} />
                                     </div>
                                     <div className="space-y-2">
+                                        <Field label={tF("plan_name")} value={formValues.plan_name} />
+
                                         <Field
                                             label={tF("contact_phone_number")}
                                             value={

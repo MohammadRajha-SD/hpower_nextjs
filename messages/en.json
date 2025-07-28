@@ -687,6 +687,14 @@
     "Terms": {
       "title": "Terms and Conditions",
       "header": "Terms and Conditions",
+      "intro": "Welcome to HPOWER! We’re glad you’re here.",
+      "agreement": "By using our website, you agree to these simple terms that govern our relationship, along with our privacy policy which explains how we handle your data. If you have any questions or do not agree with any part of them, feel free to contact us.",
+      "definition_us": "\"HPOWER\" or \"we\" refers to the owner of this website, based in Ras Al Khaimah, United Arab Emirates.",
+      "definition_you": "\"You\" refers to the valued user or visitor of our site.",
+      "info_note": "All information and materials on this site are for your general information and personal use. We’re constantly working to improve them, and they may change from time to time without notice.",
+      "accuracy_disclaimer": "We strive to provide accurate and up-to-date information, but we cannot guarantee that all materials on the site are completely free from errors or inaccuracies. Your use of any such information is entirely at your own risk. Please make sure any product, service, or info you find here suits your needs.",
+      "ownership": "Our website contains materials that are owned by or licensed to us, such as designs, graphics, and content. Copying or reproducing these materials is prohibited unless you have our written permission and in accordance with our copyright notice.",
+      "trademarks": "All trademarks that appear on the site which are not owned by or licensed to us are clearly marked.",
       "paragraph_1": "Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern HPOWER’s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.",
       "paragraph_2": "The term “HPOWER” or 'us' or 'we' refers to the owner of the website whose registered shop in Ras Al Khaimah, UAE. The term 'you' refers to the user or viewer of our website.",
       "point_1": "The content of the pages of this website is for your general information and use only. It is subject to change without notice.",
@@ -767,6 +775,7 @@
       "formSubmitted": "Form submitted successfully!"
     },
     "AgreementDetails": {
+      "plan_name" : "Plan Name",
       "legal_business_name": "Legal Business Name",
       "trade_license_number": "Trade License Number",
       "company_address": "Company Address",
