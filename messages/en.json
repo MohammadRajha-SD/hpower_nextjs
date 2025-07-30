@@ -695,14 +695,22 @@
       "accuracy_disclaimer": "We strive to provide accurate and up-to-date information, but we cannot guarantee that all materials on the site are completely free from errors or inaccuracies. Your use of any such information is entirely at your own risk. Please make sure any product, service, or info you find here suits your needs.",
       "ownership": "Our website contains materials that are owned by or licensed to us, such as designs, graphics, and content. Copying or reproducing these materials is prohibited unless you have our written permission and in accordance with our copyright notice.",
       "trademarks": "All trademarks that appear on the site which are not owned by or licensed to us are clearly marked.",
-      "paragraph_1": "Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern HPOWER’s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.",
-      "paragraph_2": "The term “HPOWER” or 'us' or 'we' refers to the owner of the website whose registered shop in Ras Al Khaimah, UAE. The term 'you' refers to the user or viewer of our website.",
-      "point_1": "The content of the pages of this website is for your general information and use only. It is subject to change without notice.",
-      "point_2": "This website uses cookies to monitor browsing preferences. If you do allow cookies to be used, the following personal information may be stored by us for use by third parties.",
-      "point_3": "Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.",
-      "point_4": "Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.",
-      "point_5": "This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.",
-      "point_6": "All trademarks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.",
+      "paragraph_1": "Welcome to HPOWER! We’re glad you’re here.",
+
+      "paragraph_2": "By using our website, you agree to these simple terms that govern our relationship, along with our privacy policy which explains how we handle your data. If you have any questions or do not agree with any part of them, feel free to contact us.",
+      
+      "point_1": "'HPOWER' or 'we' refers to the owner of this website, based in Ras Al Khaimah, United Arab Emirates.",
+     
+      "point_2": "'You' refers to the valued user or visitor of our site.",
+      
+      "point_3": "All information and materials on this site are for your general information and personal use. We’re constantly working to improve them, and they may change from time to time without notice.",
+     
+      "point_4": "We strive to provide accurate and up-to-date information, but we cannot guarantee that all materials on the site are completely free from errors or inaccuracies. Your use of any such information is entirely at your own risk. Please make sure any product, service, or info you find here suits your needs.",
+     
+      "point_5": "Our website contains materials that are owned by or licensed to us, such as designs, graphics, and content. Copying or reproducing these materials is prohibited unless you have our written permission and in accordance with our copyright notice.",
+     
+      "point_6": "All trademarks that appear on the site which are not owned by or licensed to us are clearly marked.",
+     
       "cancel": "Cancel",
       "agree": "Agree"
     },
