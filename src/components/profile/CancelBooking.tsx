@@ -124,7 +124,7 @@ const CancelBooking: React.FC<CancelBookingProps> = ({
         );
 
         setOpen(false);
-        
+
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -158,9 +158,11 @@ const CancelBooking: React.FC<CancelBookingProps> = ({
           >
             {t("cancel_booking_title")}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-gray-600" dir="auto">
-            {t("cancel_booking_description")}
-          </AlertDialogDescription>
+          {status == 'paid' &&
+            <AlertDialogDescription className="text-gray-600" dir="auto">
+              {t("cancel_booking_description")}
+            </AlertDialogDescription>
+          }
         </AlertDialogHeader>
 
         {status == 'paid' &&

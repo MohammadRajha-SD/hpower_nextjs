@@ -78,6 +78,10 @@ const AgreementForm = ({ agreement }) => {
       setShowSuccessPopup(true);
 
       toast.success(t("formSubmitted") || "Application submitted successfully!");
+
+      setTimeout(() => {
+        window.location.href = "/agreement/" + uid + "/details";
+      }, 1000);
     } catch (error) {
       console.error("Submission error:", error);
       setIsSubmitting(false);
